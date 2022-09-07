@@ -19,7 +19,11 @@
   },
   "homepage": "https://github.com/Sinrath/LeoContact#readme",
   "dependencies": {
-    "express": "^4.18.1"
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "date-fns": "^2.29.2",
+    "express": "^4.18.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
