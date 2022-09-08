@@ -4,22 +4,23 @@ const Public = () => {
     const content = (
         <section className="public">
             <header>
-                <h1>Welcome to <span className="nowrap">Dan D. Repairs!</span></h1>
+                <h1>Welcome to <span className="nowrap">LeoContact</span></h1>
             </header>
             <main className="public__main">
-                <p>Located in Beautiful Downtown Foo City, Dan D. Repairs provides a trained staff ready to meet your
-                    tech repair needs.</p>
+                <p>Mauris egestas tincidunt nisl vel gravida. Sed lorem lectus, congue non purus sed, suscipit euismod
+                    tortor. Nullam in blandit arcu, in dictum urna. Donec ultrices id nisi in egestas. Praesent interdum
+                    risus eu augue laoreet interdum. </p>
                 <address className="public__addr">
-                    Dan D. Repairs<br/>
-                    555 Foo Drive<br/>
-                    Foo City, CA 12345<br/>
-                    <a href="tel:+15555555555">(555) 555-5555</a>
+                    Blub D. Blub<br/>
+                    555 Blub Drive<br/>
+                    Blub City, Blub 12345<br/>
+                    <a href="tel:+41 79 999 99 99">+4179 999 99 99</a>
                 </address>
                 <br/>
-                <p>Owner: Dan Davidson</p>
+                <p>Owner: Pipo</p>
             </main>
             <footer>
-                <Link to="/login">Employee Login</Link>
+                <Link to="/login">User Login</Link>
             </footer>
         </section>
 

@@ -1,6 +1,6 @@
 {
-  "name": "leocontact",
-  "version": "1.0.0",
+  "name": "backend",
+  "version": "0.1.0",
   "description": "leoContact MERN Project",
   "main": "server.js",
   "scripts": {

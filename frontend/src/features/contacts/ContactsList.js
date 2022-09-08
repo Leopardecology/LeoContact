@@ -1,6 +1,6 @@
 const ContactsList = () => {
     return (
-        <h1>ContactsList</h1>
+        <h1>ContactList</h1>
     );
 };
 
