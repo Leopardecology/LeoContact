@@ -18,8 +18,8 @@ const Contact = ({ contactId }) => {
 
         return (
             <tr className="table__row">
-                <td className="table__cell contact__username">{contact.name}</td>
-                <td className="table__cell contact__created">{contact.surname}</td>
+                <td className="table__cell contact__username">{contact.firstname}</td>
+                <td className="table__cell contact__created">{contact.lastname}</td>
                 <td className="table__cell contact__updated">{updated}</td>
                 <td className="table__cell contact__title">{contact.email}</td>
 
