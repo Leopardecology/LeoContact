@@ -22,7 +22,7 @@ exports.validateUser = [
         .bail(),
     check('email')
         .trim()
-        .normalizeEmail()
+        .isEmail()
         .not()
         .isEmpty()
         .withMessage('Invalid email address!')

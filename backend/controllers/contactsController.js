@@ -27,7 +27,7 @@ const createNewContact = asyncHandler(async (req, res) => {
     const duplicate = await Contact.findOne({email}).lean().exec();
 
     if (duplicate) {
-        return res.status(409).json({message: 'Duplicate contact title'});
+        return res.status(409).json({message: 'Duplicate contact Email!'});
     }
 
     // Create and store the new contact
