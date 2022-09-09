@@ -34,7 +34,7 @@ exports.validateUser = [
         .withMessage('Role can not be empty!')
         .bail()
         .isIn(["User", "Admin"])
-        .withMessage('User or Admin')
+        .withMessage('Roles can only be User or Admin!')
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);

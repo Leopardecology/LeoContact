@@ -1,11 +1,12 @@
-const express = require('express')
-const router = express.Router()
-const contactsController = require('../controllers/contactsController')
+const express = require('express');
+const router = express.Router();
+const contactsController = require('../controllers/contactsController');
+const {validateContact} = require('../middleware/validation/contactValidator');
 
 router.route('/')
     .get(contactsController.getAllContacts)
-    .post(contactsController.createNewContact)
+    .post(validateContact, contactsController.createNewContact)
     .patch(contactsController.updateContact)
-    .delete(contactsController.deleteContact)
+    .delete(contactsController.deleteContact);
 
-module.exports = router
+module.exports = router;

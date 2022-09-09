@@ -1,20 +1,41 @@
 const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const contactSchema = new mongoose.Schema(
+const addressSchema = new mongoose.Schema(
     {
-        name: {
+        street: {
             type: String,
             required: true
         },
-        surname: {
+        city: {
+            type: String,
+            required: true
+        },
+        zip: {
+            type: Number,
+            required: true
+        },
+        country: {
+            type: String,
+            required: true
+        }
+    }
+);
+
+const contactSchema = new mongoose.Schema(
+    {
+        firstname: {
+            type: String,
+            required: true
+        },
+        lastname: {
             type: String,
             required: true
         },
         email: {
             type: String,
             required: true
-        }
+        },
+        address: [addressSchema],
     },
     {
         timestamps: true

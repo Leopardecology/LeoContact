@@ -20,12 +20,8 @@ const getAllContacts = asyncHandler(async (req, res) => {
 // @route POST /contacts
 // @access Private
 const createNewContact = asyncHandler(async (req, res) => {
-    const {name, surname, email} = req.body;
+    const {firstname, lastname, email, address} = req.body;
 
-    // Confirm data
-    if (!name || !surname || !email) {
-        return res.status(400).json({message: 'All fields are required'});
-    }
 
     // Check for duplicate title
     const duplicate = await Contact.findOne({email}).lean().exec();
@@ -35,7 +31,7 @@ const createNewContact = asyncHandler(async (req, res) => {
     }
 
     // Create and store the new contact
-    const contact = await Contact.create({name, surname, email});
+    const contact = await Contact.create({firstname, lastname, email, address});
 
     if (contact) { // Created 
         return res.status(201).json({message: 'New contact created'});
