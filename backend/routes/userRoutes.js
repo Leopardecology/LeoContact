@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/usersController');
+const {validateUser} = require('../middleware/validation/userValidator');
 
 router.route('/')
     .get(userController.getAllUsers)
-    .post(userController.createNewUser)
+    .post(validateUser, userController.createNewUser)
     .patch(userController.updateUser)
     .delete(userController.deleteUser);
 

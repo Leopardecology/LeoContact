@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const corsOption = require('./config/corsOptions');
 const connectDB = require('./config/dbConnection');
-const mongoose = require('mongoose');
+const mongoose = require('mongoose').default; //TODO: default because of bug?
 const {logEvents} = require('./middleware/logger');
 const PORT = process.env.PORT || 3500;
 
@@ -50,5 +50,5 @@ mongoose.connection.once('open', () => {
 
 mongoose.connection.on('error', err => {
     console.log(err);
-    logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log');
+    logEvents(`${err.errno}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log');
 });
