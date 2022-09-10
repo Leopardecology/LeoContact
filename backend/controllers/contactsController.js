@@ -47,11 +47,6 @@ const createNewContact = asyncHandler(async (req, res) => {
 const updateContact = asyncHandler(async (req, res) => {
     const {id, name, surname, email} = req.body;
 
-    // Confirm data
-    if (!id || !name || !surname || !email) {
-        return res.status(400).json({message: 'All fields are required'});
-    }
-
     // Confirm contact exists to update
     const contact = await Contact.findById(id).exec();
 
@@ -64,7 +59,7 @@ const updateContact = asyncHandler(async (req, res) => {
 
     // Allow renaming of the original contact 
     if (duplicate && duplicate?._id.toString() !== id) {
-        return res.status(409).json({message: 'Duplicate contact surname'});
+        return res.status(409).json({message: 'Duplicate contact email'});
     }
 
     contact.name = name;

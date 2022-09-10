@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
-const {check, validationResult} = require('express-validator');
 
 // @desc Get all users
 // @route GET /users
@@ -50,14 +49,9 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
-    const {id, username, roles, active, password} = req.body;
+    const {id, username, password, email, roles, active} = req.body;
 
-    // Confirm data 
-    if (!id || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
-        return res.status(400).json({message: 'All fields except password are required'});
-    }
-
-    // Does the user exist to update?
+    // Confirm user exists to update
     const user = await User.findById(id).exec();
 
     if (!user) {
@@ -73,6 +67,7 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 
     user.username = username;
+    user.email = email;
     user.roles = roles;
     user.active = active;
 

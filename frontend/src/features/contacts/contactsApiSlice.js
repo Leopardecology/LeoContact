@@ -12,7 +12,6 @@ export const contactsApiSlice = apiSlice.injectEndpoints({
             validateStatus: (response, result) => {
                 return response.status === 200 && !result.isError;
             },
-            keepUnusedDataFor: 5,
             transformResponse: responseData => {
                 const loadedContacts = responseData.map(contact => {
                     contact.id = contact._id;
@@ -29,11 +28,48 @@ export const contactsApiSlice = apiSlice.injectEndpoints({
                 } else return [{type: 'contact', id: 'LIST'}];
             }
         }),
+        addNewContact: builder.mutation({
+            query: initialContact => ({
+                url: '/contacts',
+                method: 'POST',
+                body: {
+                    ...initialContact,
+                }
+            }),
+            invalidatesTags: [
+                {type: 'Contact', id: "LIST"}
+            ]
+        }),
+        updateContact: builder.mutation({
+            query: initialContact => ({
+                url: '/contacts',
+                method: 'PATCH',
+                body: {
+                    ...initialContact,
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                {type: 'Contact', id: arg.id}
+            ]
+        }),
+        deleteContact: builder.mutation({
+            query: ({id}) => ({
+                url: `/contacts`,
+                method: 'DELETE',
+                body: {id}
+            }),
+            invalidatesTags: (result, error, arg) => [
+                {type: 'Contact', id: arg.id}
+            ]
+        }),
     }),
 });
 
 export const {
     useGetContactsQuery,
+    useAddNewContactMutation,
+    useUpdateContactMutation,
+    useDeleteContactMutation,
 } = contactsApiSlice;
 
 // returns the query result object

@@ -17,7 +17,7 @@ exports.validateUser = [
         .isEmpty()
         .withMessage('password can not be empty!')
         .bail()
-        .isLength({min: 5})
+        .isLength({min: 4})
         .withMessage('Minimum 5 characters required!')
         .bail(),
     check('email')

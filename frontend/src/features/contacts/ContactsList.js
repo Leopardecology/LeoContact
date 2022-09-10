@@ -8,7 +8,11 @@ const ContactsList = () => {
         isSuccess,
         isError,
         error
-    } = useGetContactsQuery();
+    } = useGetContactsQuery(undefined, {
+        pollingInterval: 60000,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
+    });
 
     let content;
 
