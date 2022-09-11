@@ -26,7 +26,7 @@ const NewUserForm = () => {
     const [validPassword, setValidPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
-    const [roles, setRoles] = useState(["User"]);
+    const [roles, setRoles] = useState("User");
 
     useEffect(() => {
         setValidUsername(USER_REGEX.test(username));
@@ -118,7 +118,7 @@ const NewUserForm = () => {
                 />
 
                 <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
+                    Password: <span className="nowrap">[4-20 chars incl. !@#$%]</span></label>
                 <input
                     className={`form__input ${validPwdClass}`}
                     id="password"
