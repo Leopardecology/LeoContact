@@ -31,8 +31,8 @@ const EditContactForm = ({contact}) => {
         const [validLastname, setValidLastname] = useState(false);
         const [email, setEmail] = useState(contact.email);
         const [validEmail, setValidEmail] = useState(false);
-        // const [address, setAddress] = useState(contact.address.street);
-        // const [validAddress, setValidAddress] = useState(false);
+        const [street, setStreet] = useState(contact.address.street);
+        const [validStreet, setValidStreet] = useState(false);
 
 
         useEffect(() => {
@@ -47,9 +47,9 @@ const EditContactForm = ({contact}) => {
             setValidEmail(EMAIL_REGEX.test(String(email)));
         }, [email]);
 
-        // useEffect(() => {
-        //     setValidAddress(ADDRESS_REGEX.test(address));
-        // }, [address]);
+        useEffect(() => {
+            setValidStreet(ADDRESS_REGEX.test(street));
+        }, [street]);
 
 
         useEffect(() => {
@@ -58,7 +58,7 @@ const EditContactForm = ({contact}) => {
                 setFirstname('');
                 setLastname('');
                 setEmail('');
-                // setAddress('');
+                setStreet('');
                 navigate('/dash/contacts');
             }
 
@@ -67,7 +67,7 @@ const EditContactForm = ({contact}) => {
         const onFirstnameChanged = e => setFirstname(e.target.value);
         const onLastnameChanged = e => setLastname(e.target.value);
         const onEmailChanged = e => setEmail(e.target.value);
-        // const onAddressCHanged = e => setAddress(e.target.value);
+        const onStreetCHanged = e => setStreet(e.target.value);
 
 
         const onSaveContactClicked = async () => {
@@ -86,7 +86,7 @@ const EditContactForm = ({contact}) => {
         const validFirstnameClass = !validFirstname ? 'form__input--incomplete' : '';
         const validLastnameClass = !validLastname ? 'form__input--incomplete' : '';
         const validEmailClass = !validEmail ? 'form__input--incomplete' : '';
-        // const validAddressClass = !validAddress ? 'form__input--incomplete' : '';
+        const validStreetClass = !validStreet ? 'form__input--incomplete' : '';
 
         const errContent = (error?.data?.message || delerror?.data?.message) ?? '';
 
@@ -150,16 +150,16 @@ const EditContactForm = ({contact}) => {
                         onChange={onEmailChanged}
                     />
 
-                    {/*<label className="form__label" htmlFor="address">*/}
-                    {/*    Address: <span className="nowrap">[address]</span></label>*/}
-                    {/*<input*/}
-                    {/*    className={`form__input ${validAddressClass}`}*/}
-                    {/*    id="address"*/}
-                    {/*    name="address"*/}
-                    {/*    type="address"*/}
-                    {/*    value={String(address)}*/}
-                    {/*    onChange={onAddressCHanged}*/}
-                    {/*/>*/}
+                    <label className="form__label" htmlFor="street">
+                        Street: <span className="nowrap">[street]</span></label>
+                    <input
+                        className={`form__input ${validStreetClass}`}
+                        id="street"
+                        name="street"
+                        type="street"
+                        value={String(street)}
+                        onChange={onStreetCHanged}
+                    />
 
                 </form>
             </>
