@@ -31,8 +31,8 @@ const EditContactForm = ({contact}) => {
         const [validLastname, setValidLastname] = useState(false);
         const [email, setEmail] = useState(contact.email);
         const [validEmail, setValidEmail] = useState(false);
-        const [street, setStreet] = useState(contact.address.street);
-        const [validStreet, setValidStreet] = useState(false);
+        const [address, setAddress] = useState(contact.address);
+        const [validAddress, setValidAddress] = useState(false);
 
 
         useEffect(() => {
@@ -48,8 +48,8 @@ const EditContactForm = ({contact}) => {
         }, [email]);
 
         useEffect(() => {
-            setValidStreet(ADDRESS_REGEX.test(street));
-        }, [street]);
+            setValidAddress(ADDRESS_REGEX.test(String(address)));
+        }, [address]);
 
 
         useEffect(() => {
@@ -58,7 +58,7 @@ const EditContactForm = ({contact}) => {
                 setFirstname('');
                 setLastname('');
                 setEmail('');
-                setStreet('');
+                setAddress('');
                 navigate('/dash/contacts');
             }
 
@@ -67,11 +67,14 @@ const EditContactForm = ({contact}) => {
         const onFirstnameChanged = e => setFirstname(e.target.value);
         const onLastnameChanged = e => setLastname(e.target.value);
         const onEmailChanged = e => setEmail(e.target.value);
-        const onStreetCHanged = e => setStreet(e.target.value);
+        const onStreetChanged = e => setAddress({...address, street: e.target.value});
+        const onCityChanged = e => setAddress({...address, city: e.target.value});
+        const onZipChanged = e => setAddress({...address, zip: e.target.value});
+        const onCountryChanged = e => setAddress({...address, country: e.target.value});
 
 
         const onSaveContactClicked = async () => {
-            await updateContact({id: contact.id, firstname, lastname, email});
+            await updateContact({id: contact.id, firstname, lastname, email, address});
         };
 
         const onDeleteContactClicked = async () => {
@@ -79,14 +82,14 @@ const EditContactForm = ({contact}) => {
         };
 
         let canSave;
-        canSave = [validFirstname, validLastname, validEmail].every(Boolean) && !isLoading;
+        canSave = [validFirstname, validLastname, validEmail, validAddress].every(Boolean) && !isLoading;
 
 
         const errClass = (isError || isDelError) ? "errmsg" : "offscreen";
         const validFirstnameClass = !validFirstname ? 'form__input--incomplete' : '';
         const validLastnameClass = !validLastname ? 'form__input--incomplete' : '';
         const validEmailClass = !validEmail ? 'form__input--incomplete' : '';
-        const validStreetClass = !validStreet ? 'form__input--incomplete' : '';
+        const validAddressClass = !validAddress ? 'form__input--incomplete' : '';
 
         const errContent = (error?.data?.message || delerror?.data?.message) ?? '';
 
@@ -150,15 +153,52 @@ const EditContactForm = ({contact}) => {
                         onChange={onEmailChanged}
                     />
 
+                    {/*ADDRESS*/}
+
+                   <label> <h2>Address:</h2> </label>
+
                     <label className="form__label" htmlFor="street">
-                        Street: <span className="nowrap">[street]</span></label>
+                        Street:</label>
                     <input
-                        className={`form__input ${validStreetClass}`}
+                        className={`form__input ${validAddressClass}`}
                         id="street"
                         name="street"
                         type="street"
-                        value={String(street)}
-                        onChange={onStreetCHanged}
+                        value={String(address.street)}
+                        onChange={onStreetChanged}
+                    />
+
+                    <label className="form__label" htmlFor="city">
+                        City:</label>
+                    <input
+                        className={`form__input ${validAddressClass}`}
+                        id="city"
+                        name="city"
+                        type="city"
+                        value={String(address.city)}
+                        onChange={onCityChanged}
+                    />
+
+                    <label className="form__label" htmlFor="zip">
+                        Zip:</label>
+                    <input
+                        className={`form__input ${validAddressClass}`}
+                        id="zip"
+                        name="zip"
+                        type="zip"
+                        value={String(address.zip)}
+                        onChange={onZipChanged}
+                    />
+
+                    <label className="form__label" htmlFor="country">
+                        Country:</label>
+                    <input
+                        className={`form__input ${validAddressClass}`}
+                        id="country"
+                        name="country"
+                        type="country"
+                        value={String(address.country)}
+                        onChange={onCountryChanged}
                     />
 
                 </form>

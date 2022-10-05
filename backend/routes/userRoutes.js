@@ -6,7 +6,7 @@ const {validateUser} = require('../middleware/validation/userValidator');
 router.route('/')
     .get(userController.getAllUsers)
     .post(validateUser, userController.createNewUser)
-    .patch(userController.updateUser)
+    .patch(validateUser, userController.updateUser)
     .delete(userController.deleteUser);
 
 module.exports = router;

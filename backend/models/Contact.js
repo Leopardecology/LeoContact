@@ -20,15 +20,15 @@ const contactSchema = new mongoose.Schema({
             },
             city: {
                 type: String,
-                required: true
+                required: false
             },
             zip: {
                 type: Number,
-                required: true
+                required: false
             },
             country: {
                 type: String,
-                required: true
+                required: false
             }
         },
     },

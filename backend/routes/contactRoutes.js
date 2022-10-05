@@ -5,8 +5,8 @@ const {validateContact} = require('../middleware/validation/contactValidator');
 
 router.route('/')
     .get(contactsController.getAllContacts)
-    .post(contactsController.createNewContact)
-    .patch(contactsController.updateContact)
+    .post(validateContact, contactsController.createNewContact)
+    .patch(validateContact, contactsController.updateContact)
     .delete(contactsController.deleteContact);
 
 module.exports = router;
