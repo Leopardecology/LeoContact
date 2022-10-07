@@ -5,47 +5,25 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave} from "@fortawesome/free-solid-svg-icons";
 import {ROLES} from "../../config/roles";
 
-const USER_REGEX = /^[A-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆŠŽ∂ð ,.'-]{3,20}$/;
-const PWD_REGEX = /^[A-z0-9!@#$%]{6,20}$/;
-const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
 const NewUserForm = () => {
 
     const [addNewUser, {
-        isLoading,
         isSuccess,
-        isError,
-        error
     }] = useAddNewUserMutation();
 
     const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
-    const [validUsername, setValidUsername] = useState(false);
     const [password, setPassword] = useState('');
-    const [validPassword, setValidPassword] = useState(false);
     const [email, setEmail] = useState('');
-    const [validEmail, setValidEmail] = useState(false);
     const [roles, setRoles] = useState("User");
-
-    useEffect(() => {
-        setValidUsername(USER_REGEX.test(username));
-    }, [username]);
-
-    useEffect(() => {
-        setValidPassword(PWD_REGEX.test(password));
-    }, [password]);
-
-    useEffect(() => {
-        setValidEmail(EMAIL_REGEX.test(email));
-    }, [email]);
 
     useEffect(() => {
         if (isSuccess) {
             setUsername('');
             setPassword('');
             setEmail('');
-            setRoles([]);
+            setRoles('');
             navigate('/dash/users');
         }
     }, [isSuccess, navigate]);
@@ -59,16 +37,12 @@ const NewUserForm = () => {
             e.target.selectedOptions, //HTMLCollection
             (option) => option.value
         );
-        setRoles(values);
+        setRoles(values); //TODO: fix this
     };
-
-    const canSave = [roles.length, validUsername, validPassword, validEmail].every(Boolean) && !isLoading;
 
     const onSaveUserClicked = async (e) => {
         e.preventDefault();
-        if (canSave) {
-            await addNewUser({username, password, email, roles});
-        }
+        await addNewUser({username, password, email, roles});
     };
 
     const options = Object.values(ROLES).map(role => {
@@ -81,16 +55,11 @@ const NewUserForm = () => {
         );
     });
 
-    const errClass = isError ? "errmsg" : "offscreen";
-    const validUserClass = !validUsername ? 'form__input--incomplete' : '';
-    const validPwdClass = !validPassword ? 'form__input--incomplete' : '';
-    const validEmailClass = !validEmail ? 'form__input--incomplete' : '';
-    const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : '';
-
+    const errContent = "ERROR";
 
     return (
         <>
-            <p className={errClass}>{error?.data?.message}</p>
+            <p className="">{errContent}</p>
 
             <form className="form" onSubmit={onSaveUserClicked}>
                 <div className="form__title-row">
@@ -99,7 +68,6 @@ const NewUserForm = () => {
                         <button
                             className="icon-button"
                             title="Save"
-                            disabled={!canSave}
                         >
                             <FontAwesomeIcon icon={faSave}/>
                         </button>
@@ -108,7 +76,7 @@ const NewUserForm = () => {
                 <label className="form__label" htmlFor="username">
                     Username: <span className="nowrap">[3-20 letters]</span></label>
                 <input
-                    className={`form__input ${validUserClass}`}
+                    className={`form__input`}
                     id="username"
                     name="username"
                     type="text"
@@ -120,7 +88,7 @@ const NewUserForm = () => {
                 <label className="form__label" htmlFor="password">
                     Password: <span className="nowrap">[4-20 chars incl. !@#$%]</span></label>
                 <input
-                    className={`form__input ${validPwdClass}`}
+                    className={`form__input`}
                     id="password"
                     name="password"
                     type="password"
@@ -131,7 +99,7 @@ const NewUserForm = () => {
                 <label className="form__label" htmlFor="email">
                     Email: <span className="nowrap">[only Emails]</span></label>
                 <input
-                    className={`form__input ${validEmailClass}`}
+                    className={`form__input`}
                     id="email"
                     name="email"
                     type="email"
@@ -144,13 +112,12 @@ const NewUserForm = () => {
                 <select
                     id="roles"
                     name="roles"
-                    className={`form__select ${validRolesClass}`}
+                    className={`form__select`}
                     value={roles}
                     onChange={onRolesChanged}
                 >
                     {options}
                 </select>
-
             </form>
         </>
     );
