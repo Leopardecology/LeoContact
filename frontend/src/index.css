@@ -33,6 +33,11 @@
     margin-bottom: 0.5em;
 }
 
+.errmsg a:link {
+    color: var(--ERROR);
+    text-decoration: underline;
+}
+
 .nowrap {
     white-space: nowrap;
 }

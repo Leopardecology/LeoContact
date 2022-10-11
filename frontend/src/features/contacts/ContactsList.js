@@ -8,7 +8,7 @@ const ContactsList = () => {
         isSuccess,
         isError,
         error
-    } = useGetContactsQuery(undefined, {
+    } = useGetContactsQuery('contactsList', {
         pollingInterval: 60000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
