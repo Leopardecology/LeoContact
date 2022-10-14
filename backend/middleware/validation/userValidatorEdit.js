@@ -34,7 +34,7 @@ exports.validateUserEdit = [
         .isEmpty()
         .withMessage('Role can not be empty!')
         .bail()
-        .isIn(["User", "Admin"])
+        .isIn(["Admin", "User"])
         .withMessage('Roles can only be User or Admin!')
         .bail(),
     (req, res, next) => {
