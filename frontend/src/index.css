@@ -33,10 +33,12 @@
     margin-bottom: 0.5em;
 }
 
-.errmsg a:link {
+.errmsg a:hover,
+.errmsg a {
     color: var(--ERROR);
     text-decoration: underline;
 }
+
 
 .nowrap {
     white-space: nowrap;
@@ -90,12 +92,8 @@ select {
 }
 
 a {
-    text-decoration: none;
-}
-
-a,
-a:visited {
     color: var(--LINK-COLOR);
+    text-decoration: none;
 }
 
 a:hover,
