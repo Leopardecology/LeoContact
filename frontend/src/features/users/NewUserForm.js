@@ -4,8 +4,10 @@ import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave} from "@fortawesome/free-solid-svg-icons";
 import {ROLES} from "../../config/roles";
+import newTitle from "../../hooks/useTitle";
 
 const NewUserForm = () => {
+    newTitle('LeoContacts - New User');gi
 
     const [addNewUser, {
         isSuccess,

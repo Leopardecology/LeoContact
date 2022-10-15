@@ -1,15 +1,29 @@
 import {useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import {selectContactById} from './contactsApiSlice';
+import {useGetContactsQuery} from './contactsApiSlice';
 import EditContactForm from './EditContactForm';
+import PulseLoader from "react-spinners/PulseLoader";
+import useAuth from '../../hooks/useAuth';
+import useTitle from '../../hooks/useTitle'
 
 const EditContact = () => {
+    useTitle('LeoContacts - Edit Contact');
+
+    const {isAdmin} = useAuth();
+
     const {id} = useParams();
 
-    const contact = useSelector(state => selectContactById(state, id));
+    const {contact} = useGetContactsQuery("contactsList", {
+        selectFromResult: ({data}) => ({
+            contact: data?.entities[id]
+        }),
+    });
 
-    const content = contact ? <EditContactForm contact={contact}/> : <p>Loading...</p>;
+    if (!contact) return <PulseLoader color={"#FFF"}/>;
 
-    return content;
+    if (!isAdmin) {
+        return <p className="errmsg">No access</p>;
+    }
+
+    return <EditContactForm contact={contact}/>;
 };
 export default EditContact;

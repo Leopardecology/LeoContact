@@ -19,13 +19,12 @@ const getAllUsers = async (req, res) => {
 // @route POST /users
 // @access Private
 const createNewUser = async (req, res) => {
+    const {username, password, email, roles} = req.body;
 
     // Confirm data
     if (!username || !password) {
         return res.status(400).json({message: 'All fields are required'});
     }
-
-    const {username, password, email, roles} = req.body;
 
     // Check for duplicate username
     const duplicate = await User.findOne({username}).collation({locale: 'en', strength: 2}).lean().exec();

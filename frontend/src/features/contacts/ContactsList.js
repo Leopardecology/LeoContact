@@ -1,7 +1,11 @@
 import {useGetContactsQuery} from "./contactsApiSlice";
 import Contact from "./Contact";
+import PulseLoader from 'react-spinners/PulseLoader';
+import useTitle from "../../hooks/useTitle";
 
 const ContactsList = () => {
+    useTitle('LeoContacts - Contacts');
+
     const {
         data: contacts,
         isLoading,
@@ -16,7 +20,7 @@ const ContactsList = () => {
 
     let content;
 
-    if (isLoading) content = <p>Loading...</p>;
+    if (isLoading) content = <PulseLoader color={"#FFF"}/>;
 
     if (isError) {
         content = <p className="errmsg">{error?.data?.message}</p>;

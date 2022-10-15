@@ -3,8 +3,10 @@ import {useAddNewContactMutation} from "./contactsApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave} from "@fortawesome/free-solid-svg-icons";
+import useTitle from "../../hooks/useTitle";
 
 const NewContactForm = () => {
+    useTitle('LeoContacts - New Contact');
 
     const [addNewContact, {
         isSuccess,

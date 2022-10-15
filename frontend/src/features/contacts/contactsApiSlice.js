@@ -8,10 +8,12 @@ const initialState = contactsAdapter.getInitialState();
 export const contactsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getContacts: builder.query({
-            query: () => '/contacts',
-            validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError;
-            },
+            query: () => ({
+                url: '/contacts',
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError;
+                },
+            }),
             transformResponse: responseData => {
                 const loadedContacts = responseData.map(contact => {
                     contact.id = contact._id;

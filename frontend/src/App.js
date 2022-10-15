@@ -13,10 +13,12 @@ import NewContactForm from "./features/contacts/NewContactForm";
 import Prefetch from "./features/auth/Prefetch";
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from "./features/auth/RequireAuth";
+import useTitle from "./hooks/useTitle";
 import {ROLES} from "./config/roles";
 
 
 function App() {
+    useTitle('LeoContacts');
     return (
         <Routes>
             <Route path="/" element={<Layout/>}>

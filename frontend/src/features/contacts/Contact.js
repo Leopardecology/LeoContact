@@ -1,20 +1,24 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
+import {useNavigate} from 'react-router-dom';
+import {memo} from "react";
 
-import { useSelector } from 'react-redux'
-import { selectContactById } from './contactsApiSlice'
+import {useGetContactsQuery} from "./contactsApiSlice";
 
-const Contact = ({ contactId }) => {
+const Contact = ({contactId}) => {
 
-    const contact = useSelector(state => selectContactById(state, contactId))
+    const {contact} = useGetContactsQuery("contactsList", {
+        selectFromResult: ({data}) => ({
+            contact: data?.entities[contactId]
+        }),
+    });
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     if (contact) {
-        const updated = new Date(contact.updatedAt).toLocaleString('de-DE', { day: 'numeric', month: 'long' })
+        const updated = new Date(contact.updatedAt).toLocaleString('de-DE', {day: 'numeric', month: 'long'});
 
-        const handleEdit = () => navigate(`/dash/contacts/${contactId}`)
+        const handleEdit = () => navigate(`/dash/contacts/${contactId}`);
 
         return (
             <tr className="table__row">
@@ -29,12 +33,15 @@ const Contact = ({ contactId }) => {
                         className="icon-button table__button"
                         onClick={handleEdit}
                     >
-                        <FontAwesomeIcon icon={faPenToSquare} />
+                        <FontAwesomeIcon icon={faPenToSquare}/>
                     </button>
                 </td>
             </tr>
-        )
+        );
 
-    } else return null
-}
-export default Contact
+    } else return null;
+};
+
+const memoizedContact = memo(Contact);
+
+export default memoizedContact;
