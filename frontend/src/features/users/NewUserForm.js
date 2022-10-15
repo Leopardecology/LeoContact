@@ -7,7 +7,7 @@ import {ROLES} from "../../config/roles";
 import newTitle from "../../hooks/useTitle";
 
 const NewUserForm = () => {
-    newTitle('LeoContacts - New User');gi
+    newTitle('LeoContacts - New User');
 
     const [addNewUser, {
         isSuccess,
