@@ -1,10 +1,9 @@
 const Contact = require('../models/Contact');
-const asyncHandler = require('express-async-handler');
 
 // @desc Get all contacts 
 // @route GET /contacts
 // @access Private
-const getAllContacts = asyncHandler(async (req, res) => {
+const getAllContacts = async (req, res) => {
     // Get all contacts from MongoDB
     const contacts = await Contact.find().lean();
 
@@ -14,17 +13,17 @@ const getAllContacts = asyncHandler(async (req, res) => {
     }
 
     res.json(contacts);
-});
+};
 
 // @desc Create new contact
 // @route POST /contacts
 // @access Private
-const createNewContact = asyncHandler(async (req, res) => {
+const createNewContact = async (req, res) => {
     const {firstname, lastname, email, address} = req.body;
 
 
     // Check for duplicate email
-    const duplicate = await Contact.findOne({email}).lean().exec();
+    const duplicate = await Contact.findOne({email}).collation({locale: 'en', strength: 2}).lean().exec();
 
     if (duplicate) {
         return res.status(409).json({message: 'Duplicate contact Email!'});
@@ -39,12 +38,12 @@ const createNewContact = asyncHandler(async (req, res) => {
         return res.status(400).json({message: 'Invalid contact data received'});
     }
 
-});
+};
 
 // @desc Update a contact
 // @route PATCH /contacts
 // @access Private
-const updateContact = asyncHandler(async (req, res) => {
+const updateContact = async (req, res) => {
     const {id, firstname, lastname, email, address} = req.body;
 
     // Confirm contact exists to update
@@ -55,7 +54,7 @@ const updateContact = asyncHandler(async (req, res) => {
     }
 
     // Check for duplicate email
-    const duplicate = await Contact.findOne({email}).lean().exec();
+    const duplicate = await Contact.findOne({email}).collation({locale: 'en', strength: 2}).lean().exec();
 
     // Allow renaming of the original contact 
     if (duplicate && duplicate?._id.toString() !== id) {
@@ -70,12 +69,12 @@ const updateContact = asyncHandler(async (req, res) => {
     const updatedContact = await contact.save();
 
     res.json(`'${updatedContact.email}' updated`);
-});
+};
 
 // @desc Delete a contact
 // @route DELETE /contacts
 // @access Private
-const deleteContact = asyncHandler(async (req, res) => {
+const deleteContact = async (req, res) => {
     const {id} = req.body;
 
     // Confirm data
@@ -95,7 +94,7 @@ const deleteContact = asyncHandler(async (req, res) => {
     const reply = `Contact '${result.email}' with ID ${result._id} deleted`;
 
     res.json(reply);
-});
+};
 
 module.exports = {
     getAllContacts,
