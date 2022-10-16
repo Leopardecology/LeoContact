@@ -9,7 +9,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
             query: () => ({
-                url: '/users',
+                url: '/api/users',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 },
@@ -32,7 +32,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         }),
         addNewUser: builder.mutation({
             query: initialUserData => ({
-                url: '/users',
+                url: '/api/users',
                 method: 'POST',
                 body: {
                     ...initialUserData,
@@ -44,7 +44,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         }),
         updateUser: builder.mutation({
             query: initialUserData => ({
-                url: '/users',
+                url: '/api/users',
                 method: 'PATCH',
                 body: {
                     ...initialUserData,
@@ -56,7 +56,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         }),
         deleteUser: builder.mutation({
             query: ({id}) => ({
-                url: `/users`,
+                url: `/api/users`,
                 method: 'DELETE',
                 body: {id}
             }),
