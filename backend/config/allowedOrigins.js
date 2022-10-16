@@ -1,5 +1,6 @@
 const allowedOrigins = [
-    'http://localhost:3000'
-]
+    'https://leocontacts.com',
+    'https://www.leocontacts.com'
+];
 
 module.exports = allowedOrigins;
