@@ -9,7 +9,7 @@ export const contactsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getContacts: builder.query({
             query: () => ({
-                url: '/contacts',
+                url: '/api/contacts',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 },
@@ -32,7 +32,7 @@ export const contactsApiSlice = apiSlice.injectEndpoints({
         }),
         addNewContact: builder.mutation({
             query: initialContact => ({
-                url: '/contacts',
+                url: '/api/contacts',
                 method: 'POST',
                 body: {
                     ...initialContact,
@@ -44,7 +44,7 @@ export const contactsApiSlice = apiSlice.injectEndpoints({
         }),
         updateContact: builder.mutation({
             query: initialContact => ({
-                url: '/contacts',
+                url: '/api/contacts',
                 method: 'PATCH',
                 body: {
                     ...initialContact,
@@ -56,7 +56,7 @@ export const contactsApiSlice = apiSlice.injectEndpoints({
         }),
         deleteContact: builder.mutation({
             query: ({id}) => ({
-                url: `/contacts`,
+                url: `/api/contacts`,
                 method: 'DELETE',
                 body: {id}
             }),
