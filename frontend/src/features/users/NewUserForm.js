@@ -10,6 +10,7 @@ const NewUserForm = () => {
     newTitle('LeoContacts - New User');
 
     const [addNewUser, {
+        error,
         isSuccess,
     }] = useAddNewUserMutation();
 
@@ -57,11 +58,9 @@ const NewUserForm = () => {
         );
     });
 
-    const errContent = "ERROR";
-
     return (
         <>
-            <p className="">{errContent}</p>
+            <p className="">{error?.data?.errors[0]?.msg}</p>
 
             <form className="form" onSubmit={onSaveUserClicked}>
                 <div className="form__title-row">

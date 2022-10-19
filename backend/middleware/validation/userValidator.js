@@ -22,9 +22,10 @@ exports.validateUser = [
         .bail(),
     check('email')
         .trim()
-        .isEmail()
         .not()
         .isEmpty()
+        .withMessage('email address cant be empty!').bail()
+        .isEmail()
         .withMessage('Invalid email address!')
         .bail(),
     check('roles')
