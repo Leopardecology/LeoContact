@@ -10,8 +10,8 @@ const NewUserForm = () => {
     newTitle('LeoContacts - New User');
 
     const [addNewUser, {
-        error,
         isSuccess,
+        error,
     }] = useAddNewUserMutation();
 
     const navigate = useNavigate();
@@ -60,7 +60,7 @@ const NewUserForm = () => {
 
     return (
         <>
-            <p className="">{error?.data?.errors[0]?.msg}</p>
+            <p className="error">{error?.data?.errors[0]?.msg}</p>
 
             <form className="form" onSubmit={onSaveUserClicked}>
                 <div className="form__title-row">
