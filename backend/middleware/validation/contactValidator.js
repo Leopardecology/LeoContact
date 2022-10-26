@@ -6,20 +6,20 @@ exports.validateContact = [
         .escape()
         .not()
         .isEmpty()
-        .withMessage('First Name can not be empty!')
+        .withMessage('Firstname can not be empty!')
         .bail()
         .isLength({min: 3})
-        .withMessage('Minimum 2 characters required!')
+        .withMessage('For Firstname, a minimum of 3 characters is required!')
         .bail(),
     check('lastname')
         .trim()
         .escape()
         .not()
         .isEmpty()
-        .withMessage('Last Name can not be empty!')
+        .withMessage('Lastname can not be empty!')
         .bail()
-        .isLength({min: 2})
-        .withMessage('Minimum 2 characters required!')
+        .isLength({min: 3})
+        .withMessage('For Lastname, a minimum of 3 characters is required!')
         .bail(),
     check('email')
         .trim()
@@ -34,8 +34,8 @@ exports.validateContact = [
         .isEmpty()
         .withMessage('Street can not be empty!')
         .bail()
-        .isLength({min: 2})
-        .withMessage('Minimum 2 characters required!')
+        .isLength({min: 3})
+        .withMessage('For Street, a minimum of 3 characters is required!')
         .bail(),
     check('address.city')
         .trim()
@@ -43,8 +43,8 @@ exports.validateContact = [
         .isEmpty()
         .withMessage('City can not be empty!')
         .bail()
-        .isLength({min: 2})
-        .withMessage('Minimum 2 characters required!')
+        .isLength({min: 3})
+        .withMessage('For City, a minimum of 3 characters is required!')
         .bail(),
     check('address.zip')
         .trim()
@@ -55,7 +55,7 @@ exports.validateContact = [
         .withMessage('Zip can not be empty!')
         .bail()
         .isLength({min: 2})
-        .withMessage('Minimum 2 characters required!')
+        .withMessage('For Zip, a minimum of 2 characters is required!')
         .bail(),
     check('address.country')
         .trim()
@@ -63,8 +63,8 @@ exports.validateContact = [
         .isEmpty()
         .withMessage('Country can not be empty!')
         .bail()
-        .isLength({min: 2})
-        .withMessage('Minimum 2 characters required!')
+        .isLength({min: 3})
+        .withMessage('For Country, a minimum of 3 characters is required!')
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);
