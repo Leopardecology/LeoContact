@@ -1,8 +1,20 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {setCredentials} from '../../features/auth/authSlice';
 
+let baseUrlEnv;
+
+if (process.env.NODE_ENV === 'development') {
+    baseUrlEnv = 'http://localhost:3500';
+} else if (process.env.NODE_ENV === 'production') {
+    baseUrlEnv = 'https://leocontacts.com';
+}
+
+console.log(baseUrlEnv);
+
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3500',
+
+
+    baseUrl: baseUrlEnv,
     credentials: 'include',
     prepareHeaders: (headers, {getState}) => {
         const token = getState().auth.token;
@@ -18,7 +30,6 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
     // console.log(args) // request url, method, body
     // console.log(api) // signal, dispatch, getState()
     // console.log(extraOptions) //custom like {shout: true}
-
     let result = await baseQuery(args, api, extraOptions);
 
     // If you want, handle other status codes, too
