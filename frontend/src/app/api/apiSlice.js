@@ -1,8 +1,18 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {setCredentials} from '../../features/auth/authSlice';
 
+let baseUrlEnv;
+
+if (process.env.NODE_ENV === 'development') {
+    baseUrlEnv = 'http://localhost:3500';
+} else if (process.env.NODE_ENV === 'production') {
+    baseUrlEnv = 'https://leocontacts.com';
+}
+
+console.log(baseUrlEnv);
+
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://leocontacts.com',
+    baseUrl: baseUrlEnv,
     credentials: 'include',
     prepareHeaders: (headers, {getState}) => {
         const token = getState().auth.token;

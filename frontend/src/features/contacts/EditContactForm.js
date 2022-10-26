@@ -8,6 +8,7 @@ const EditContactForm = ({contact}) => {
 
         const [updateContact, {
             isSuccess,
+            error,
         }] = useUpdateContactMutation();
 
         const [deleteContact, {
@@ -51,7 +52,7 @@ const EditContactForm = ({contact}) => {
 
         return (
             <>
-                <p className=""></p>
+                <p className="error">{error?.data?.errors[0]?.msg}</p>
 
                 <form className="form" onSubmit={e => e.preventDefault()}>
                     <div className="form__title-row">

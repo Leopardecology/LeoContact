@@ -25,6 +25,11 @@
 }
 
 /* || UTILITY CLASSES */
+
+.error {
+    color: var(--ERROR);
+}
+
 .errmsg {
     display: inline-block;
     background-color: var(--TABLE-BGCOLOR);

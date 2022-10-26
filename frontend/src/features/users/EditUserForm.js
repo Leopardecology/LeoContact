@@ -9,6 +9,7 @@ const EditUserForm = ({user}) => {
 
     const [updateUser, {
         isSuccess,
+        error,
     }] = useUpdateUserMutation();
 
     const [deleteUser, {
@@ -60,11 +61,9 @@ const EditUserForm = ({user}) => {
         );
     });
 
-    const errContent = "ERROR";
-
     return (
         <>
-            <p className="">{errContent}</p>
+            <p className="error">{error?.data?.errors[0]?.msg}</p>
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">

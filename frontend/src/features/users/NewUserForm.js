@@ -11,6 +11,7 @@ const NewUserForm = () => {
 
     const [addNewUser, {
         isSuccess,
+        error,
     }] = useAddNewUserMutation();
 
     const navigate = useNavigate();
@@ -57,11 +58,9 @@ const NewUserForm = () => {
         );
     });
 
-    const errContent = "ERROR";
-
     return (
         <>
-            <p className="">{errContent}</p>
+            <p className="error">{error?.data?.errors[0]?.msg}</p>
 
             <form className="form" onSubmit={onSaveUserClicked}>
                 <div className="form__title-row">

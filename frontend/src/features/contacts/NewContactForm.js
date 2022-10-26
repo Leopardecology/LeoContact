@@ -45,7 +45,7 @@ const NewContactForm = () => {
 
     return (
         <>
-            <p className="">{error?.data?.message}</p>
+            <p className="error">{error?.data?.errors[0]?.msg}</p>
 
             <form className="form" onSubmit={onSaveContactClicked}>
                 <div className="form__title-row">
