@@ -58,9 +58,18 @@ const NewUserForm = () => {
         );
     });
 
+    //check if there is an error TODO: better error handling
+    let errormessage = "";
+    if (error) {
+        if (error.data.errors) {
+            errormessage = error.data.errors[0].msg;
+        } else if (error.data.message !== null) {
+            errormessage = error.data.message;
+        }
+    }
     return (
         <>
-            <p className="error">{error?.data?.errors[0]?.msg}</p>
+            <p className="error">{errormessage}</p>
 
             <form className="form" onSubmit={onSaveUserClicked}>
                 <div className="form__title-row">

@@ -109,7 +109,7 @@ const DashHeader = () => {
         </button>
     );
 
-    const errClass = isError ? "errmsg" : "offscreen";
+    const errClass = isError ? "error" : "offscreen";
 
     let buttonContent;
     if (isLoading) {

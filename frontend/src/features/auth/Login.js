@@ -1,11 +1,11 @@
-import {useRef, useState, useEffect} from 'react';
-import {useNavigate, Link} from 'react-router-dom';
+import {useEffect, useRef, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux/es/hooks/useDispatch';
 import {setCredentials} from './authSlice';
 import {useLoginMutation} from './authApiSlice';
 import usePersist from "../../hooks/usePersist";
 import PulseLoader from 'react-spinners/PulseLoader';
-import useTitle from '../../hooks/useTitle'
+import useTitle from '../../hooks/useTitle';
 
 const Login = () => {
     useTitle('LeoContacts - Login');
@@ -14,7 +14,7 @@ const Login = () => {
     const errRef = useRef();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg, setError] = useState('');
     const [persist, setPersist] = usePersist();
 
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Login = () => {
     }, []);
 
     useEffect(() => {
-        setErrMsg('');
+        setError('');
     }, [username, password]);
 
 
@@ -41,13 +41,13 @@ const Login = () => {
             navigate('/dash');
         } catch (err) {
             if (!err.status) {
-                setErrMsg('No Server Response');
+                setError('No Server Response');
             } else if (err.status === 400) {
-                setErrMsg('Missing Username or Password');
+                setError('Missing Username or Password');
             } else if (err.status === 401) {
-                setErrMsg('Unauthorized');
+                setError('Wrong Username or Password');
             } else {
-                setErrMsg(err.data?.message);
+                setError(err.data?.message);
             }
             errRef.current.focus();
         }
@@ -57,11 +57,11 @@ const Login = () => {
     const handlePwdInput = (e) => setPassword(e.target.value);
     const handleToggle = () => setPersist(prev => !prev);
 
-    const errClass = errMsg ? "errmsg" : "offscreen";
+    const errClass = errMsg ? "error" : "offscreen";
 
     if (isLoading) return <PulseLoader color={"#FFF"}/>;
 
-    const content = (
+    return (
         <section className="public">
             <header>
                 <h1>Employee Login</h1>
@@ -110,7 +110,5 @@ const Login = () => {
             </footer>
         </section>
     );
-
-    return content;
 };
 export default Login;

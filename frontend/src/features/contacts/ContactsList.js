@@ -23,7 +23,7 @@ const ContactsList = () => {
     if (isLoading) content = <PulseLoader color={"#FFF"}/>;
 
     if (isError) {
-        content = <p className="errmsg">{error?.data?.message}</p>;
+        content = <p className="error">{error?.data?.message}</p>;
     }
 
     if (isSuccess) {
