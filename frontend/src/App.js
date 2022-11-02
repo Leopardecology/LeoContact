@@ -1,7 +1,6 @@
 import {Route, Routes} from 'react-router-dom';
 import Layout from "./components/Layout";
-import Public from "./components/Public";
-import Login from "./features/auth/Login";
+import Home from "./components/Home";
 import DashLayout from "./components/DashLayout";
 import Welcome from "./features/auth/Welcome";
 import ContactsList from "./features/contacts/ContactsList";
@@ -22,9 +21,8 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout/>}>
-                {/* Public Routes */}
-                <Route index element={<Public/>}/>
-                <Route path="login" element={<Login/>}/>
+                {/* Home Routes */}
+                <Route index element={<Home/>}/>
 
                 {/* Protected Routes */}
                 <Route element={<PersistLogin/>}>

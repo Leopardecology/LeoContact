@@ -25,13 +25,12 @@ const DashFooter = () => {
         );
     }
 
-    const content = (
+    return (
         <footer className="dash-footer">
             {goHomeButton}
             <p>Current User: {username}</p>
             <p>Status: {status}</p>
         </footer>
     );
-    return content;
 };
 export default DashFooter;

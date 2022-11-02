@@ -2,9 +2,9 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// @desc Login
+// @desc Home
 // @route POST /auth
-// @access Public
+// @access Home
 const login = async (req, res) => {
     const {username, password} = req.body;
 
@@ -53,7 +53,7 @@ const login = async (req, res) => {
 
 // @desc Refresh
 // @route GET /auth/refresh
-// @access Public - because access token has expired
+// @access Home - because access token has expired
 const refresh = (req, res) => {
     const cookies = req.cookies;
 
@@ -89,7 +89,7 @@ const refresh = (req, res) => {
 
 // @desc Logout
 // @route POST /auth/logout
-// @access Public - just to clear cookie if exists
+// @access Home - just to clear cookie if exists
 const logout = (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(204); //No content

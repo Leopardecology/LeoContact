@@ -3,11 +3,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faFileCirclePlus,
     faFilePen,
+    faRightFromBracket,
     faUserGear,
-    faUserPlus,
-    faRightFromBracket
+    faUserPlus
 } from "@fortawesome/free-solid-svg-icons";
-import {useNavigate, Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 import PulseLoader from 'react-spinners/PulseLoader';
 
@@ -126,7 +126,7 @@ const DashHeader = () => {
         );
     }
 
-    const content = (
+    return (
         <>
             <p className={errClass}>{error?.data?.message}</p>
 
@@ -142,6 +142,5 @@ const DashHeader = () => {
             </header>
         </>
     );
-    return content;
 };
 export default DashHeader;
