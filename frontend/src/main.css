@@ -1,49 +1,55 @@
-/* || VARIABLES */
-
+/* COLORS */
 :root {
-    /* COLORS */
-    --BGCOLOR: #0F172A;
-    --BORDER-COLOR: #FFF;
-    --COLOR: #FFF;
-    --ERROR: firebrick;
-    --INACTIVE: lightgray;
-    --LINK-COLOR: whitesmoke;
-    --LINK-HOVER: rgba(245, 245, 245, 0.9);
-    --CONTACT-BGCOLOR: hsla(240, 64%, 27%, 0.65);
-    --STATUS-COMPLETE: limegreen;
-    --STATUS-OPEN: firebrick;
-    --TABLE-BGCOLOR: #FFF;
-    --TABLE-COLOR: #000;
+    --BUTTON: #64a19d;
+    --ERROR: #ff0000;
 }
 
 /* GENERAL */
 
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
 /* START SITE */
 
-main {
+.start-page {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%,
     rgba(0, 0, 0, 0.8) 45%, #000 100%),
-    url(./img/background.jpg);
+    url(./img/background.jpg) no-repeat center fixed;
+    background-size: cover;
     width: 100%;
     min-height: 100vh;
 }
 
-.title-container {
-    padding: 10rem;
-}
 
-.mainTitle {
+.main-title {
+    padding-top: 10rem;
     text-align: center;
-    font-size: 5rem;
-    background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    font-size: 6.5rem;
+    letter-spacing: 0.8rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.03));
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+}
+
+.login-btn {
+    background-color: var(--BUTTON) !important;
+    border: none !important;
+    padding: 1rem !important;
+    width: 10rem !important;
+    margin: 3rem auto !important;
+    letter-spacing: 0.2rem;
+    font-size: 90% !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* UTILITY CLASSES */
 
 .error {
-    color: var(--ERROR);
+    color: var(--BUTTON);
 }
 
 .error a:hover,

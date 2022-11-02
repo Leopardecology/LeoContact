@@ -1,24 +1,21 @@
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 
 const Public = () => {
-    const content = (
-        <section className="public">
-            <main>
-                <Container className="title-container">
-                    <Row>
-                        <Col><h1 className="mainTitle">LeoContact</h1></Col>
-                    </Row>
-                </Container>
-            </main>
-            {/*<footer>*/}
-            {/*    <Button href="/login">*/}
-            {/*        User Login*/}
-            {/*    </Button>*/}
-            {/*</footer>*/}
+    return (
+        <section className="public start-page">
+            <Container>
+                <Row>
+                    <Col><h1 className="main-title prevent-select">LeoContact</h1></Col>
+                </Row>
+                <Row>
+                    <Button className="login-btn" href="/login">
+                        LOGIN
+                    </Button>
+                </Row>
+            </Container>
         </section>
 
     );
-    return content;
 };
 
 export default Public;
