@@ -1,4 +1,4 @@
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row, Modal, Form} from "react-bootstrap";
 import {useEffect, useRef, useState} from "react";
 import usePersist from "../hooks/usePersist";
 import {useNavigate} from "react-router-dom";
@@ -10,6 +10,13 @@ import PulseLoader from "react-spinners/PulseLoader";
 const Home = () => {
 
 
+    //Modal
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    //Login
     const userRef = useRef();
     const errRef = useRef();
     const [username, setUsername] = useState('');
@@ -22,9 +29,10 @@ const Home = () => {
 
     const [login, {isLoading}] = useLoginMutation();
 
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
+    //TODO: Need to add a check to see if the user is already logged in ???
+    // useEffect(() => {
+    //     userRef.current.focus();
+    // }, []);
 
     useEffect(() => {
         setError('');
@@ -49,7 +57,7 @@ const Home = () => {
             } else {
                 setError(err.data?.message);
             }
-            errRef.current.focus();
+            // errRef.current.focus();
         }
     };
 
@@ -72,50 +80,72 @@ const Home = () => {
                         <Col><h1 className="main-title prevent-select">LeoContact</h1></Col>
                     </Row>
                     <Row>
-                        <Button className="login-btn" href="/login">
+                        <Button className="login-btn" onClick={handleShow}>
                             LOGIN
                         </Button>
                     </Row>
 
-                    <form className="form" onSubmit={handleSubmit}>
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            className="form__input"
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            value={username}
-                            onChange={handleUserInput}
-                            autoComplete="off"
-                            required
-                        />
+                    <Modal
+                        show={show}
+                        onHide={handleClose}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Login</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form>
+                                <Form.Group controlId="username"
+                                            type="text"
+                                            id="username"
+                                            ref={userRef}
+                                            value={username}
+                                            onChange={handleUserInput}
+                                            autoComplete="off">
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter username"/>
+                                    <Form.Text className="text-muted">
+                                        We'll never share your email with anyone else.
+                                    </Form.Text>
+                                </Form.Group>
 
-                        <label htmlFor="password">Password:</label>
-                        <input
-                            className="form__input"
-                            type="password"
-                            id="password"
-                            onChange={handlePwdInput}
-                            value={password}
-                            required
-                        />
-                        <button className="form__submit-button">Sign In</button>
+                                <Form.Group controlId="password"
+                                            type="password"
+                                            id="password"
+                                            value={password}
+                                            onChange={handlePwdInput}>
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control type="password" placeholder="Password"/>
+                                    <Form.Text className="text-muted">
+                                        We'll never share your email with anyone else.
+                                    </Form.Text>
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
 
-                        <label htmlFor="persist" className="form__persist">
-                            <input
-                                type="checkbox"
-                                className="form__checkbox"
-                                id="persist"
-                                onChange={handleToggle}
-                                checked={persist}
-                            />
-                            Trust This Device
-                        </label>
-                    </form>
+                            <label htmlFor="persist" className="form__persist">
+                                <input
+                                    type="checkbox"
+                                    className="form__checkbox"
+                                    id="persist"
+                                    onChange={handleToggle}
+                                    checked={persist}
+                                />
+                                Trust This Device
+                            </label>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleSubmit}>LOGIN</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </Container>
             </main>
         </section>
-    );
+    )
+        ;
 };
 
 export default Home;
