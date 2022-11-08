@@ -1,10 +1,21 @@
 /* COLORS */
 :root {
-    --BUTTON: #64a19d;
+    --DEFAULT: #64a19d;
     --ERROR: #ff0000;
 }
 
 /* GENERAL */
+
+.btn-primary {
+    background-color: var(--DEFAULT) !important;
+    border-color: var(--DEFAULT) !important;
+    letter-spacing: 0.1rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--DEFAULT) !important;
+    border-color: var(--DEFAULT) !important;
+}
 
 .offscreen {
     position: absolute;
@@ -15,6 +26,10 @@
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+}
+
+.modal-title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* START SITE */
@@ -41,7 +56,7 @@
 }
 
 .login-btn {
-    background-color: var(--BUTTON) !important;
+    background-color: var(--DEFAULT) !important;
     border: none !important;
     padding: 1rem !important;
     width: 10rem !important;
@@ -51,10 +66,19 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.form-checkbox {
+    margin-left: 0 !important;;
+    margin-right: auto !important;
+}
+
+#username {
+    margin-bottom: 1rem;
+}
+
 /* UTILITY CLASSES */
 
 .error {
-    color: var(--BUTTON);
+    color: var(--ERROR);
 }
 
 .error a:hover,
