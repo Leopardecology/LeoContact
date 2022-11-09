@@ -2,10 +2,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {useLocation, useNavigate} from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
+import {Container} from "react-bootstrap";
 
 const DashFooter = () => {
 
-    const {username, status} = useAuth();
+    const {status} = useAuth();
 
     const navigate = useNavigate();
     const {pathname} = useLocation();
@@ -26,11 +27,12 @@ const DashFooter = () => {
     }
 
     return (
-        <footer className="dash-footer">
-            {goHomeButton}
-            <p>Current User: {username}</p>
-            <p>Status: {status}</p>
-        </footer>
+        <Container className="footer prevent-select">
+            <footer>
+                {goHomeButton}
+                <p>Status: {status}</p>
+            </footer>
+        </Container>
     );
 };
 export default DashFooter;

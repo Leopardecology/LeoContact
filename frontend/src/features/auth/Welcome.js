@@ -1,3 +1,4 @@
+import {Button, Col, Container, Row} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
 import useTitle from '../../hooks/useTitle';
@@ -14,18 +15,34 @@ const Welcome = () => {
     return (
         <section className="welcome">
 
-            <p>{today}</p>
-
-            <h1>Welcome {username}!</h1>
-
-            <p><Link to="/dash/contacts">View Contacts</Link></p>
-
-            <p><Link to="/dash/contacts/new">Add New Contacts</Link></p>
-
-            {(isAdmin) && <p><Link to="/dash/users">View User Settings</Link></p>}
-
-            {(isAdmin) && <p><Link to="/dash/users/new">Add New User</Link></p>}
-
+            <main className="welcome-page">
+                <Container>
+                    <Row>
+                        <Col>
+                            <p>{today}</p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <h2 className="welcome-subtitle">Hello {username}!</h2>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Link to="/dash/contacts">
+                                <Button className="welcome-btn">Contacts</Button>
+                            </Link>
+                        </Col>
+                    </Row>
+                    {(isAdmin) && <Row>
+                        <Col>
+                            <Link to="/dash/users">
+                                <Button className="welcome-btn">Users</Button>
+                            </Link>
+                        </Col>
+                    </Row>}
+                </Container>
+            </main>
         </section>
     );
 };

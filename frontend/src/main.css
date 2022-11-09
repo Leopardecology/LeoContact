@@ -2,9 +2,20 @@
 :root {
     --DEFAULT: #64a19d;
     --ERROR: #ff0000;
+    --BACKGOUND: #CCCCCC;
+    --NAV: #EEEEEE;
 }
 
 /* GENERAL */
+
+.footer {
+    position: fixed;
+    bottom: 0;
+}
+
+body {
+    background-color: var(--BACKGOUND) !important;
+}
 
 .btn-primary {
     background-color: var(--DEFAULT) !important;
@@ -30,6 +41,35 @@
 
 .modal-title {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* NAVBAR */
+.nav {
+    background-color: var(--NAV);
+    padding-bottom: 0.2rem !important;
+}
+
+.navbar-brand {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1rem;
+    margin-bottom: -0.3rem;
+}
+
+.navbar-brand img {
+    margin-bottom: 0.4rem;
+}
+
+.navbar-brand div {
+    font-size: 0.8rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.1rem;
+}
+
+.dropdown-toggle {
+    color: var(--DEFAULT) !important;
+    font-weight: 700 !important;
 }
 
 /* START SITE */
@@ -74,6 +114,9 @@
 #username {
     margin-bottom: 1rem;
 }
+
+/* WELCOME SITE */
+
 
 /* UTILITY CLASSES */
 
