@@ -2,7 +2,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {useLocation, useNavigate} from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
-import {Container} from "react-bootstrap";
+import {Container, Col, Row} from "react-bootstrap";
 
 const DashFooter = () => {
 
@@ -27,11 +27,11 @@ const DashFooter = () => {
     }
 
     return (
-        <Container className="footer prevent-select">
-            <footer>
-                {goHomeButton}
-                <p>Status: {status}</p>
-            </footer>
+        <Container className={"footer fixed-bottom prevent-select"}>
+            <Row>
+                <Col>Status: {status}</Col>
+                <Col>{goHomeButton}</Col>
+            </Row>
         </Container>
     );
 };

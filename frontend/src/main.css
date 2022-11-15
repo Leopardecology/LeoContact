@@ -3,14 +3,15 @@
     --DEFAULT: #64a19d;
     --ERROR: #ff0000;
     --BACKGOUND: #CCCCCC;
-    --NAV: #EEEEEE;
+    --NAV: #e7e7e7;
 }
 
 /* GENERAL */
 
 .footer {
-    position: fixed;
-    bottom: 0;
+    padding-bottom: 1rem;
+    font-weight: 700;
+    color: #6c6c6c;
 }
 
 body {
@@ -44,9 +45,10 @@ body {
 }
 
 /* NAVBAR */
-.nav {
+
+.top-navbar {
     background-color: var(--NAV);
-    padding-bottom: 0.2rem !important;
+    margin-bottom: 1rem;
 }
 
 .navbar-brand {

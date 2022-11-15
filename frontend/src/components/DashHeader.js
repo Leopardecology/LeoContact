@@ -74,7 +74,7 @@ const DashHeader = () => {
 
     return (
         <>
-            <Navbar bg="light" expand="sm">
+            <Navbar className="top-navbar" expand="sm">
                 <Container>
                     <Navbar.Brand href="/dash">
                         <img

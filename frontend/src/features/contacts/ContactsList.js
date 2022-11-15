@@ -2,6 +2,7 @@ import {useGetContactsQuery} from "./contactsApiSlice";
 import Contact from "./Contact";
 import PulseLoader from 'react-spinners/PulseLoader';
 import useTitle from "../../hooks/useTitle";
+import {Container} from "react-bootstrap";
 
 const ContactsList = () => {
     useTitle('LeoContacts - Contacts');
@@ -34,24 +35,26 @@ const ContactsList = () => {
             : null;
 
         content = (
-            <table className="table table--contacts">
-                <thead className="table__thead">
-                <tr>
-                    <th scope="col" className="table__th contact__status">Name</th>
-                    <th scope="col" className="table__th contact__created">Surname</th>
-                    <th scope="col" className="table__th contact__updated">Updated</th>
-                    <th scope="col" className="table__th contact__title">Email</th>
+            <Container>
 
-                    <th scope="col" className="table__th contact__edit">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                {tableContent}
-                </tbody>
-            </table>
+                <table className="table table--contacts">
+                    <thead className="table__thead">
+                    <tr>
+                        <th scope="col" className="table__th contact__status">Name</th>
+                        <th scope="col" className="table__th contact__created">Surname</th>
+                        <th scope="col" className="table__th contact__updated">Updated</th>
+                        <th scope="col" className="table__th contact__title">Email</th>
+
+                        <th scope="col" className="table__th contact__edit">Edit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tableContent}
+                    </tbody>
+                </table>
+            </Container>
         );
+        return content;
     }
-
-    return content;
 };
 export default ContactsList;

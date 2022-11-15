@@ -2,7 +2,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from 'react-router-dom';
 import {memo} from "react";
-
 import {useGetContactsQuery} from "./contactsApiSlice";
 
 const Contact = ({contactId}) => {
@@ -38,7 +37,6 @@ const Contact = ({contactId}) => {
                 </td>
             </tr>
         );
-
     } else return null;
 };
 

@@ -1,7 +1,8 @@
 import {useGetUsersQuery} from "./usersApiSlice";
 import User from './User';
-import PulseLoader from 'react-spinners/PulseLoader'
+import PulseLoader from 'react-spinners/PulseLoader';
 import newTitle from "../../hooks/useTitle";
+import {Container} from "react-bootstrap";
 
 const UsersList = () => {
     newTitle('LeoContacts - Users');
@@ -20,7 +21,7 @@ const UsersList = () => {
 
     let content;
 
-    if (isLoading) content = <PulseLoader color={"#FFF"} />
+    if (isLoading) content = <PulseLoader color={"#FFF"}/>;
 
     if (isError) {
         content = <p className="error">{error?.data?.message}</p>;
@@ -33,18 +34,20 @@ const UsersList = () => {
         const tableContent = ids?.length && ids.map(userId => <User key={userId} userId={userId}/>);
 
         content = (
-            <table className="table table--users">
-                <thead className="table__thead">
-                <tr>
-                    <th scope="col" className="table__th user__username">Username</th>
-                    <th scope="col" className="table__th user__roles">Roles</th>
-                    <th scope="col" className="table__th user__edit">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                {tableContent}
-                </tbody>
-            </table>
+            <Container>
+                <table className="table table--users">
+                    <thead className="table__thead">
+                    <tr>
+                        <th scope="col" className="table__th user__username">Username</th>
+                        <th scope="col" className="table__th user__roles">Roles</th>
+                        <th scope="col" className="table__th user__edit">Edit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tableContent}
+                    </tbody>
+                </table>
+            </Container>
         );
     }
     return content;

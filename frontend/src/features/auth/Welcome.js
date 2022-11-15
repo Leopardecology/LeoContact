@@ -10,41 +10,40 @@ const Welcome = () => {
     useTitle('LeoContacts - Welcome');
 
     const date = new Date();
-    const today = new Intl.DateTimeFormat('de-DE', {dateStyle: 'full', timeStyle: 'long'}).format(date);
+    const today = new Intl.DateTimeFormat('en-DE', {dateStyle: 'full', timeStyle: 'short'}).format(date);
 
     return (
         <section className="welcome">
 
             <main className="welcome-page">
                 <Container>
-                    <Row>
-                        <Col>
-                            <p>{today}</p>
-                        </Col>
-                    </Row>
+
                     <Row>
                         <Col>
                             <h2 className="welcome-subtitle">Hello {username}!</h2>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
+                        <p>{today}</p>
+                    </Row>
+                    <Row>
+                        <Col sm="auto">
                             <Link to="/dash/contacts">
                                 <Button className="welcome-btn">Contacts</Button>
                             </Link>
                         </Col>
-                    </Row>
-                    {(isAdmin) && <Row>
-                        <Col>
+                        {isAdmin && <Col sm="auto">
                             <Link to="/dash/users">
                                 <Button className="welcome-btn">Users</Button>
                             </Link>
-                        </Col>
-                    </Row>}
+                        </Col>}
+                    </Row>
+
                 </Container>
             </main>
         </section>
-    );
+    )
+        ;
 };
 
 export default Welcome;
