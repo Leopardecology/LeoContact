@@ -1,4 +1,4 @@
-import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Button, Container, Nav, Navbar, NavDropdown, OverlayTrigger, Tooltip} from "react-bootstrap";
 import {useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFileCirclePlus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
@@ -35,26 +35,35 @@ const DashHeader = () => {
     let newContactButton = null;
     if (CONTACTS_REGEX.test(pathname)) {
         newContactButton = (
-            <button
-                className="icon-button"
-                title="New Contact"
-                onClick={onNewContactClicked}
+
+            <OverlayTrigger
+                placement="right"
+                overlay={
+                    <Tooltip id="my-tooltip-id">
+                        <strong>Add New Contact</strong>
+                    </Tooltip>
+                }
             >
-                <FontAwesomeIcon icon={faFileCirclePlus}/>
-            </button>
+                <Button
+                    className="icon-button"
+                    onClick={onNewContactClicked}
+                >
+                    <FontAwesomeIcon icon={faFileCirclePlus}/>
+                </Button>
+            </OverlayTrigger>
         );
     }
 
     let newUserButton = null;
     if (USERS_REGEX.test(pathname)) {
         newUserButton = (
-            <button
+            <Button
                 className="icon-button"
                 title="New User"
                 onClick={onNewUserClicked}
             >
                 <FontAwesomeIcon icon={faUserPlus}/>
-            </button>
+            </Button>
         );
     }
 

@@ -2,7 +2,7 @@ import {useGetContactsQuery} from "./contactsApiSlice";
 import Contact from "./Contact";
 import PulseLoader from 'react-spinners/PulseLoader';
 import useTitle from "../../hooks/useTitle";
-import {Container} from "react-bootstrap";
+import {Container, Table} from "react-bootstrap";
 
 const ContactsList = () => {
     useTitle('LeoContacts - Contacts');
@@ -37,21 +37,21 @@ const ContactsList = () => {
         content = (
             <Container>
 
-                <table className="table table--contacts">
-                    <thead className="table__thead">
+                <Table striped bordered hover>
+                    <thead>
                     <tr>
-                        <th scope="col" className="table__th contact__status">Name</th>
-                        <th scope="col" className="table__th contact__created">Surname</th>
-                        <th scope="col" className="table__th contact__updated">Updated</th>
-                        <th scope="col" className="table__th contact__title">Email</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Updated</th>
+                        <th scope="col">Email</th>
 
-                        <th scope="col" className="table__th contact__edit">Edit</th>
+                        <th scope="col">Edit</th>
                     </tr>
                     </thead>
                     <tbody>
                     {tableContent}
                     </tbody>
-                </table>
+                </Table>
             </Container>
         );
         return content;

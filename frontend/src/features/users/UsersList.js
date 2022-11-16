@@ -2,7 +2,7 @@ import {useGetUsersQuery} from "./usersApiSlice";
 import User from './User';
 import PulseLoader from 'react-spinners/PulseLoader';
 import newTitle from "../../hooks/useTitle";
-import {Container} from "react-bootstrap";
+import {Container, Table} from "react-bootstrap";
 
 const UsersList = () => {
     newTitle('LeoContacts - Users');
@@ -35,18 +35,18 @@ const UsersList = () => {
 
         content = (
             <Container>
-                <table className="table table--users">
-                    <thead className="table__thead">
+                <Table striped bordered hover>
+                    <thead>
                     <tr>
-                        <th scope="col" className="table__th user__username">Username</th>
-                        <th scope="col" className="table__th user__roles">Roles</th>
-                        <th scope="col" className="table__th user__edit">Edit</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col">Edit</th>
                     </tr>
                     </thead>
                     <tbody>
                     {tableContent}
                     </tbody>
-                </table>
+                </Table>
             </Container>
         );
     }
