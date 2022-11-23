@@ -35,12 +35,11 @@ const UsersList = () => {
 
         content = (
             <Container>
-                <Table striped bordered hover>
+                <Table className={"prevent-select"} striped bordered hover>
                     <thead>
                     <tr>
                         <th scope="col">Username</th>
                         <th scope="col">Roles</th>
-                        <th scope="col">Edit</th>
                     </tr>
                     </thead>
                     <tbody>
