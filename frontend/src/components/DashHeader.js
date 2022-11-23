@@ -1,4 +1,4 @@
-import {Button, Container, Nav, Navbar, NavDropdown, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {Button, Col, Container, Nav, Navbar, NavDropdown, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faFileCirclePlus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
@@ -33,17 +33,17 @@ const DashHeader = () => {
     const onNewUserClicked = () => navigate('/dash/users/new');
 
     let newContactButton = null;
+    let newContactTitle = null;
+
     if (CONTACTS_REGEX.test(pathname)) {
         newContactButton = (
-
             <OverlayTrigger
                 placement="right"
                 overlay={
                     <Tooltip id="my-tooltip-id">
                         <strong>Add New Contact</strong>
                     </Tooltip>
-                }
-            >
+                }>
                 <Button
                     className="icon-button"
                     onClick={onNewContactClicked}
@@ -52,31 +52,57 @@ const DashHeader = () => {
                 </Button>
             </OverlayTrigger>
         );
+
+        newContactTitle = (
+            <h1 className={"title"}>Contacts</h1>
+        );
     }
 
+    let newUserTitle = null;
     let newUserButton = null;
+
     if (USERS_REGEX.test(pathname)) {
         newUserButton = (
-            <Button
-                className="icon-button"
-                title="New User"
-                onClick={onNewUserClicked}
-            >
-                <FontAwesomeIcon icon={faUserPlus}/>
-            </Button>
+            <OverlayTrigger
+                placement="right"
+                overlay={
+                    <Tooltip id="my-tooltip-id">
+                        <strong>Add New User</strong>
+                    </Tooltip>
+                }>
+                <Button
+                    className="icon-button"
+                    onClick={onNewUserClicked}
+                >
+                    <FontAwesomeIcon icon={faUserPlus}/>
+                </Button>
+            </OverlayTrigger>
+        );
+
+        newUserTitle = (
+            <h1 className={"title"}>Users</h1>
         );
     }
 
     const errClass = isError ? "error" : "offscreen";
 
     let buttonContent;
+    let titleContent;
+
     if (isLoading) {
         buttonContent = <PulseLoader color={"#FFF"}/>;
+        titleContent = <PulseLoader color={"#FFF"}/>;
     } else {
         buttonContent = (
             <>
                 {newContactButton}
                 {newUserButton}
+            </>
+        );
+        titleContent = (
+            <>
+                {newContactTitle}
+                {newUserTitle}
             </>
         );
     }
@@ -115,7 +141,14 @@ const DashHeader = () => {
             </Navbar>
 
             <Container>
-                {buttonContent}
+                <Row xs={3}>
+                    <Col>
+                        {buttonContent}
+                    </Col>
+                    <Col>
+                        {titleContent}
+                    </Col>
+                </Row>
             </Container>
 
             <p className={errClass}>{error?.data?.message}</p>

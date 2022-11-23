@@ -11,11 +11,13 @@ const DashFooter = () => {
     const navigate = useNavigate();
     const {pathname} = useLocation();
 
+
+
     const onGoHomeClicked = () => navigate('/dash');
 
-    let goHomeButton = null;
-    if (pathname !== '/dash') {
-        goHomeButton = (
+    let goBackButton = null;
+    if (pathname == '/dash') {
+        goBackButton = (
             <button
                 className="dash-footer__button icon-button"
                 title="Home"
@@ -30,7 +32,6 @@ const DashFooter = () => {
         <Container className={"footer fixed-bottom prevent-select"}>
             <Row>
                 <Col>Status: {status}</Col>
-                <Col>{goHomeButton}</Col>
             </Row>
         </Container>
     );

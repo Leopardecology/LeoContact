@@ -9,6 +9,18 @@
 
 /* GENERAL */
 
+.icon-button {
+    margin-top: 3rem;
+}
+
+.title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: 0.2rem;
+    justify-content: center;
+    display: flex;
+}
+
 .footer {
     padding-bottom: 1rem;
     font-weight: 700;
@@ -33,14 +45,6 @@ body {
 .offscreen {
     position: absolute;
     overflow: hidden;
-}
-
-.table__row {
-    cursor: pointer;
-}
-
-.table__row:hover {
-    background-color: var(--DARK_BACKGROUND);
 }
 
 .prevent-select {
@@ -94,7 +98,6 @@ body {
     min-height: 100vh;
 }
 
-
 .main-title {
     padding-top: 10rem;
     text-align: center;
@@ -124,6 +127,21 @@ body {
 
 #username {
     margin-bottom: 1rem;
+}
+
+/* TABLE */
+
+table {
+    margin-top: 1rem;
+}
+
+.table__row {
+    padding-top: 2rem !important;
+    cursor: pointer;
+}
+
+.table__row:hover {
+    background-color: var(--DARK_BACKGROUND);
 }
 
 /* WELCOME SITE */

@@ -2,7 +2,8 @@ import {useEffect, useState} from "react";
 import {useDeleteContactMutation, useUpdateContactMutation} from "./contactsApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {Button} from "react-bootstrap";
 
 const EditContactForm = ({contact}) => {
 
@@ -58,20 +59,27 @@ const EditContactForm = ({contact}) => {
                     <div className="form__title-row">
                         <h2>Edit Contact</h2>
                         <div className="form__action-buttons">
-                            <button
+                            <Button
                                 className="icon-button"
                                 title="Save"
                                 onClick={onSaveContactClicked}
                             >
                                 <FontAwesomeIcon icon={faSave}/>
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                                 className="icon-button"
                                 title="Delete"
                                 onClick={onDeleteContactClicked}
                             >
                                 <FontAwesomeIcon icon={faTrashCan}/>
-                            </button>
+                            </Button>
+                            <Button
+                                className="icon-button"
+                                title="Back"
+                                onClick={() => navigate('/dash/users')}
+                            >
+                                <FontAwesomeIcon icon={faArrowLeft}/>
+                            </Button>
                         </div>
                     </div>
                     <label className="form__label" htmlFor="firstname">

@@ -36,7 +36,6 @@ const ContactsList = () => {
 
         content = (
             <Container>
-
                 <Table className={"prevent-select"} striped bordered hover>
                     <thead>
                     <tr>
