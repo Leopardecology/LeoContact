@@ -1,7 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {memo} from "react";
 import {useGetContactsQuery} from "./contactsApiSlice";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
 
 const Contact = ({contactId}) => {
 
