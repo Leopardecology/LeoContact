@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import {memo} from "react";
 
 import {useGetUsersQuery} from "./usersApiSlice";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 
 const User = ({userId}) => {
 
