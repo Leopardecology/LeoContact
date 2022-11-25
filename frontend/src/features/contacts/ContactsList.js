@@ -2,10 +2,16 @@ import {useGetContactsQuery} from "./contactsApiSlice";
 import Contact from "./Contact";
 import PulseLoader from 'react-spinners/PulseLoader';
 import useTitle from "../../hooks/useTitle";
-import {Container, Table} from "react-bootstrap";
+import {Button, Container, OverlayTrigger, Table, Tooltip} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFileCirclePlus} from "@fortawesome/free-solid-svg-icons";
+import {useNavigate} from "react-router-dom";
 
 const ContactsList = () => {
     useTitle('LeoContacts - Contacts');
+
+    const navigate = useNavigate();
+    const onNewContactClicked = () => navigate('/dash/contacts/new');
 
     const {
         data: contacts,
@@ -36,6 +42,21 @@ const ContactsList = () => {
 
         content = (
             <Container>
+                <h1 className={"title"}>Contacts</h1>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={
+                        <Tooltip id="my-tooltip-id">
+                            <strong>Add New Contact</strong>
+                        </Tooltip>
+                    }>
+                    <Button
+                        className="icon-button"
+                        onClick={onNewContactClicked}
+                    >
+                        <FontAwesomeIcon icon={faFileCirclePlus}/>
+                    </Button>
+                </OverlayTrigger>
                 <Table className={"prevent-select"} striped bordered hover>
                     <thead>
                     <tr>

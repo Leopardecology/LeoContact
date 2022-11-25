@@ -2,10 +2,16 @@ import {useGetUsersQuery} from "./usersApiSlice";
 import User from './User';
 import PulseLoader from 'react-spinners/PulseLoader';
 import newTitle from "../../hooks/useTitle";
-import {Container, Table} from "react-bootstrap";
+import {Button, Container, OverlayTrigger, Table, Tooltip} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {useNavigate} from "react-router-dom";
 
 const UsersList = () => {
     newTitle('LeoContacts - Users');
+
+    const navigate = useNavigate();
+    const onNewUserClicked = () => navigate('/dash/users/new');
 
     const {
         data: users,
@@ -35,6 +41,21 @@ const UsersList = () => {
 
         content = (
             <Container>
+                <h1 className={"title"}>Users</h1>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={
+                        <Tooltip id="my-tooltip-id">
+                            <strong>Add New User</strong>
+                        </Tooltip>
+                    }>
+                    <Button
+                        className="icon-button"
+                        onClick={onNewUserClicked}
+                    >
+                        <FontAwesomeIcon icon={faUserPlus}/>
+                    </Button>
+                </OverlayTrigger>
                 <Table className={"prevent-select"} striped bordered hover>
                     <thead>
                     <tr>

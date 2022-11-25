@@ -2,9 +2,10 @@ import {useEffect, useState} from "react";
 import {useAddNewUserMutation} from "./usersApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {ROLES} from "../../config/roles";
 import newTitle from "../../hooks/useTitle";
+import {Button, Col, Container, Form, Row, Stack} from "react-bootstrap";
 
 const NewUserForm = () => {
     newTitle('LeoContacts - New User');
@@ -71,65 +72,68 @@ const NewUserForm = () => {
         <>
             <p className="error">{errormessage}</p>
 
-            <form className="form" onSubmit={onSaveUserClicked}>
-                <div className="form__title-row">
-                    <h2>New User</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                        >
-                            <FontAwesomeIcon icon={faSave}/>
-                        </button>
-                    </div>
-                </div>
-                <label className="form__label" htmlFor="username">
-                    Username: <span className="nowrap">[3-20 letters]</span></label>
-                <input
-                    className={`form__input`}
-                    id="username"
-                    name="username"
-                    type="text"
-                    autoComplete="off"
-                    value={username}
-                    onChange={onUsernameChanged}
-                />
+            <Container>
+                <h3 className={"title"}>New User</h3>
 
-                <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[4-20 chars incl. !@#$%]</span></label>
-                <input
-                    className={`form__input`}
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={onPasswordChanged}
-                />
-
-                <label className="form__label" htmlFor="email">
-                    Email: <span className="nowrap">[only Emails]</span></label>
-                <input
-                    className={`form__input`}
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={email}
-                    onChange={onEmailChanged}
-                />
-
-                <label className="form__label" htmlFor="roles">
-                    ASSIGNED ROLES:</label>
-                <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select`}
-                    value={roles}
-                    onChange={onRolesChanged}
+                <Button
+                    className="back-button"
+                    title="Back"
+                    onClick={() => navigate('/dash/users')}
                 >
-                    {options}
-                </select>
-            </form>
+                    <FontAwesomeIcon icon={faArrowLeft}/>
+                </Button>
+
+                <Form onSubmit={e => e.preventDefault()}>
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="username">
+                            <Form.Label>Username [3-20 letters]</Form.Label>
+                            <Form.Control placeholder="Username"
+                                          autoComplete="off"
+                                          type="text"
+                                          value={String(username)}
+                                          onChange={onUsernameChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={6} as={Col} controlId="password">
+                            <Form.Label>Password [6-20 chars incl. !@#$%]</Form.Label>
+                            <Form.Control placeholder="Password [empty = no change]"
+                                          type="password"
+                                          value={password}
+                                          onChange={onPasswordChanged}/>
+                        </Form.Group>
+                    </Row>
+
+                    <Row>
+                        <Form.Group sm={6} as={Col} controlId="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control placeholder="Enter email"
+                                          type="email"
+                                          value={String(email)}
+                                          onChange={onEmailChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} controlId="roles">
+                            <Form.Label>Role</Form.Label>
+                            <Form.Select value={String(roles)}
+                                         onChange={onRolesChanged}>
+                                {/*//TODO: type error*/}
+                                {options}
+                            </Form.Select>
+                        </Form.Group>
+                    </Row>
+                </Form>
+                <Col>
+                    <Button
+                        className="save-button"
+                        title="Save"
+                        onClick={onSaveUserClicked}
+                    >
+                        <FontAwesomeIcon icon={faSave}/>
+                    </Button>
+                </Col>
+            </Container>
         </>
-    );
+    )
+        ;
 };
 export default NewUserForm;

@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {ROLES} from "../../config/roles";
-import {Button} from "react-bootstrap";
+import {Button, Col, Container, Form, Row, Stack} from "react-bootstrap";
 
 const EditUserForm = ({user}) => {
 
@@ -76,91 +76,81 @@ const EditUserForm = ({user}) => {
         <>
             <p className="error">{errormessage}</p>
 
-            <form className="form" onSubmit={e => e.preventDefault()}>
-                <div className="form__title-row">
-                    <h2>Edit User</h2>
-                    <div className="form__action-buttons">
-                        <Button
-                            className="icon-button"
-                            title="Save"
-                            onClick={onSaveUserClicked}
-                        >
-                            <FontAwesomeIcon icon={faSave}/>
-                        </Button>
-                        <Button
-                            className="icon-button"
-                            title="Delete"
-                            onClick={onDeleteUserClicked}
-                        >
-                            <FontAwesomeIcon icon={faTrashCan}/>
-                        </Button>
-                        <Button
-                            className="icon-button"
-                            title="Back"
-                            onClick={() => navigate('/dash/users')}
-                        >
-                            <FontAwesomeIcon icon={faArrowLeft}/>
-                        </Button>
-                    </div>
-                </div>
-                <label className="form__label" htmlFor="username">
-                    Username: <span className="nowrap">[3-20 letters]</span></label>
-                <input
-                    className={`form__input`}
-                    id="username"
-                    name="username"
-                    type="text"
-                    autoComplete="off"
-                    value={String(username)}
-                    onChange={onUsernameChanged}
-                />
+            <Container>
+                <h3 className={"title"}>Edit {username}</h3>
+                <Stack direction={"horizontal"} gap={3}>
+                    <Button
+                        className="back-button"
+                        title="Back"
+                        onClick={() => navigate('/dash/users')}
+                    >
+                        <FontAwesomeIcon icon={faArrowLeft}/>
+                    </Button>
 
-                <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[empty = no change]</span> <span className="nowrap">[6-20 chars incl. !@#$%]</span></label>
-                <input
-                    className={`form__input`}
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={onPasswordChanged}
-                />
+                    <Button
+                        className="delete-button ms-auto"
+                        title="Delete"
+                        onClick={onDeleteUserClicked}
+                    >
+                        <FontAwesomeIcon icon={faTrashCan}/>
+                    </Button>
+                </Stack>
 
-                <label className="form__label" htmlFor="email">
-                    Email: <span className="nowrap">[only Emails]</span></label>
-                <input
-                    className={`form__input`}
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={String(email)}
-                    onChange={onEmailChanged}
-                />
+                <Form onSubmit={e => e.preventDefault()}>
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="username">
+                            <Form.Label>Username [3-20 letters]</Form.Label>
+                            <Form.Control placeholder="Username"
+                                          autoComplete="off"
+                                          type="text"
+                                          value={String(username)}
+                                          onChange={onUsernameChanged}/>
+                        </Form.Group>
 
-                <label className="form__label form__checkbox-container" htmlFor="user-active">
-                    ACTIVE:
-                    <input
-                        className="form__checkbox"
-                        id="user-active"
-                        name="user-active"
-                        type="checkbox"
-                        checked={Boolean(active)}
-                        onChange={onActiveChanged}
-                    />
-                </label>
+                        <Form.Group sm={6} as={Col} controlId="password">
+                            <Form.Label>Password [6-20 chars incl. !@#$%]</Form.Label>
+                            <Form.Control placeholder="Password [empty = no change]"
+                                          type="password"
+                                          value={password}
+                                          onChange={onPasswordChanged}/>
+                        </Form.Group>
+                    </Row>
 
-                <label className="form__label" htmlFor="roles">
-                    ASSIGNED ROLES:</label>
-                <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select`}
-                    value={String(roles)}
-                    onChange={onRolesChanged}
-                >
-                    {options}
-                </select>
-            </form>
+                    <Row>
+                        <Form.Group sm={6} as={Col} controlId="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control placeholder="Enter email"
+                                          type="email"
+                                          value={String(email)}
+                                          onChange={onEmailChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} controlId="roles">
+                            <Form.Label>Assigned Roles</Form.Label>
+                            <Form.Select value={String(roles)}
+                                         onChange={onRolesChanged}>
+                                {/*//TODO: type error*/}
+                                {options}
+                            </Form.Select>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} id="user-active">
+                            <Form.Check label="Active"
+                                        type="checkbox"
+                                        checked={Boolean(active)}
+                                        onChange={onActiveChanged}/>
+                        </Form.Group>
+                    </Row>
+
+                    <Button
+                        className="save-button"
+                        title="Save"
+                        onClick={onSaveUserClicked}
+                    >
+                        <FontAwesomeIcon icon={faSave}/>
+                    </Button>
+                </Form>
+            </Container>
         </>
     );
 };
