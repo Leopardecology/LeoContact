@@ -1,5 +1,4 @@
 const {check, validationResult} = require('express-validator');
-const {isLength} = require("validator");
 
 exports.validateUser = [
     check('username')
