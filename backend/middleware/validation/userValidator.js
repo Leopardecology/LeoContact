@@ -1,4 +1,5 @@
 const {check, validationResult} = require('express-validator');
+const {isLength} = require("validator");
 
 exports.validateUser = [
     check('username')
@@ -19,6 +20,9 @@ exports.validateUser = [
         .bail()
         .isLength({min: 6})
         .withMessage('For Password, a minimum of 6 characters is required!')
+        .bail()
+        .isLength({max: 20})
+        .withMessage('For Password, a maximum of 20 characters is required!')
         .bail(),
     check('email')
         .trim()
