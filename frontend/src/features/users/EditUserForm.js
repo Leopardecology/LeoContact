@@ -2,8 +2,9 @@ import {useEffect, useState} from "react";
 import {useDeleteUserMutation, useUpdateUserMutation} from "./usersApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {ROLES} from "../../config/roles";
+import {Alert, Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 
 const EditUserForm = ({user}) => {
 
@@ -61,88 +62,171 @@ const EditUserForm = ({user}) => {
         );
     });
 
+    //ERROR HANDLING
+
+    //TODO: better error handling
+    let errorContent;
+    let errorMessageUser;
+    let errorMessagePassword;
+    let errorMessageEmail;
+
+    let validUserClass;
+    let validPasswordClass;
+    let validEmailClass;
+
+    let isError = false;
+    if (error) {
+        isError = true;
+
+        for (let i = 0; i < error.data.errors.length; i++) {
+            switch (error.data.errors[i].param) {
+                case 'username':
+                    validUserClass = 'is-invalid';
+                    errorMessageUser = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'password':
+                    validPasswordClass = 'is-invalid';
+                    errorMessagePassword = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'email':
+                    validEmailClass = 'is-invalid';
+                    errorMessageEmail = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+            }
+        }
+
+        errorContent = (
+            <>
+                {errorMessageUser}
+                {errorMessagePassword}
+                {errorMessageEmail}
+            </>
+        );
+    }
+
+
     return (
         <>
-            <p className="error">{error?.data?.errors[0]?.msg}</p>
+            <Container className={"prevent-select"}>
+                <h3 className={"title"}>Edit {user.username}</h3>
 
-            <form className="form" onSubmit={e => e.preventDefault()}>
-                <div className="form__title-row">
-                    <h2>Edit User</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            onClick={onSaveUserClicked}
+                <Stack direction={"horizontal"} gap={3}>
+                    <OverlayTrigger
+                        placement="right"
+                        overlay={
+                            <Tooltip id="my-tooltip-id">
+                                <strong>Back</strong>
+                            </Tooltip>
+                        }>
+                        <Button
+                            className="back-button"
+                            onClick={() => navigate('/dash/users')}
                         >
-                            <FontAwesomeIcon icon={faSave}/>
-                        </button>
-                        <button
-                            className="icon-button"
-                            title="Delete"
+                            <FontAwesomeIcon icon={faArrowLeft}/>
+                        </Button>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger
+                        placement="right"
+                        overlay={
+                            <Tooltip id="my-tooltip-id">
+                                <strong>Delete</strong>
+                            </Tooltip>
+                        }>
+                        <Button
+                            className="delete-button ms-auto"
                             onClick={onDeleteUserClicked}
                         >
                             <FontAwesomeIcon icon={faTrashCan}/>
-                        </button>
-                    </div>
-                </div>
-                <label className="form__label" htmlFor="username">
-                    Username: <span className="nowrap">[3-20 letters]</span></label>
-                <input
-                    className={`form__input`}
-                    id="username"
-                    name="username"
-                    type="text"
-                    autoComplete="off"
-                    value={String(username)}
-                    onChange={onUsernameChanged}
-                />
+                        </Button>
+                    </OverlayTrigger>
+                </Stack>
 
-                <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[empty = no change]</span> <span className="nowrap">[6-20 chars incl. !@#$%]</span></label>
-                <input
-                    className={`form__input`}
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={onPasswordChanged}
-                />
+                <Form onSubmit={e => e.preventDefault()}>
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="username">
+                            <Form.Label>Username: [3-20]</Form.Label>
+                            <Form.Control placeholder="Username"
+                                          className={validUserClass}
+                                          autoComplete="off"
+                                          type="text"
+                                          value={String(username)}
+                                          onChange={onUsernameChanged}/>
+                        </Form.Group>
 
-                <label className="form__label" htmlFor="email">
-                    Email: <span className="nowrap">[only Emails]</span></label>
-                <input
-                    className={`form__input`}
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={String(email)}
-                    onChange={onEmailChanged}
-                />
+                        <Form.Group sm={6} as={Col} controlId="password">
+                            <Form.Label>Password: [6-20]</Form.Label>
+                            <Form.Control placeholder="Password [empty = no change]"
+                                          className={validPasswordClass}
+                                          type="password"
+                                          value={password}
+                                          onChange={onPasswordChanged}/>
+                        </Form.Group>
+                    </Row>
 
-                <label className="form__label form__checkbox-container" htmlFor="user-active">
-                    ACTIVE:
-                    <input
-                        className="form__checkbox"
-                        id="user-active"
-                        name="user-active"
-                        type="checkbox"
-                        checked={Boolean(active)}
-                        onChange={onActiveChanged}
-                    />
-                </label>
+                    <Row>
+                        <Form.Group sm={6} as={Col} controlId="email">
+                            <Form.Label>Email:</Form.Label>
+                            <Form.Control placeholder="Enter email"
+                                          className={validEmailClass}
+                                          type="email"
+                                          value={String(email)}
+                                          onChange={onEmailChanged}/>
+                        </Form.Group>
 
-                <label className="form__label" htmlFor="roles">
-                    ASSIGNED ROLES:</label>
-                <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select`}
-                    value={String(roles)}
-                    onChange={onRolesChanged}
-                >
-                    {options}
-                </select>
-            </form>
+                        <Form.Group sm={3} as={Col} controlId="roles">
+                            <Form.Label>Role:</Form.Label>
+                            <Form.Select value={String(roles)}
+                                         onChange={onRolesChanged}>
+                                {options}
+                            </Form.Select>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} id="user-active">
+                            <Form.Check label="Active"
+                                        type="checkbox"
+                                        checked={Boolean(active)}
+                                        onChange={onActiveChanged}/>
+                        </Form.Group>
+                    </Row>
+                </Form>
+
+                <OverlayTrigger
+                    placement="right"
+                    overlay={
+                        <Tooltip id="my-tooltip-id">
+                            <strong>Save</strong>
+                        </Tooltip>
+                    }>
+                    <Button
+                        className="save-button"
+                        onClick={onSaveUserClicked}
+                    >
+                        <FontAwesomeIcon icon={faSave}/>
+                    </Button>
+                </OverlayTrigger>
+
+                {errorContent}
+
+            </Container>
         </>
     );
 };

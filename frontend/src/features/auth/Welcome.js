@@ -1,6 +1,7 @@
+import {Button, Col, Container, Row} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
-import useTitle from '../../hooks/useTitle'
+import useTitle from '../../hooks/useTitle';
 
 const Welcome = () => {
 
@@ -9,26 +10,40 @@ const Welcome = () => {
     useTitle('LeoContacts - Welcome');
 
     const date = new Date();
-    const today = new Intl.DateTimeFormat('de-DE', {dateStyle: 'full', timeStyle: 'long'}).format(date);
+    const today = new Intl.DateTimeFormat('en-DE', {dateStyle: 'full', timeStyle: 'short'}).format(date);
 
-    const content = (
+    return (
         <section className="welcome">
 
-            <p>{today}</p>
+            <main className="welcome-page">
+                <Container>
 
-            <h1>Welcome {username}!</h1>
+                    <Row>
+                        <Col>
+                            <h2 className="welcome-subtitle">Hello {username}!</h2>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <p>{today}</p>
+                    </Row>
+                    <Row>
+                        <Col sm="auto">
+                            <Link to="/dash/contacts">
+                                <Button className="welcome-btn">Contacts</Button>
+                            </Link>
+                        </Col>
+                        {isAdmin && <Col sm="auto">
+                            <Link to="/dash/users">
+                                <Button className="welcome-btn">Users</Button>
+                            </Link>
+                        </Col>}
+                    </Row>
 
-            <p><Link to="/dash/contacts">View Contacts</Link></p>
-
-            <p><Link to="/dash/contacts/new">Add New Contacts</Link></p>
-
-            {(isAdmin) && <p><Link to="/dash/users">View User Settings</Link></p>}
-
-            {(isAdmin) && <p><Link to="/dash/users/new">Add New User</Link></p>}
-
+                </Container>
+            </main>
         </section>
-    );
-    return content;
+    )
+        ;
 };
 
 export default Welcome;

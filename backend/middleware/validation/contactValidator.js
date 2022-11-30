@@ -23,9 +23,10 @@ exports.validateContact = [
         .bail(),
     check('email')
         .trim()
-        .isEmail()
         .not()
         .isEmpty()
+        .withMessage('Email address cant be empty!').bail()
+        .isEmail()
         .withMessage('Invalid email address!')
         .bail(),
     check('address.street')

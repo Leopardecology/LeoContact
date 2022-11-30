@@ -2,9 +2,16 @@ import {useGetContactsQuery} from "./contactsApiSlice";
 import Contact from "./Contact";
 import PulseLoader from 'react-spinners/PulseLoader';
 import useTitle from "../../hooks/useTitle";
+import {Button, Container, OverlayTrigger, Table, Tooltip} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFileCirclePlus} from "@fortawesome/free-solid-svg-icons";
+import {useNavigate} from "react-router-dom";
 
 const ContactsList = () => {
     useTitle('LeoContacts - Contacts');
+
+    const navigate = useNavigate();
+    const onNewContactClicked = () => navigate('/dash/contacts/new');
 
     const {
         data: contacts,
@@ -23,7 +30,7 @@ const ContactsList = () => {
     if (isLoading) content = <PulseLoader color={"#FFF"}/>;
 
     if (isError) {
-        content = <p className="errmsg">{error?.data?.message}</p>;
+        content = <p className="error">{error?.data?.message}</p>;
     }
 
     if (isSuccess) {
@@ -34,24 +41,38 @@ const ContactsList = () => {
             : null;
 
         content = (
-            <table className="table table--contacts">
-                <thead className="table__thead">
-                <tr>
-                    <th scope="col" className="table__th contact__status">Name</th>
-                    <th scope="col" className="table__th contact__created">Surname</th>
-                    <th scope="col" className="table__th contact__updated">Updated</th>
-                    <th scope="col" className="table__th contact__title">Email</th>
-
-                    <th scope="col" className="table__th contact__edit">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                {tableContent}
-                </tbody>
-            </table>
+            <Container>
+                <h1 className={"title prevent-select"}>Contacts</h1>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={
+                        <Tooltip id="my-tooltip-id">
+                            <strong>Add New Contact</strong>
+                        </Tooltip>
+                    }>
+                    <Button
+                        className="icon-button"
+                        onClick={onNewContactClicked}
+                    >
+                        <FontAwesomeIcon icon={faFileCirclePlus}/>
+                    </Button>
+                </OverlayTrigger>
+                <Table className={"prevent-select"} striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Updated</th>
+                        <th scope="col">Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tableContent}
+                    </tbody>
+                </Table>
+            </Container>
         );
+        return content;
     }
-
-    return content;
 };
 export default ContactsList;

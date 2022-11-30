@@ -9,8 +9,6 @@ if (process.env.NODE_ENV === 'development') {
     baseUrlEnv = 'https://leocontacts.com';
 }
 
-console.log(baseUrlEnv);
-
 const baseQuery = fetchBaseQuery({
     baseUrl: baseUrlEnv,
     credentials: 'include',

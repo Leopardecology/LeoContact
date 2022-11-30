@@ -9,7 +9,7 @@ const RequireAuth = ({allowedRoles}) => {
     return (
         rolesArray.some(role => allowedRoles.includes(role))
             ? <Outlet/>
-            : <Navigate to="/login" state={{from: location}} replace/>
+            : <Navigate to="/" state={{from: location}} replace/>
     );
 };
 export default RequireAuth;

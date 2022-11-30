@@ -21,7 +21,7 @@ const EditContact = () => {
     if (!contact) return <PulseLoader color={"#FFF"}/>;
 
     if (!isAdmin) {
-        return <p className="errmsg">No access</p>;
+        return <p className="error">No access</p>;
     }
 
     return <EditContactForm contact={contact}/>;

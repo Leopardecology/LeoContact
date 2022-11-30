@@ -1,378 +1,223 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* || VARIABLES */
-
+/* COLORS */
 :root {
-    /* COLORS */
-    --BGCOLOR: #0F172A;
-    --BORDER-COLOR: #FFF;
-    --COLOR: #FFF;
-    --ERROR: firebrick;
-    --INACTIVE: lightgray;
-    --LINK-COLOR: whitesmoke;
-    --LINK-HOVER: rgba(245, 245, 245, 0.9);
-    --CONTACT-BGCOLOR: hsla(240, 64%, 27%, 0.65);
-    --STATUS-COMPLETE: limegreen;
-    --STATUS-OPEN: firebrick;
-    --TABLE-BGCOLOR: #FFF;
-    --TABLE-COLOR: #000;
+    --DEFAULT: #64a19d;
+    --ERROR: #ff0000;
+    --BACKGOUND: #CCCCCC;
+    --NAV: #e7e7e7;
+    --DARK_BACKGROUND: #b9b9b9;
 }
 
-/* || UTILITY CLASSES */
+/* GENERAL */
 
-.error {
-    color: var(--ERROR);
+h3 {
+    padding-top: 0.9rem;
 }
 
-.errmsg {
+h5 {
+    padding-top: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: 0.15rem;
+    justify-content: center;
+    display: flex;
+}
+
+.title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: 0.2rem;
+    justify-content: center;
+    display: flex;
+}
+
+body {
+    background-color: var(--BACKGOUND) !important;
+}
+
+.btn-primary {
+    background-color: var(--DEFAULT) !important;
+    border-color: var(--DEFAULT) !important;
+    letter-spacing: 0.1rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--DEFAULT) !important;
+    border-color: var(--DEFAULT) !important;
+}
+
+.offscreen {
+    position: absolute;
+    overflow: hidden;
+}
+
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.modal-title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.save-button {
+    margin-top: 2rem;
+}
+
+Form {
+    margin-top: 0.5rem;
+}
+
+/* FOOTER */
+
+@media screen and (max-width: 576px) {
+    .footer.fixed-bottom {
+        padding-top: 1rem;
+        position: unset;
+    }
+}
+
+.footer {
+    padding-bottom: 1rem;
+    font-weight: 700;
+    color: #6c6c6c;
+}
+
+/* NAVBAR */
+
+.top-navbar {
+    background-color: var(--NAV);
+    margin-bottom: 1rem;
+}
+
+.navbar-brand {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1rem;
+    margin-bottom: -0.3rem;
+}
+
+.navbar-brand img {
+    margin-bottom: 0.4rem;
+}
+
+.navbar-brand div {
+    font-size: 0.8rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.1rem;
+}
+
+.dropdown-toggle {
+    color: var(--DEFAULT) !important;
+    font-weight: 700 !important;
+}
+
+.dropdown-item:active {
+    background-color: var(--DEFAULT) !important;
+}
+
+.nav-link {
+    font-size: 1.1rem !important;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.nav-link-active {
+    text-decoration: underline !important;
+    color: red;
+}
+
+/* START SITE */
+
+.home-page {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.8) 45%, #000 100%),
+    url(./img/background.jpg) no-repeat center fixed;
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.main-title {
+    padding-top: 10rem;
+    text-align: center;
+    font-size: 6.5rem;
+    letter-spacing: 0.8rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.03));
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.login-btn {
+    background-color: var(--DEFAULT) !important;
+    border: none !important;
+    padding: 1rem !important;
+    width: 10rem !important;
+    margin: 3rem auto !important;
+    letter-spacing: 0.2rem;
+    font-size: 90% !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.form-checkbox {
+    margin-left: 0 !important;;
+    margin-right: auto !important;
+}
+
+/* TABLE */
+
+table {
+    margin-top: 1rem;
+}
+
+.table__row {
+    padding-top: 2rem !important;
+    cursor: pointer;
+}
+
+.table__row:hover {
+    background-color: var(--DARK_BACKGROUND);
+}
+
+/* Edit Side */
+
+@media screen and (min-width: 576px) {
+    .form-check {
+        margin-top: 2.5rem;
+        margin-left: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .form-check {
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+}
+
+.delete-button {
+    display: flex;
+    align-items: center !important;
+}
+
+/* UTILITY CLASSES */
+
+.alert {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.2rem;
     display: inline-block;
-    background-color: var(--TABLE-BGCOLOR);
-    color: var(--ERROR);
-    padding: 0.25em;
-    margin-bottom: 0.5em;
 }
 
-.errmsg a:hover,
-.errmsg a {
+.error a:hover,
+.error a {
     color: var(--ERROR);
     text-decoration: underline;
 }
 
-
-.nowrap {
-    white-space: nowrap;
-}
-
-.icon-button {
-    width: 48px;
-    height: 48px;
-    font-size: 2.5rem;
-    background-color: transparent;
-    border: none;
-    color: var(--COLOR);
-    display: grid;
-    place-content: center;
-}
-
-.icon-button:hover,
-.icon-button:focus-visible {
-    transform: scale(1.2);
-}
-
-.icon-button[disabled] {
-    visibility: hidden;
-}
-
-/* || GENERAL STYLES */
-
-body {
-    font-family: 'Nunito', sans-serif;
-    min-height: 100vh;
-    background-color: var(--BGCOLOR);
-    color: var(--COLOR);
-    background-image: url('./img/background.jpg');
-    background-size: cover;
-    background-position: top right;
-    background-blend-mode: multiply;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-}
-
-#root {
-    /* React root div */
-    min-height: 100vh;
-    display: flex;
-    flex-flow: column nowrap;
-}
-
-a {
-    color: var(--LINK-COLOR);
-    text-decoration: none;
-}
-
-a:hover,
-a:focus-visible {
-    color: var(--LINK-HOVER);
-}
-
-/* || PAGES */
-
-.public,
-.welcome {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.public {
-    padding: 1em;
-    flex-grow: 1;
-}
-
-.public__main,
-.login {
-    flex-grow: 1;
-    border-top: 2px solid var(--BORDER-COLOR);
-    border-bottom: 2px solid var(--BORDER-COLOR);
-    padding: 1em 0;
-}
-
-.public__addr {
-    margin-top: 1em;
-}
-
-.welcome a::before {
-    content: "➜ "
-}
-
-/* || DASH HEADER, CONTAINER & FOOTER */
-
-.dash-header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: var(--BGCOLOR);
-    padding: 0 0.5em;
-    border-bottom: 1px solid var(--BORDER-COLOR);
-}
-
-.dash-header__container {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dash-header__nav {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
-    gap: 0.5em;
-}
-
-.dash-container {
-    padding: 0.75em 0.5em 0.5em;
-    flex-grow: 1;
-}
-
-.dash-footer {
-    font-size: 1rem;
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-    background-color: var(--BGCOLOR);
-    padding: 0.5em;
-    border-top: 1px solid var(--BORDER-COLOR);
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    gap: 1em;
-}
-
-.dash-footer__button {
-    font-size: 1rem;
-    width: auto;
-    height: auto;
-}
-
-
-/* || TABLES - GENERAL */
-
-thead,
-tbody,
-tr {
-    display: contents;
-}
-
-.table {
-    font-size: 1rem;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    color: var(--TABLE-COLOR);
-    gap: 0.1em;
-}
-
-.table__button {
-    padding: 0.25em;
-    font-size: 1.5rem;
-    color: var(--TABLE-COLOR);
-}
-
-.table__thead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-.table__th,
-.table__cell {
-    background-color: var(--TABLE-BGCOLOR);
-    text-align: left;
-    border: 1px solid var(--TABLE-COLOR);
-    padding: 0.5em;
-}
-
-.table__cell:last-child {
-    display: grid;
-    place-content: center;
-}
-
-.table__cell--inactive {
-    background-color: var(--INACTIVE);
-}
-
-/* ||  CONTACT */
-
-.contact__created,
-.contact__updated,
-.contact__username {
-    display: none;
-}
-
-.contact__status {
-    font-weight: bold;
-}
-
-.contact__status--open {
-    color: var(--STATUS-OPEN);
-}
-
-.contact__status--completed {
-    color: var(--STATUS-COMPLETE);
-}
-
-
-/* || FORM - GENERAL */
-
-.form {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 0.75em;
-    max-width: 800px;
-}
-
-.form__checkbox-container {
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    gap: 0.5em;
-}
-
-.form__persist {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 0.5em;
-}
-
-.form__title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.form__input,
-.form__submit-button {
-    padding: 0.5em;
-    border-radius: 15px;
-}
-
-.form__input--text {
-    min-height: 150px;
-}
-
-.form__input--incomplete {
-    border: 1px solid red;
-    outline: 1px solid red;
-}
-
-
-.form__checkbox {
-    width: 24px;
-    height: 24px;
-}
-
-.form__select {
-    width: fit-content;
-    padding: 0.25em;
-}
-
-.form__action-buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.5em;
-    position: absolute;
-    right: 0.5em;
-}
-
-.form__row {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 2em;
-}
-
-.form__divider {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 0.5em;
-}
-
-@media screen and (max-width: 400px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    .dash-header__nav {
-        gap: 0;
-    }
-
-    .icon-button {
-        font-size: 1.5rem;
-    }
-}
-
-@media screen and (min-width: 768px) {
-
-    body {
-        font-size: 1.25rem;
-    }
-
-    .dash-header {
-        padding: 0 1em;
-    }
-
-    .dash-container {
-        padding: 1em;
-    }
-
-    .table {
-        font-size: 1.5rem;
-    }
-
-    .table--contacts {
-        grid-template-columns: repeat(3, 1fr) 2fr repeat(1, 0.5fr);
-    }
-
-    .contact__created,
-    .contact__updated,
-    .contact__username {
-        display: block
-    }
-
-    .form__action-buttons {
-        position: static;
-    }
+.is-invalid {
+    border: 1px solid var(--ERROR) !important;
 }
