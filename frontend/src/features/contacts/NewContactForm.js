@@ -2,8 +2,9 @@ import {useEffect, useState} from "react";
 import {useAddNewContactMutation} from "./contactsApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSave} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import useTitle from "../../hooks/useTitle";
+import {Alert, Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 
 const NewContactForm = () => {
     useTitle('LeoContacts - New Contact');
@@ -43,104 +44,136 @@ const NewContactForm = () => {
         await addNewContact({firstname, lastname, email, address});
     };
 
+    //check if there is an error TODO: better error handling
+    let errormessage = "";
+    let isError = false;
+    if (error) {
+        isError = true;
+        if (error.data.errors) {
+            errormessage = error.data.errors[0].msg;
+        } else if (error.data.message !== null) {
+            errormessage = error.data.message;
+        }
+    }
+
     return (
         <>
-            <p className="error">{error?.data?.errors[0]?.msg}</p>
+            <Container className={"prevent-select"}>
+                <h3 className={"title"}>New Contact</h3>
 
-            <form className="form" onSubmit={onSaveContactClicked}>
-                <div className="form__title-row">
-                    <h2>New Contact</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
+                <Stack direction={"horizontal"} gap={3}>
+                    <OverlayTrigger
+                        placement="right"
+                        overlay={
+                            <Tooltip id="my-tooltip-id">
+                                <strong>Back</strong>
+                            </Tooltip>
+                        }>
+                        <Button
+                            className="back-button"
+                            onClick={() => navigate('/dash/contacts')}
                         >
-                            <FontAwesomeIcon icon={faSave}/>
-                        </button>
-                    </div>
-                </div>
-                <label className="form__label" htmlFor="firstname">
-                    Firstname: <span className="nowrap">[3-20 letters]</span></label>
-                <input
-                    className={`form__input`}
-                    id="firstname"
-                    name="firstname"
-                    type="text"
-                    autoComplete="off"
-                    value={String(firstname)}
-                    onChange={onFirstnameChanged}
-                />
+                            <FontAwesomeIcon icon={faArrowLeft}/>
+                        </Button>
+                    </OverlayTrigger>
+                </Stack>
 
-                <label className="form__label" htmlFor="password">
-                    Lastname: <span className="nowrap">[3-20 letters]</span></label>
-                <input
-                    className={`form__input`}
-                    id="lastname"
-                    name="lastname"
-                    type="text"
-                    value={String(lastname)}
-                    onChange={onLastnameChanged}
-                />
+                <Form onSubmit={e => e.preventDefault()}>
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="firstname">
+                            <Form.Label>Firstname: [3-20]</Form.Label>
+                            <Form.Control placeholder="Firstname"
+                                          autoComplete="off"
+                                          type="text"
+                                          value={String(firstname)}
+                                          onChange={onFirstnameChanged}/>
+                        </Form.Group>
 
-                <label className="form__label" htmlFor="email">
-                    Email: <span className="nowrap">[only Emails]</span></label>
-                <input
-                    className={`form__input`}
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={String(email)}
-                    onChange={onEmailChanged}
-                />
+                        <Form.Group sm={6} as={Col} controlId="lastname">
+                            <Form.Label>Lastname: [3-20]</Form.Label>
+                            <Form.Control placeholder="Lastname"
+                                          autoComplete="off"
+                                          type="text"
+                                          value={String(lastname)}
+                                          onChange={onLastnameChanged}/>
+                        </Form.Group>
+                    </Row>
 
-                {/*ADDRESS*/}
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="email">
+                            <Form.Label>Email:</Form.Label>
+                            <Form.Control placeholder="Enter email"
+                                          type="email"
+                                          value={String(email)}
+                                          onChange={onEmailChanged}/>
+                        </Form.Group>
+                    </Row>
 
-                <label><h2>Address:</h2></label>
+                    {/*ADDRESS*/}
 
-                <label className="form__label" htmlFor="street">
-                    Street:</label>
-                <input
-                    className={`form__input`}
-                    id="street"
-                    name="street"
-                    type="street"
-                    value={address.street}
-                    onChange={onStreetChanged}
-                />
+                    <h5>Address</h5>
 
-                <label className="form__label" htmlFor="city">
-                    City:</label>
-                <input
-                    className={`form__input`}
-                    id="city"
-                    name="city"
-                    type="city"
-                    value={address.city}
-                    onChange={onCityChanged}
-                />
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="street">
+                            <Form.Label>Street:</Form.Label>
+                            <Form.Control placeholder="Street"
+                                          autoComplete="off"
+                                          type="street"
+                                          value={address.street}
+                                          onChange={onStreetChanged}/>
+                        </Form.Group>
+                    </Row>
 
-                <label className="form__label" htmlFor="zip">
-                    Zip:</label>
-                <input
-                    className={`form__input`}
-                    id="zip"
-                    name="zip"
-                    type="zip"
-                    value={address.zip}
-                    onChange={onZipChanged}
-                />
+                    <Row>
+                        <Form.Group sm={4} as={Col} controlId="city">
+                            <Form.Label>City:</Form.Label>
+                            <Form.Control placeholder="City"
+                                          autoComplete="off"
+                                          type="city"
+                                          value={address.city}
+                                          onChange={onCityChanged}/>
+                        </Form.Group>
 
-                <label className="form__label" htmlFor="country">
-                    Country:</label>
-                <input
-                    className={`form__input`}
-                    id="country"
-                    name="country"
-                    type="country"
-                    value={address.country}
-                    onChange={onCountryChanged}
-                />
-            </form>
+                        <Form.Group sm={4} as={Col} controlId="zip">
+                            <Form.Label>Zip:</Form.Label>
+                            <Form.Control placeholder="Zip"
+                                          autoComplete="off"
+                                          type="zip"
+                                          value={address.zip}
+                                          onChange={onZipChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={4} as={Col} controlId="country">
+                            <Form.Label>Country:</Form.Label>
+                            <Form.Control placeholder="Country"
+                                          autoComplete="off"
+                                          type="country"
+                                          value={address.country}
+                                          onChange={onCountryChanged}/>
+                        </Form.Group>
+                    </Row>
+                </Form>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={
+                        <Tooltip id="my-tooltip-id">
+                            <strong>Save</strong>
+                        </Tooltip>
+                    }>
+                    <Button
+                        className="save-button"
+                        onClick={onSaveContactClicked}
+                    >
+                        <FontAwesomeIcon icon={faSave}/>
+                    </Button>
+                </OverlayTrigger>
+
+                <Col className={"text-center"}>
+                    <Alert show={isError} variant="danger">
+                        {errormessage}
+                    </Alert>
+                </Col>
+            </Container>
         </>
     );
 };

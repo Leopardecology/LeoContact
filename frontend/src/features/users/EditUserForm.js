@@ -74,10 +74,13 @@ const EditUserForm = ({user}) => {
         }
     }
 
+    console.log(error?.data);
+
     return (
         <>
             <Container className={"prevent-select"}>
                 <h3 className={"title"}>Edit {user.username}</h3>
+
                 <Stack direction={"horizontal"} gap={3}>
                     <OverlayTrigger
                         placement="right"
@@ -108,8 +111,6 @@ const EditUserForm = ({user}) => {
                             <FontAwesomeIcon icon={faTrashCan}/>
                         </Button>
                     </OverlayTrigger>
-
-
                 </Stack>
 
                 <Form onSubmit={e => e.preventDefault()}>

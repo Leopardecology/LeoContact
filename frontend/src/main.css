@@ -13,18 +13,21 @@ h3 {
     padding-top: 0.9rem;
 }
 
+h5 {
+    padding-top: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: 0.15rem;
+    justify-content: center;
+    display: flex;
+}
+
 .title {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 700 !important;
     letter-spacing: 0.2rem;
     justify-content: center;
     display: flex;
-}
-
-.footer {
-    padding-bottom: 1rem;
-    font-weight: 700;
-    color: #6c6c6c;
 }
 
 body {
@@ -61,8 +64,23 @@ body {
     margin-top: 2rem;
 }
 
-.back-button {
-    margin-bottom: 1rem;
+Form {
+    margin-top: 0.5rem;
+}
+
+/* FOOTER */
+
+@media screen and (max-width: 576px) {
+    .footer.fixed-bottom {
+        padding-top: 1rem;
+        position: unset;
+    }
+}
+
+.footer {
+    padding-bottom: 1rem;
+    font-weight: 700;
+    color: #6c6c6c;
 }
 
 /* NAVBAR */
@@ -108,7 +126,7 @@ body {
 }
 
 .nav-link-active {
-    text-decoration: underline  !important;
+    text-decoration: underline !important;
     color: red;
 }
 
