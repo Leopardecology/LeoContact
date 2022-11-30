@@ -44,16 +44,118 @@ const NewContactForm = () => {
         await addNewContact({firstname, lastname, email, address});
     };
 
-    //check if there is an error TODO: better error handling
-    let errormessage = "";
+    //ERROR HANDLING
+
+    //TODO: better error handling
+    let errorContent;
+
+    let errorMessageFirstname;
+    let errorMessageLastname;
+    let errorMessageEmail;
+    let errorMessageStreet;
+    let errorMessageCity;
+    let errorMessageZip;
+    let errorMessageCountry;
+
+    let validFirstnameClass;
+    let validLastnameClass;
+    let validEmailClass;
+    let validStreetClass;
+    let validCityClass;
+    let validZipClass;
+    let validCountryClass;
+
     let isError = false;
     if (error) {
         isError = true;
-        if (error.data.errors) {
-            errormessage = error.data.errors[0].msg;
-        } else if (error.data.message !== null) {
-            errormessage = error.data.message;
+
+        for (let i = 0; i < error.data.errors.length; i++) {
+            console.log(error.data.errors[i]);
+            switch (error.data.errors[i].param) {
+                case 'firstname':
+                    validFirstnameClass = 'is-invalid';
+                    errorMessageFirstname = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'lastname':
+                    validLastnameClass = 'is-invalid';
+                    errorMessageLastname = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'email':
+                    validEmailClass = 'is-invalid';
+                    errorMessageEmail = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'address.street':
+                    validStreetClass = 'is-invalid';
+                    errorMessageStreet = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'address.city':
+                    validCityClass = 'is-invalid';
+                    errorMessageCity = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'address.zip':
+                    validZipClass = 'is-invalid';
+                    errorMessageZip = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'address.country':
+                    validCountryClass = 'is-invalid';
+                    errorMessageCountry = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+            }
         }
+
+        errorContent = (
+            <>
+                {errorMessageFirstname}
+                {errorMessageLastname}
+                {errorMessageEmail}
+                {errorMessageStreet}
+                {errorMessageCity}
+                {errorMessageZip}
+                {errorMessageCountry}
+            </>
+        );
     }
 
     return (
@@ -83,6 +185,7 @@ const NewContactForm = () => {
                         <Form.Group sm={6} as={Col} controlId="firstname">
                             <Form.Label>Firstname: [3-20]</Form.Label>
                             <Form.Control placeholder="Firstname"
+                                          className={validFirstnameClass}
                                           autoComplete="off"
                                           type="text"
                                           value={String(firstname)}
@@ -92,6 +195,7 @@ const NewContactForm = () => {
                         <Form.Group sm={6} as={Col} controlId="lastname">
                             <Form.Label>Lastname: [3-20]</Form.Label>
                             <Form.Control placeholder="Lastname"
+                                          className={validLastnameClass}
                                           autoComplete="off"
                                           type="text"
                                           value={String(lastname)}
@@ -103,6 +207,7 @@ const NewContactForm = () => {
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
                             <Form.Control placeholder="Enter email"
+                                          className={validEmailClass}
                                           type="email"
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
@@ -117,6 +222,7 @@ const NewContactForm = () => {
                         <Form.Group sm={6} as={Col} controlId="street">
                             <Form.Label>Street:</Form.Label>
                             <Form.Control placeholder="Street"
+                                          className={validStreetClass}
                                           autoComplete="off"
                                           type="street"
                                           value={address.street}
@@ -128,6 +234,7 @@ const NewContactForm = () => {
                         <Form.Group sm={4} as={Col} controlId="city">
                             <Form.Label>City:</Form.Label>
                             <Form.Control placeholder="City"
+                                            className={validCityClass}
                                           autoComplete="off"
                                           type="city"
                                           value={address.city}
@@ -137,6 +244,7 @@ const NewContactForm = () => {
                         <Form.Group sm={4} as={Col} controlId="zip">
                             <Form.Label>Zip:</Form.Label>
                             <Form.Control placeholder="Zip"
+                                            className={validZipClass}
                                           autoComplete="off"
                                           type="zip"
                                           value={address.zip}
@@ -146,6 +254,7 @@ const NewContactForm = () => {
                         <Form.Group sm={4} as={Col} controlId="country">
                             <Form.Label>Country:</Form.Label>
                             <Form.Control placeholder="Country"
+                                            className={validCountryClass}
                                           autoComplete="off"
                                           type="country"
                                           value={address.country}
@@ -168,11 +277,8 @@ const NewContactForm = () => {
                     </Button>
                 </OverlayTrigger>
 
-                <Col className={"text-center"}>
-                    <Alert show={isError} variant="danger">
-                        {errormessage}
-                    </Alert>
-                </Col>
+                {errorContent}
+
             </Container>
         </>
     );

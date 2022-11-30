@@ -60,15 +60,61 @@ const NewUserForm = () => {
     });
 
     //check if there is an error TODO: better error handling
-    let errormessage = "";
+    let errorContent;
+    let errorMessageUser;
+    let errorMessagePassword;
+    let errorMessageEmail;
+
+    let validUserClass;
+    let validPasswordClass;
+    let validEmailClass;
+
     let isError = false;
     if (error) {
         isError = true;
-        if (error.data.errors) {
-            errormessage = error.data.errors[0].msg;
-        } else if (error.data.message !== null) {
-            errormessage = error.data.message;
+
+        for (let i = 0; i < error.data.errors.length; i++) {
+            switch (error.data.errors[i].param) {
+                case 'username':
+                    validUserClass = 'is-invalid';
+                    errorMessageUser = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'password':
+                    validPasswordClass = 'is-invalid';
+                    errorMessagePassword = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'email':
+                    validEmailClass = 'is-invalid';
+                    errorMessageEmail = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+            }
         }
+
+        errorContent = (
+            <>
+                {errorMessageUser}
+                {errorMessagePassword}
+                {errorMessageEmail}
+            </>
+        );
     }
 
     return (
@@ -96,6 +142,7 @@ const NewUserForm = () => {
                         <Form.Group sm={6} as={Col} controlId="username">
                             <Form.Label>Username: [3-20]</Form.Label>
                             <Form.Control placeholder="Username"
+                                          className={validUserClass}
                                           autoComplete="off"
                                           type="text"
                                           value={String(username)}
@@ -105,6 +152,7 @@ const NewUserForm = () => {
                         <Form.Group sm={6} as={Col} controlId="password">
                             <Form.Label>Password: [6-20]</Form.Label>
                             <Form.Control placeholder="Password"
+                                          className={validPasswordClass}
                                           type="password"
                                           value={password}
                                           onChange={onPasswordChanged}/>
@@ -115,6 +163,7 @@ const NewUserForm = () => {
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
                             <Form.Control placeholder="Enter email"
+                                          className={validEmailClass}
                                           type="email"
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
@@ -146,11 +195,8 @@ const NewUserForm = () => {
                     </Button>
                 </OverlayTrigger>
 
-                <Col className={"text-center"}>
-                    <Alert show={isError} variant="danger">
-                        {errormessage}
-                    </Alert>
-                </Col>
+                {errorContent}
+
             </Container>
         </>
     )
