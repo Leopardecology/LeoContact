@@ -19,6 +19,9 @@ exports.validateUserEdit = [
         .bail()
         .isLength({min: 6})
         .withMessage('For Password, a minimum of 6 characters is required!')
+        .bail()
+        .isLength({max: 20})
+        .withMessage('For Password, a maximum of 20 characters is required!')
         .optional({checkFalsy: true})
         .bail(),
     check('email')

@@ -217,3 +217,7 @@ table {
     color: var(--ERROR);
     text-decoration: underline;
 }
+
+.is-invalid {
+    border: 1px solid var(--ERROR) !important;
+}
