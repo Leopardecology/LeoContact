@@ -95,6 +95,23 @@ body {
     font-weight: 700 !important;
 }
 
+.dropdown-item:active {
+    background-color: var(--DEFAULT) !important;
+}
+
+.nav-link {
+    font-size: 1.1rem !important;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.nav-link-active {
+    text-decoration: underline  !important;
+    color: red;
+}
+
 /* START SITE */
 
 .home-page {
@@ -131,10 +148,6 @@ body {
 .form-checkbox {
     margin-left: 0 !important;;
     margin-right: auto !important;
-}
-
-#username {
-    margin-bottom: 1rem;
 }
 
 /* TABLE */

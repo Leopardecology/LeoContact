@@ -41,7 +41,7 @@ const UsersList = () => {
 
         content = (
             <Container>
-                <h1 className={"title"}>Users</h1>
+                <h1 className={"title prevent-select"}>Users</h1>
                 <OverlayTrigger
                     placement="right"
                     overlay={

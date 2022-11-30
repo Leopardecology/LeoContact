@@ -76,7 +76,7 @@ const EditUserForm = ({user}) => {
 
     return (
         <>
-            <Container>
+            <Container className={"prevent-select"}>
                 <h3 className={"title"}>Edit {user.username}</h3>
                 <Stack direction={"horizontal"} gap={3}>
                     <OverlayTrigger

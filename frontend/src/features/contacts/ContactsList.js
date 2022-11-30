@@ -42,7 +42,7 @@ const ContactsList = () => {
 
         content = (
             <Container>
-                <h1 className={"title"}>Contacts</h1>
+                <h1 className={"title prevent-select"}>Contacts</h1>
                 <OverlayTrigger
                     placement="right"
                     overlay={

@@ -73,7 +73,7 @@ const NewUserForm = () => {
 
     return (
         <>
-            <Container>
+            <Container className={"prevent-select"}>
                 <h3 className={"title"}>New User</h3>
 
                 <OverlayTrigger

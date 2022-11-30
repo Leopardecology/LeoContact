@@ -25,17 +25,17 @@ const DashHeader = () => {
 
     return (
         <>
-            <Navbar className="top-navbar" expand="sm">
+            <Navbar className="top-navbar prevent-select" expand="sm">
                 <Container>
                     <Navbar.Brand href="/dash">
                         <img
                             src="../../img/LECLogo.jpg"
                             width="50"
                             height="50"
-                            className="d-inline-block align-center"
+                            className="d-inline-block align-center prevent-select"
                             alt="LEC Logo"
-                        />{' '}
-                        LeoContact
+                        />
+                        &nbsp;LeoContact
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
