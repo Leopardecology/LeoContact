@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useAddNewContactMutation} from "./contactsApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
 import useTitle from "../../hooks/useTitle";
 import {Alert, Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 
@@ -141,6 +141,8 @@ const NewContactForm = () => {
                             </Alert>
                         </Col>
                     );
+                    break;
+                default:
                     break;
             }
         }

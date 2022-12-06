@@ -105,6 +105,8 @@ const NewUserForm = () => {
                         </Col>
                     );
                     break;
+                default:
+                    break;
             }
         }
 

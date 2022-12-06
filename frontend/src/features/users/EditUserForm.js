@@ -110,6 +110,8 @@ const EditUserForm = ({user}) => {
                         </Col>
                     );
                     break;
+                default:
+                    break;
             }
         }
 

@@ -24,11 +24,11 @@ const contactSchema = new mongoose.Schema({
             },
             zip: {
                 type: Number,
-                required: false
+                required: true
             },
             country: {
                 type: String,
-                required: false
+                required: true
             }
         },
     },
