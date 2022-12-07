@@ -59,7 +59,9 @@ const NewUserForm = () => {
         );
     });
 
-    //check if there is an error TODO: better error handling
+    //ERROR HANDLING
+
+    //TODO: better error handling
     let errorContent;
     let errorMessageUser;
     let errorMessagePassword;
@@ -175,7 +177,6 @@ const NewUserForm = () => {
                             <Form.Label>Role:</Form.Label>
                             <Form.Select value={String(roles)}
                                          onChange={onRolesChanged}>
-                                {/*//TODO: type error*/}
                                 {options}
                             </Form.Select>
                         </Form.Group>

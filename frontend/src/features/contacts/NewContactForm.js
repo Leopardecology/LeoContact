@@ -263,8 +263,7 @@ const NewContactForm = () => {
                                               searchPlaceholder="Search Country"
                                               selected={address.country}
                                               onSelect={(code) => onCountryChanged(code)}
-                                              className={validCountryClass}
-                                              selectButtonClassName="countrySelect"/>
+                                              selectButtonClassName={validCountryClass + " countrySelect"}/>
                         </Form.Group>
                     </Row>
                 </Form>
