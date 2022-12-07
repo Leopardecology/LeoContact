@@ -4,8 +4,9 @@ import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
 import useTitle from "../../hooks/useTitle";
-import {Alert, Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 import ReactFlagsSelect from "react-flags-select";
+import {errorHandlingContact} from "./ErrorHandlingContact";
 
 const NewContactForm = () => {
     useTitle('LeoContacts - New Contact');
@@ -48,121 +49,16 @@ const NewContactForm = () => {
         await addNewContact({firstname, lastname, email, address});
     };
 
-    //ERROR HANDLING
-
-    //TODO: better error handling
-    let errorContent;
-
-    let errorMessageFirstname;
-    let errorMessageLastname;
-    let errorMessageEmail;
-    let errorMessageStreet;
-    let errorMessageCity;
-    let errorMessageZip;
-    let errorMessageCountry;
-
-    let validFirstnameClass;
-    let validLastnameClass;
-    let validEmailClass;
-    let validStreetClass;
-    let validCityClass;
-    let validZipClass;
-    let validCountryClass;
-
-    let isError = false;
-    if (error) {
-        isError = true;
-
-        for (let i = 0; i < error.data.errors.length; i++) {
-            console.log(error.data.errors[i]);
-            switch (error.data.errors[i].param) {
-                case 'firstname':
-                    validFirstnameClass = 'is-invalid';
-                    errorMessageFirstname = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'lastname':
-                    validLastnameClass = 'is-invalid';
-                    errorMessageLastname = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'email':
-                    validEmailClass = 'is-invalid';
-                    errorMessageEmail = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.street':
-                    validStreetClass = 'is-invalid';
-                    errorMessageStreet = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.city':
-                    validCityClass = 'is-invalid';
-                    errorMessageCity = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.zip':
-                    validZipClass = 'is-invalid';
-                    errorMessageZip = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.country':
-                    validCountryClass = 'is-invalid';
-                    errorMessageCountry = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        errorContent = (
-            <>
-                {errorMessageFirstname}
-                {errorMessageLastname}
-                {errorMessageEmail}
-                {errorMessageStreet}
-                {errorMessageCity}
-                {errorMessageZip}
-                {errorMessageCountry}
-            </>
-        );
-    }
+    const {
+        errorContent,
+        firstnameClassName,
+        lastnameClassName,
+        emailClassName,
+        streetClassName,
+        cityClassName,
+        zipClassName,
+        countryClassName
+    } = errorHandlingContact(error);
 
     return (
         <>
@@ -189,9 +85,9 @@ const NewContactForm = () => {
                 <Form onSubmit={e => e.preventDefault()}>
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="firstname">
-                            <Form.Label>Firstname: [3-20]</Form.Label>
+                            <Form.Label>Firstname:</Form.Label>
                             <Form.Control placeholder="Firstname"
-                                          className={validFirstnameClass}
+                                          className={firstnameClassName}
                                           autoComplete="off"
                                           type="text"
                                           value={String(firstname)}
@@ -199,9 +95,9 @@ const NewContactForm = () => {
                         </Form.Group>
 
                         <Form.Group sm={6} as={Col} controlId="lastname">
-                            <Form.Label>Lastname: [3-20]</Form.Label>
+                            <Form.Label>Lastname:</Form.Label>
                             <Form.Control placeholder="Lastname"
-                                          className={validLastnameClass}
+                                          className={lastnameClassName}
                                           autoComplete="off"
                                           type="text"
                                           value={String(lastname)}
@@ -213,7 +109,7 @@ const NewContactForm = () => {
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
                             <Form.Control placeholder="Enter email"
-                                          className={validEmailClass}
+                                          className={emailClassName}
                                           type="email"
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
@@ -228,7 +124,7 @@ const NewContactForm = () => {
                         <Form.Group sm={6} as={Col} controlId="street">
                             <Form.Label>Street:</Form.Label>
                             <Form.Control placeholder="Street"
-                                          className={validStreetClass}
+                                          className={streetClassName}
                                           autoComplete="off"
                                           type="street"
                                           value={address.street}
@@ -240,7 +136,7 @@ const NewContactForm = () => {
                         <Form.Group sm={4} as={Col} controlId="city">
                             <Form.Label>City:</Form.Label>
                             <Form.Control placeholder="City"
-                                          className={validCityClass}
+                                          className={cityClassName}
                                           autoComplete="off"
                                           type="city"
                                           value={address.city}
@@ -250,7 +146,7 @@ const NewContactForm = () => {
                         <Form.Group sm={4} as={Col} controlId="zip">
                             <Form.Label>Zip:</Form.Label>
                             <Form.Control placeholder="Zip"
-                                          className={validZipClass}
+                                          className={zipClassName}
                                           autoComplete="off"
                                           type="zip"
                                           value={address.zip}
@@ -263,7 +159,7 @@ const NewContactForm = () => {
                                               searchPlaceholder="Search Country"
                                               selected={address.country}
                                               onSelect={(code) => onCountryChanged(code)}
-                                              selectButtonClassName={validCountryClass + " countrySelect"}/>
+                                              selectButtonClassName={countryClassName + " countrySelect"}/>
                         </Form.Group>
                     </Row>
                 </Form>
