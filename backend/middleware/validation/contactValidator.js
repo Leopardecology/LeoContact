@@ -64,8 +64,8 @@ exports.validateContact = [
         .isEmpty()
         .withMessage('Country can not be empty!')
         .bail()
-        .isLength({min: 3})
-        .withMessage('For Country, a minimum of 3 characters is required!')
+        .isLength({min: 2, max: 2})
+        .withMessage('For Country, a minimum of 2 characters is required!')
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);

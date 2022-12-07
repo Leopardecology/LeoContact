@@ -3,7 +3,9 @@ import {useDeleteContactMutation, useUpdateContactMutation} from "./contactsApiS
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import {Alert, Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import ReactFlagsSelect from "react-flags-select";
+import {errorHandlingContact} from "./ErrorHandlingContact";
 
 const EditContactForm = ({contact}) => {
 
@@ -41,7 +43,10 @@ const EditContactForm = ({contact}) => {
     const onStreetChanged = e => setAddress({...address, street: e.target.value});
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
-    const onCountryChanged = e => setAddress({...address, country: e.target.value});
+
+    function onCountryChanged(code) {
+        setAddress({...address, country: code});
+    }
 
     const onSaveContactClicked = async () => {
         await updateContact({id: contact.id, firstname, lastname, email, address});
@@ -51,119 +56,16 @@ const EditContactForm = ({contact}) => {
         await deleteContact({id: contact.id});
     };
 
-    //ERROR HANDLING
-
-    //TODO: better error handling
-    let errorContent;
-
-    let errorMessageFirstname;
-    let errorMessageLastname;
-    let errorMessageEmail;
-    let errorMessageStreet;
-    let errorMessageCity;
-    let errorMessageZip;
-    let errorMessageCountry;
-
-    let validFirstnameClass;
-    let validLastnameClass;
-    let validEmailClass;
-    let validStreetClass;
-    let validCityClass;
-    let validZipClass;
-    let validCountryClass;
-
-    let isError = false;
-    if (error) {
-        isError = true;
-
-        for (let i = 0; i < error.data.errors.length; i++) {
-            console.log(error.data.errors[i]);
-            switch (error.data.errors[i].param) {
-                case 'firstname':
-                    validFirstnameClass = 'is-invalid';
-                    errorMessageFirstname = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'lastname':
-                    validLastnameClass = 'is-invalid';
-                    errorMessageLastname = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'email':
-                    validEmailClass = 'is-invalid';
-                    errorMessageEmail = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.street':
-                    validStreetClass = 'is-invalid';
-                    errorMessageStreet = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.city':
-                    validCityClass = 'is-invalid';
-                    errorMessageCity = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.zip':
-                    validZipClass = 'is-invalid';
-                    errorMessageZip = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'address.country':
-                    validCountryClass = 'is-invalid';
-                    errorMessageCountry = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-            }
-        }
-
-        errorContent = (
-            <>
-                {errorMessageFirstname}
-                {errorMessageLastname}
-                {errorMessageEmail}
-                {errorMessageStreet}
-                {errorMessageCity}
-                {errorMessageZip}
-                {errorMessageCountry}
-            </>
-        );
-    }
+    const {
+        errorContent,
+        firstnameClassName,
+        lastnameClassName,
+        emailClassName,
+        streetClassName,
+        cityClassName,
+        zipClassName,
+        countryClassName
+    } = errorHandlingContact(error);
 
     return (
         <>
@@ -205,9 +107,9 @@ const EditContactForm = ({contact}) => {
                 <Form onSubmit={e => e.preventDefault()}>
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="firstname">
-                            <Form.Label>Firstname: [3-20]</Form.Label>
+                            <Form.Label>Firstname:</Form.Label>
                             <Form.Control placeholder="Firstname"
-                                          className={validFirstnameClass}
+                                          className={firstnameClassName}
                                           autoComplete="off"
                                           type="text"
                                           value={String(firstname)}
@@ -215,9 +117,9 @@ const EditContactForm = ({contact}) => {
                         </Form.Group>
 
                         <Form.Group sm={6} as={Col} controlId="lastname">
-                            <Form.Label>Lastname: [3-20]</Form.Label>
+                            <Form.Label>Lastname:</Form.Label>
                             <Form.Control placeholder="Lastname"
-                                          className={validLastnameClass}
+                                          className={lastnameClassName}
                                           autoComplete="off"
                                           type="text"
                                           value={String(lastname)}
@@ -229,7 +131,7 @@ const EditContactForm = ({contact}) => {
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
                             <Form.Control placeholder="Enter email"
-                                          className={validEmailClass}
+                                          className={emailClassName}
                                           type="email"
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
@@ -244,7 +146,7 @@ const EditContactForm = ({contact}) => {
                         <Form.Group sm={6} as={Col} controlId="street">
                             <Form.Label>Street:</Form.Label>
                             <Form.Control placeholder="Street"
-                                          className={validStreetClass}
+                                          className={streetClassName}
                                           autoComplete="off"
                                           type="street"
                                           value={String(address.street)}
@@ -256,7 +158,7 @@ const EditContactForm = ({contact}) => {
                         <Form.Group sm={4} as={Col} controlId="city">
                             <Form.Label>City:</Form.Label>
                             <Form.Control placeholder="City"
-                                          className={validCityClass}
+                                          className={cityClassName}
                                           autoComplete="off"
                                           type="city"
                                           value={String(address.city)}
@@ -266,7 +168,7 @@ const EditContactForm = ({contact}) => {
                         <Form.Group sm={4} as={Col} controlId="zip">
                             <Form.Label>Zip:</Form.Label>
                             <Form.Control placeholder="Zip"
-                                          className={validZipClass}
+                                          className={zipClassName}
                                           autoComplete="off"
                                           type="zip"
                                           value={String(address.zip)}
@@ -275,12 +177,12 @@ const EditContactForm = ({contact}) => {
 
                         <Form.Group sm={4} as={Col} controlId="country">
                             <Form.Label>Country:</Form.Label>
-                            <Form.Control placeholder="Country"
-                                          className={validCountryClass}
-                                          autoComplete="off"
-                                          type="country"
-                                          value={String(address.country)}
-                                          onChange={onCountryChanged}/>
+                            <ReactFlagsSelect searchable
+                                              searchPlaceholder="Search Country"
+                                              selected={String(address.country)}
+                                              onSelect={(code) => onCountryChanged(code)}
+                                              className={countryClassName}
+                                              selectButtonClassName="countrySelect"/>
                         </Form.Group>
                     </Row>
                 </Form>

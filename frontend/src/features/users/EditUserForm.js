@@ -4,7 +4,8 @@ import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {ROLES} from "../../config/roles";
-import {Alert, Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {errorHandlingUser} from "./ErrorHandlingUser";
 
 const EditUserForm = ({user}) => {
 
@@ -26,7 +27,6 @@ const EditUserForm = ({user}) => {
     const [active, setActive] = useState(user.active);
 
     useEffect(() => {
-        console.log(isSuccess);
         if (isSuccess || isDelSuccess) {
             setUsername('');
             setPassword('');
@@ -34,7 +34,6 @@ const EditUserForm = ({user}) => {
             setRoles([]);
             navigate('/dash/users');
         }
-
     }, [isSuccess, isDelSuccess, navigate]);
 
     const onUsernameChanged = e => setUsername(e.target.value);
@@ -62,66 +61,12 @@ const EditUserForm = ({user}) => {
         );
     });
 
-    //ERROR HANDLING
-
-    //TODO: better error handling
-    let errorContent;
-    let errorMessageUser;
-    let errorMessagePassword;
-    let errorMessageEmail;
-
-    let validUserClass;
-    let validPasswordClass;
-    let validEmailClass;
-
-    let isError = false;
-    if (error) {
-        isError = true;
-
-        for (let i = 0; i < error.data.errors.length; i++) {
-            switch (error.data.errors[i].param) {
-                case 'username':
-                    validUserClass = 'is-invalid';
-                    errorMessageUser = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'password':
-                    validPasswordClass = 'is-invalid';
-                    errorMessagePassword = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-                case 'email':
-                    validEmailClass = 'is-invalid';
-                    errorMessageEmail = (
-                        <Col className={"text-center"}>
-                            <Alert show={isError} variant="danger">
-                                {error.data.errors[i].msg}
-                            </Alert>
-                        </Col>
-                    );
-                    break;
-            }
-        }
-
-        errorContent = (
-            <>
-                {errorMessageUser}
-                {errorMessagePassword}
-                {errorMessageEmail}
-            </>
-        );
-    }
-
+    const {
+        errorContent,
+        userClassName,
+        passwordClassName,
+        emailClassName
+    } = errorHandlingUser(error);
 
     return (
         <>
@@ -163,9 +108,9 @@ const EditUserForm = ({user}) => {
                 <Form onSubmit={e => e.preventDefault()}>
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="username">
-                            <Form.Label>Username: [3-20]</Form.Label>
+                            <Form.Label>Username:</Form.Label>
                             <Form.Control placeholder="Username"
-                                          className={validUserClass}
+                                          className={userClassName}
                                           autoComplete="off"
                                           type="text"
                                           value={String(username)}
@@ -173,9 +118,9 @@ const EditUserForm = ({user}) => {
                         </Form.Group>
 
                         <Form.Group sm={6} as={Col} controlId="password">
-                            <Form.Label>Password: [6-20]</Form.Label>
+                            <Form.Label>Password:</Form.Label>
                             <Form.Control placeholder="Password [empty = no change]"
-                                          className={validPasswordClass}
+                                          className={passwordClassName}
                                           type="password"
                                           value={password}
                                           onChange={onPasswordChanged}/>
@@ -186,7 +131,7 @@ const EditUserForm = ({user}) => {
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
                             <Form.Control placeholder="Enter email"
-                                          className={validEmailClass}
+                                          className={emailClassName}
                                           type="email"
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
