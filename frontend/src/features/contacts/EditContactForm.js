@@ -282,6 +282,7 @@ const EditContactForm = ({contact}) => {
                         <Form.Group sm={4} as={Col} controlId="country">
                             <Form.Label>Country:</Form.Label>
                             <ReactFlagsSelect searchable
+                                              searchPlaceholder="Search Country"
                                               selected={String(address.country)}
                                               onSelect={(code) => onCountryChanged(code)}
                                               className={validCountryClass}
