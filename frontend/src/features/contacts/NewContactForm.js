@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
 import useTitle from "../../hooks/useTitle";
 import {Alert, Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import ReactFlagsSelect from "react-flags-select";
 
 const NewContactForm = () => {
     useTitle('LeoContacts - New Contact');
@@ -37,7 +38,10 @@ const NewContactForm = () => {
     const onStreetChanged = e => setAddress({...address, street: e.target.value}); //TODO: fix this
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
-    const onCountryChanged = e => setAddress({...address, country: e.target.value});
+
+    function onCountryChanged(code) {
+        setAddress({...address, country: code});
+    }
 
     const onSaveContactClicked = async (e) => {
         e.preventDefault();
@@ -236,7 +240,7 @@ const NewContactForm = () => {
                         <Form.Group sm={4} as={Col} controlId="city">
                             <Form.Label>City:</Form.Label>
                             <Form.Control placeholder="City"
-                                            className={validCityClass}
+                                          className={validCityClass}
                                           autoComplete="off"
                                           type="city"
                                           value={address.city}
@@ -246,7 +250,7 @@ const NewContactForm = () => {
                         <Form.Group sm={4} as={Col} controlId="zip">
                             <Form.Label>Zip:</Form.Label>
                             <Form.Control placeholder="Zip"
-                                            className={validZipClass}
+                                          className={validZipClass}
                                           autoComplete="off"
                                           type="zip"
                                           value={address.zip}
@@ -255,12 +259,11 @@ const NewContactForm = () => {
 
                         <Form.Group sm={4} as={Col} controlId="country">
                             <Form.Label>Country:</Form.Label>
-                            <Form.Control placeholder="Country"
-                                            className={validCountryClass}
-                                          autoComplete="off"
-                                          type="country"
-                                          value={address.country}
-                                          onChange={onCountryChanged}/>
+                            <ReactFlagsSelect searchable
+                                              selected={address.country}
+                                              onSelect={(code) => onCountryChanged(code)}
+                                              className={validCountryClass}
+                                              selectButtonClassName="countrySelect"/>
                         </Form.Group>
                     </Row>
                 </Form>

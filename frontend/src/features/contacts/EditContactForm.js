@@ -281,19 +281,11 @@ const EditContactForm = ({contact}) => {
 
                         <Form.Group sm={4} as={Col} controlId="country">
                             <Form.Label>Country:</Form.Label>
-                            <ReactFlagsSelect selected={String(address.country)}
+                            <ReactFlagsSelect searchable
+                                              selected={String(address.country)}
                                               onSelect={(code) => onCountryChanged(code)}
                                               className={validCountryClass}
                                               selectButtonClassName="countrySelect"/>
-
-
-                            {/*<Form.Select placeholder="Country"*/}
-                            {/*              className={validCountryClass}*/}
-                            {/*              autoComplete="off"*/}
-                            {/*              type="country"*/}
-                            {/*              value={String(address.country)}*/}
-                            {/*              onChange={onCountryChanged}>*/}
-                            {/*<Form.Select />*/}
                         </Form.Group>
                     </Row>
                 </Form>
