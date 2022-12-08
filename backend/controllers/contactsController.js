@@ -19,7 +19,7 @@ const getAllContacts = async (req, res) => {
 // @route POST /contacts
 // @access Private
 const createNewContact = async (req, res) => {
-    const {firstname, lastname, email, address} = req.body;
+    const {firstname, lastname, email, address, personal} = req.body;
 
 
     // Check for duplicate email
@@ -30,7 +30,7 @@ const createNewContact = async (req, res) => {
     }
 
     // Create and store the new contact
-    const contact = await Contact.create({firstname, lastname, email, address});
+    const contact = await Contact.create({firstname, lastname, email, address, personal});
 
     if (contact) { // Created 
         return res.status(201).json({message: 'New contact created'});
@@ -44,7 +44,7 @@ const createNewContact = async (req, res) => {
 // @route PATCH /contacts
 // @access Private
 const updateContact = async (req, res) => {
-    const {id, firstname, lastname, email, address} = req.body;
+    const {id, firstname, lastname, email, address, personal} = req.body;
 
     // Confirm contact exists to update
     const contact = await Contact.findById(id).exec();
@@ -65,6 +65,7 @@ const updateContact = async (req, res) => {
     contact.lastname = lastname;
     contact.email = email;
     contact.address = address;
+    contact.personal = personal;
 
     const updatedContact = await contact.save();
 

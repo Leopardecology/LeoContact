@@ -22,6 +22,7 @@ const NewContactForm = () => {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
+    const [personal, setPersonal] = useState(false);
 
     useEffect(() => {
         if (isSuccess) {
@@ -39,6 +40,7 @@ const NewContactForm = () => {
     const onStreetChanged = e => setAddress({...address, street: e.target.value}); //TODO: fix this
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
+    const onPersonalChanged = e => setPersonal(e.target.checked);
 
     function onCountryChanged(code) {
         setAddress({...address, country: code});
@@ -46,7 +48,7 @@ const NewContactForm = () => {
 
     const onSaveContactClicked = async (e) => {
         e.preventDefault();
-        await addNewContact({firstname, lastname, email, address});
+        await addNewContact({firstname, lastname, email, address, personal});
     };
 
     const {
@@ -113,6 +115,13 @@ const NewContactForm = () => {
                                           type="email"
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} id="personal">
+                            <Form.Check label="Personal"
+                                        type="checkbox"
+                                        checked={Boolean(personal)}
+                                        onChange={onPersonalChanged}/>
                         </Form.Group>
                     </Row>
 

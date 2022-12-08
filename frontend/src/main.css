@@ -201,6 +201,10 @@ table {
     background-color: var(--DARK_BACKGROUND);
 }
 
+.table__cell--inactive {
+    color: #9d9d9d !important;
+}
+
 /* Edit Side */
 
 @media screen and (min-width: 576px) {

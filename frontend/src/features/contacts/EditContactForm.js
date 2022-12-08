@@ -24,9 +24,9 @@ const EditContactForm = ({contact}) => {
     const [lastname, setLastname] = useState(contact.lastname);
     const [email, setEmail] = useState(contact.email);
     const [address, setAddress] = useState(contact.address);
+    const [personal, setPersonal] = useState(contact.personal);
 
     useEffect(() => {
-        console.log(isSuccess);
         if (isSuccess || isDelSuccess) {
             setFirstname('');
             setLastname('');
@@ -43,13 +43,14 @@ const EditContactForm = ({contact}) => {
     const onStreetChanged = e => setAddress({...address, street: e.target.value});
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
+    const onPersonalChanged = () => setPersonal(prev => !prev);
 
     function onCountryChanged(code) {
         setAddress({...address, country: code});
     }
 
     const onSaveContactClicked = async () => {
-        await updateContact({id: contact.id, firstname, lastname, email, address});
+        await updateContact({id: contact.id, firstname, lastname, email, address, personal});
     };
 
     const onDeleteContactClicked = async () => {
@@ -135,6 +136,13 @@ const EditContactForm = ({contact}) => {
                                           type="email"
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} id="personal">
+                            <Form.Check label="Personal"
+                                        type="checkbox"
+                                        checked={Boolean(personal)}
+                                        onChange={onPersonalChanged}/>
                         </Form.Group>
                     </Row>
 

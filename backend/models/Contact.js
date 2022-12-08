@@ -31,6 +31,11 @@ const contactSchema = new mongoose.Schema({
                 required: true
             }
         },
+        personal: {
+            type: Boolean,
+            default: false,
+            required: true
+        }
     },
     {
         timestamps: true
