@@ -7,9 +7,12 @@ import useTitle from "../../hooks/useTitle";
 import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 import ReactFlagsSelect from "react-flags-select";
 import {errorHandlingContact} from "./ErrorHandlingContact";
+import useAuth from "../../hooks/useAuth";
 
 const NewContactForm = () => {
     useTitle('LeoContacts - New Contact');
+
+    const {isAdmin} = useAuth();
 
     const [addNewContact, {
         isSuccess,
@@ -117,12 +120,12 @@ const NewContactForm = () => {
                                           onChange={onEmailChanged}/>
                         </Form.Group>
 
-                        <Form.Group sm={3} as={Col} id="personal">
+                        {(isAdmin) && <Form.Group sm={3} as={Col} id="personal">
                             <Form.Check label="Personal"
                                         type="checkbox"
                                         checked={Boolean(personal)}
                                         onChange={onPersonalChanged}/>
-                        </Form.Group>
+                        </Form.Group>}
                     </Row>
 
                     {/*ADDRESS*/}

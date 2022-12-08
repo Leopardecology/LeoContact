@@ -6,8 +6,11 @@ import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons
 import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 import ReactFlagsSelect from "react-flags-select";
 import {errorHandlingContact} from "./ErrorHandlingContact";
+import useAuth from "../../hooks/useAuth";
 
 const EditContactForm = ({contact}) => {
+
+    const {isAdmin} = useAuth();
 
     const [updateContact, {
         isSuccess,
@@ -138,12 +141,12 @@ const EditContactForm = ({contact}) => {
                                           onChange={onEmailChanged}/>
                         </Form.Group>
 
-                        <Form.Group sm={3} as={Col} id="personal">
+                        {(isAdmin) && <Form.Group sm={3} as={Col} id="personal">
                             <Form.Check label="Personal"
                                         type="checkbox"
                                         checked={Boolean(personal)}
                                         onChange={onPersonalChanged}/>
-                        </Form.Group>
+                        </Form.Group>}
                     </Row>
 
                     {/*ADDRESS*/}
