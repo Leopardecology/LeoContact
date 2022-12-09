@@ -6,8 +6,11 @@ import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons
 import {ROLES} from "../../config/roles";
 import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 import {errorHandlingUser} from "./ErrorHandlingUser";
+import useAuth from "../../hooks/useAuth";
 
 const EditUserForm = ({user}) => {
+
+    const {loggedInUser} = useAuth();
 
     const [updateUser, {
         isSuccess,
@@ -68,6 +71,24 @@ const EditUserForm = ({user}) => {
         emailClassName
     } = errorHandlingUser(error);
 
+    // don't show delete button if user is himself
+    const deleteButton = user.username !== loggedInUser ? (
+        <OverlayTrigger
+            placement="right"
+            overlay={
+                <Tooltip id="my-tooltip-id">
+                    <strong>Delete</strong>
+                </Tooltip>
+            }>
+            <Button
+                className="delete-button ms-auto"
+                onClick={onDeleteUserClicked}
+            >
+                <FontAwesomeIcon icon={faTrashCan}/>
+            </Button>
+        </OverlayTrigger>
+    ) : null;
+
     return (
         <>
             <Container className={"prevent-select"}>
@@ -89,20 +110,7 @@ const EditUserForm = ({user}) => {
                         </Button>
                     </OverlayTrigger>
 
-                    <OverlayTrigger
-                        placement="right"
-                        overlay={
-                            <Tooltip id="my-tooltip-id">
-                                <strong>Delete</strong>
-                            </Tooltip>
-                        }>
-                        <Button
-                            className="delete-button ms-auto"
-                            onClick={onDeleteUserClicked}
-                        >
-                            <FontAwesomeIcon icon={faTrashCan}/>
-                        </Button>
-                    </OverlayTrigger>
+                    {deleteButton}
                 </Stack>
 
                 <Form onSubmit={e => e.preventDefault()}>
