@@ -119,10 +119,7 @@ const Home = () => {
                             <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
                             <Button type="submit" variant="primary" onClick={handleSubmit}>LOGIN</Button>
-
                         </Modal.Footer>
-
-
                     </Modal>
                 </Container>
             </main>
