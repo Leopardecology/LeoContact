@@ -33,6 +33,8 @@ const ContactsList = () => {
     if (isSuccess) {
         const {ids, entities} = contacts;
 
+        console.log(entities);
+
         let filteredIds;
 
         if (isAdmin) {
