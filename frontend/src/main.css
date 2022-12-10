@@ -255,6 +255,10 @@ table {
 
 /* UTILITY CLASSES */
 
+.delete-warning {
+    transform: scale(0.5);
+}
+
 .access_denied {
     color: red !important;
     text-align: center !important;

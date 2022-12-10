@@ -3,7 +3,8 @@ import {useDeleteContactMutation, useUpdateContactMutation} from "./contactsApiS
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import circleExclamation from "../../img/circleExclamation.png";
+import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 import ReactFlagsSelect from "react-flags-select";
 import {errorHandlingContact} from "./ErrorHandlingContact";
 import useAuth from "../../hooks/useAuth";
@@ -28,6 +29,7 @@ const EditContactForm = ({contact}) => {
     const [email, setEmail] = useState(contact.email);
     const [address, setAddress] = useState(contact.address);
     const [personal, setPersonal] = useState(contact.personal);
+    const [Show, setShow] = useState(false);
 
     useEffect(() => {
         if (isSuccess || isDelSuccess) {
@@ -101,12 +103,35 @@ const EditContactForm = ({contact}) => {
                         }>
                         <Button
                             className="delete-button ms-auto"
-                            onClick={onDeleteContactClicked}
+                            onClick={() => setShow(true)}
                         >
                             <FontAwesomeIcon icon={faTrashCan}/>
                         </Button>
                     </OverlayTrigger>
                 </Stack>
+
+
+                <Modal
+                    show={Show}
+                    onHide={() => setShow(false)}
+                    aria-labelledby="example-modal-sizes-title-sm"
+                >
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Container>
+                            <Row>
+                                <img className={"delete-warning"} alt={"Warning"} src={circleExclamation}/>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <h5>Delete this Contact?</h5>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </Modal.Body>
+                </Modal>
+
 
                 <Form onSubmit={e => e.preventDefault()}>
                     <Row className="mb-3">
