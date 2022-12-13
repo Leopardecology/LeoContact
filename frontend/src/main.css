@@ -1,7 +1,8 @@
 /* COLORS */
 :root {
     --DEFAULT: #64a19d;
-    --ERROR: #ff0000;
+    --DEFAULT_DARKER: #406966;
+    --ERROR: #dc3545;
     --BACKGOUND: #CCCCCC;
     --NAV: #e7e7e7;
     --DARK_BACKGROUND: #b9b9b9;
@@ -11,6 +12,15 @@
 
 h3 {
     padding-top: 0.9rem;
+}
+
+h4 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: 0.15rem;
+    justify-content: center;
+    display: flex;
+    padding-bottom: 3rem;
 }
 
 h5 {
@@ -35,8 +45,19 @@ body {
 }
 
 .btn-primary {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
     background-color: var(--DEFAULT) !important;
     border-color: var(--DEFAULT) !important;
+    letter-spacing: 0.1rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--DEFAULT_DARKER) !important;
+    border-color: var(--DEFAULT_DARKER) !important;
+}
+
+.btn-danger {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
     letter-spacing: 0.1rem;
 }
 
@@ -54,6 +75,10 @@ body {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+}
+
+.modal {
+    --bs-modal-width: 440px !important;
 }
 
 .modal-title {
@@ -143,11 +168,6 @@ Form {
     text-decoration: underline;
 }
 
-.nav-link-active {
-    text-decoration: underline !important;
-    color: red;
-}
-
 /* START SITE */
 
 .home-page {
@@ -181,9 +201,12 @@ Form {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.form-checkbox {
-    margin-left: 0 !important;;
-    margin-right: auto !important;
+.modal-footer {
+    justify-content: unset !important;
+}
+
+.persist-checkbox {
+    margin-top: 0.5rem;
 }
 
 /* TABLE */
@@ -208,14 +231,14 @@ table {
 /* Edit Side */
 
 @media screen and (min-width: 576px) {
-    .form-check {
+    .personal-checkbox {
         margin-top: 2.5rem;
         margin-left: 2.5rem;
     }
 }
 
 @media screen and (max-width: 576px) {
-    .form-check {
+    .personal-checkbox {
         margin-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
@@ -253,21 +276,41 @@ table {
     border: 4px solid #f4f4f4
 }
 
-/* UTILITY CLASSES */
+/* WARNING MODAL */
 
-.delete-warning {
-    transform: scale(0.5);
+.delete-symbol {
+    transform: scale(1) translate(74%, -10%);
+    max-width: 40% !important;
+    padding-top: 2rem;
 }
+
+.delete-contact-button {
+    width: 11rem !important;
+    padding: 0.5rem 1rem 0.5rem 1rem !important;
+}
+
+.cancel-button {
+    width: 11rem !important;
+    padding: 0.5rem 1rem 0.5rem 1rem !important;
+}
+
+/* UTILITY CLASSES */
 
 .access_denied {
     color: red !important;
     text-align: center !important;
 }
 
+
 .alert {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.2rem;
     display: inline-block;
+}
+
+.error {
+    color: var(--ERROR);
+    font-size: 1.2rem;
 }
 
 .error a:hover,

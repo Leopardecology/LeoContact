@@ -80,6 +80,7 @@ const EditContactForm = ({contact}) => {
 
                 <Stack direction={"horizontal"} gap={3}>
                     <OverlayTrigger
+                        trigger={["hover"]}
                         placement="right"
                         overlay={
                             <Tooltip id="my-tooltip-id">
@@ -95,6 +96,7 @@ const EditContactForm = ({contact}) => {
                     </OverlayTrigger>
 
                     <OverlayTrigger
+                        trigger={["hover"]}
                         placement="right"
                         overlay={
                             <Tooltip id="my-tooltip-id">
@@ -110,28 +112,39 @@ const EditContactForm = ({contact}) => {
                     </OverlayTrigger>
                 </Stack>
 
-
                 <Modal
                     show={Show}
                     onHide={() => setShow(false)}
                     aria-labelledby="example-modal-sizes-title-sm"
                 >
-                    <Modal.Header closeButton>
-                    </Modal.Header>
                     <Modal.Body>
                         <Container>
                             <Row>
-                                <img className={"delete-warning"} alt={"Warning"} src={circleExclamation}/>
+                                <img className={"delete-symbol"} alt={"Warning"} src={circleExclamation}/>
+                                <h4>Delete this Contact?</h4>
                             </Row>
                             <Row>
+
                                 <Col>
-                                    <h5>Delete this Contact?</h5>
+                                    <Button
+                                        className="cancel-button"
+                                        onClick={() => setShow(false)}>
+                                        Cancel
+                                    </Button>
                                 </Col>
+                                <Col>
+                                    <Button
+                                        variant="danger"
+                                        className="delete-contact-button"
+                                        onClick={onDeleteContactClicked}>
+                                        Delete Contact
+                                    </Button>
+                                </Col>
+
                             </Row>
                         </Container>
                     </Modal.Body>
                 </Modal>
-
 
                 <Form onSubmit={e => e.preventDefault()}>
                     <Row className="mb-3">
@@ -169,6 +182,7 @@ const EditContactForm = ({contact}) => {
                         {(isAdmin) && <Form.Group sm={3} as={Col} id="personal">
                             <Form.Check label="Personal"
                                         type="checkbox"
+                                        className={"personal-checkbox"}
                                         checked={Boolean(personal)}
                                         onChange={onPersonalChanged}/>
                         </Form.Group>}
@@ -223,6 +237,7 @@ const EditContactForm = ({contact}) => {
                     </Row>
                 </Form>
                 <OverlayTrigger
+                    trigger={["hover"]}
                     placement="right"
                     overlay={
                         <Tooltip id="my-tooltip-id">

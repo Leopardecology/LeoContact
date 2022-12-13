@@ -4,9 +4,10 @@ import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {ROLES} from "../../config/roles";
-import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 import {errorHandlingUser} from "./ErrorHandlingUser";
 import useAuth from "../../hooks/useAuth";
+import circleExclamation from "../../img/circleExclamation.png";
 
 const EditUserForm = ({user}) => {
 
@@ -28,6 +29,7 @@ const EditUserForm = ({user}) => {
     const [email, setEmail] = useState(user.email);
     const [roles, setRoles] = useState(user.roles);
     const [active, setActive] = useState(user.active);
+    const [Show, setShow] = useState(false);
 
     useEffect(() => {
         if (isSuccess || isDelSuccess) {
@@ -82,7 +84,7 @@ const EditUserForm = ({user}) => {
             }>
             <Button
                 className="delete-button ms-auto"
-                onClick={onDeleteUserClicked}
+                onClick={() => setShow(true)}
             >
                 <FontAwesomeIcon icon={faTrashCan}/>
             </Button>
@@ -112,6 +114,40 @@ const EditUserForm = ({user}) => {
 
                     {deleteButton}
                 </Stack>
+
+                <Modal
+                    show={Show}
+                    onHide={() => setShow(false)}
+                    aria-labelledby="example-modal-sizes-title-sm"
+                >
+                    <Modal.Body>
+                        <Container>
+                            <Row>
+                                <img className={"delete-symbol"} alt={"Warning"} src={circleExclamation}/>
+                                <h4>Delete this User?</h4>
+                            </Row>
+                            <Row>
+
+                                <Col>
+                                    <Button
+                                        className="cancel-button"
+                                        onClick={() => setShow(false)}>
+                                        Cancel
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button
+                                        variant="danger"
+                                        className="delete-contact-button"
+                                        onClick={onDeleteUserClicked}>
+                                        Delete User
+                                    </Button>
+                                </Col>
+
+                            </Row>
+                        </Container>
+                    </Modal.Body>
+                </Modal>
 
                 <Form onSubmit={e => e.preventDefault()}>
                     <Row className="mb-3">
