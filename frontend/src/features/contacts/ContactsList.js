@@ -2,9 +2,9 @@ import {useGetContactsQuery} from "./contactsApiSlice";
 import Contact from "./Contact";
 import PulseLoader from 'react-spinners/PulseLoader';
 import useTitle from "../../hooks/useTitle";
-import {Button, Container, OverlayTrigger, Table, Tooltip} from "react-bootstrap";
+import {Button, Container, OverlayTrigger, Stack, Table, Tooltip} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFileCirclePlus} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faFileCirclePlus} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
@@ -62,20 +62,38 @@ const ContactsList = () => {
     content = (
         <Container>
             <h1 className={"title prevent-select"}>Contacts</h1>
-            <OverlayTrigger
-                placement="right"
-                overlay={
-                    <Tooltip id="my-tooltip-id">
-                        <strong>Add New Contact</strong>
-                    </Tooltip>
-                }>
-                <Button
-                    className="icon-button"
-                    onClick={onNewContactClicked}
-                >
-                    <FontAwesomeIcon icon={faFileCirclePlus}/>
-                </Button>
-            </OverlayTrigger>
+
+            <Stack direction={"horizontal"} gap={3}>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={
+                        <Tooltip id="my-tooltip-id">
+                            <strong>Back</strong>
+                        </Tooltip>
+                    }>
+                    <Button
+                        className="back-button"
+                        onClick={() => navigate('/dash')}
+                    >
+                        <FontAwesomeIcon icon={faArrowLeft}/>
+                    </Button>
+                </OverlayTrigger>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={
+                        <Tooltip id="my-tooltip-id">
+                            <strong>Add New Contact</strong>
+                        </Tooltip>
+                    }>
+                    <Button
+                        className="icon-button ms-auto"
+                        onClick={onNewContactClicked}
+                    >
+                        <FontAwesomeIcon icon={faFileCirclePlus}/>
+                    </Button>
+                </OverlayTrigger>
+            </Stack>
+
             <Table className={"prevent-select"} striped bordered hover>
                 <thead>
                 <tr>

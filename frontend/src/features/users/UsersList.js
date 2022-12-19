@@ -2,9 +2,9 @@ import {useGetUsersQuery} from "./usersApiSlice";
 import User from './User';
 import PulseLoader from 'react-spinners/PulseLoader';
 import newTitle from "../../hooks/useTitle";
-import {Button, Container, OverlayTrigger, Table, Tooltip} from "react-bootstrap";
+import {Button, Container, OverlayTrigger, Stack, Table, Tooltip} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
 
 const UsersList = () => {
@@ -42,20 +42,39 @@ const UsersList = () => {
         content = (
             <Container>
                 <h1 className={"title prevent-select"}>Users</h1>
-                <OverlayTrigger
-                    placement="right"
-                    overlay={
-                        <Tooltip id="my-tooltip-id">
-                            <strong>Add New User</strong>
-                        </Tooltip>
-                    }>
-                    <Button
-                        className="icon-button"
-                        onClick={onNewUserClicked}
-                    >
-                        <FontAwesomeIcon icon={faUserPlus}/>
-                    </Button>
-                </OverlayTrigger>
+
+                <Stack direction={"horizontal"} gap={3}>
+                    <OverlayTrigger
+                        placement="right"
+                        overlay={
+                            <Tooltip id="my-tooltip-id">
+                                <strong>Back</strong>
+                            </Tooltip>
+                        }>
+                        <Button
+                            className="back-button"
+                            onClick={() => navigate('/dash')}
+                        >
+                            <FontAwesomeIcon icon={faArrowLeft}/>
+                        </Button>
+                    </OverlayTrigger>
+
+                    <OverlayTrigger
+                        placement="right"
+                        overlay={
+                            <Tooltip id="my-tooltip-id">
+                                <strong>Add New User</strong>
+                            </Tooltip>
+                        }>
+                        <Button
+                            className="icon-button ms-auto"
+                            onClick={onNewUserClicked}
+                        >
+                            <FontAwesomeIcon icon={faUserPlus}/>
+                        </Button>
+                    </OverlayTrigger>
+                </Stack>
+
                 <Table className={"prevent-select"} striped bordered hover>
                     <thead>
                     <tr>
