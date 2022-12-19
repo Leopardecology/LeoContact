@@ -15,7 +15,7 @@ export function errorHandlingUser(error) {
 
     if (error) {
         isError = true;
-        console.log(error);
+
         for (let i = 0; i < error.data.errors?.length; i++) {
             switch (error.data.errors[i].param) {
                 case 'username':

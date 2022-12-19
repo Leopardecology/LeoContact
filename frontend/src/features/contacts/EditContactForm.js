@@ -80,7 +80,7 @@ const EditContactForm = ({contact}) => {
 
                 <Stack direction={"horizontal"} gap={3}>
                     <OverlayTrigger
-                        trigger={["hover"]}
+                        trigger={['hover', 'focus']}
                         placement="right"
                         overlay={
                             <Tooltip id="my-tooltip-id">
@@ -96,7 +96,7 @@ const EditContactForm = ({contact}) => {
                     </OverlayTrigger>
 
                     <OverlayTrigger
-                        trigger={["hover"]}
+                        trigger={['hover', 'focus']}
                         placement="right"
                         overlay={
                             <Tooltip id="my-tooltip-id">
@@ -237,7 +237,7 @@ const EditContactForm = ({contact}) => {
                     </Row>
                 </Form>
                 <OverlayTrigger
-                    trigger={["hover"]}
+                    trigger={['hover', 'focus']}
                     placement="right"
                     overlay={
                         <Tooltip id="my-tooltip-id">
