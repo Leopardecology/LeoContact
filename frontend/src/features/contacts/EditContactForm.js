@@ -3,11 +3,15 @@ import {useDeleteContactMutation, useUpdateContactMutation} from "./contactsApiS
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave, faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import circleExclamation from "../../img/circleExclamation.png";
+import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
 import ReactFlagsSelect from "react-flags-select";
 import {errorHandlingContact} from "./ErrorHandlingContact";
+import useAuth from "../../hooks/useAuth";
 
 const EditContactForm = ({contact}) => {
+
+    const {isAdmin} = useAuth();
 
     const [updateContact, {
         isSuccess,
@@ -24,9 +28,10 @@ const EditContactForm = ({contact}) => {
     const [lastname, setLastname] = useState(contact.lastname);
     const [email, setEmail] = useState(contact.email);
     const [address, setAddress] = useState(contact.address);
+    const [personal, setPersonal] = useState(contact.personal);
+    const [Show, setShow] = useState(false);
 
     useEffect(() => {
-        console.log(isSuccess);
         if (isSuccess || isDelSuccess) {
             setFirstname('');
             setLastname('');
@@ -43,13 +48,14 @@ const EditContactForm = ({contact}) => {
     const onStreetChanged = e => setAddress({...address, street: e.target.value});
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
+    const onPersonalChanged = () => setPersonal(prev => !prev);
 
     function onCountryChanged(code) {
         setAddress({...address, country: code});
     }
 
     const onSaveContactClicked = async () => {
-        await updateContact({id: contact.id, firstname, lastname, email, address});
+        await updateContact({id: contact.id, firstname, lastname, email, address, personal});
     };
 
     const onDeleteContactClicked = async () => {
@@ -74,6 +80,7 @@ const EditContactForm = ({contact}) => {
 
                 <Stack direction={"horizontal"} gap={3}>
                     <OverlayTrigger
+                        trigger={["hover"]}
                         placement="right"
                         overlay={
                             <Tooltip id="my-tooltip-id">
@@ -89,6 +96,7 @@ const EditContactForm = ({contact}) => {
                     </OverlayTrigger>
 
                     <OverlayTrigger
+                        trigger={["hover"]}
                         placement="right"
                         overlay={
                             <Tooltip id="my-tooltip-id">
@@ -97,12 +105,46 @@ const EditContactForm = ({contact}) => {
                         }>
                         <Button
                             className="delete-button ms-auto"
-                            onClick={onDeleteContactClicked}
+                            onClick={() => setShow(true)}
                         >
                             <FontAwesomeIcon icon={faTrashCan}/>
                         </Button>
                     </OverlayTrigger>
                 </Stack>
+
+                <Modal
+                    show={Show}
+                    onHide={() => setShow(false)}
+                    aria-labelledby="example-modal-sizes-title-sm"
+                >
+                    <Modal.Body>
+                        <Container>
+                            <Row>
+                                <img className={"delete-symbol"} alt={"Warning"} src={circleExclamation}/>
+                                <h4>Delete this Contact?</h4>
+                            </Row>
+                            <Row>
+
+                                <Col>
+                                    <Button
+                                        className="cancel-button"
+                                        onClick={() => setShow(false)}>
+                                        Cancel
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button
+                                        variant="danger"
+                                        className="delete-contact-button"
+                                        onClick={onDeleteContactClicked}>
+                                        Delete Contact
+                                    </Button>
+                                </Col>
+
+                            </Row>
+                        </Container>
+                    </Modal.Body>
+                </Modal>
 
                 <Form onSubmit={e => e.preventDefault()}>
                     <Row className="mb-3">
@@ -136,6 +178,14 @@ const EditContactForm = ({contact}) => {
                                           value={String(email)}
                                           onChange={onEmailChanged}/>
                         </Form.Group>
+
+                        {(isAdmin) && <Form.Group sm={3} as={Col} id="personal">
+                            <Form.Check label="Personal"
+                                        type="checkbox"
+                                        className={"personal-checkbox"}
+                                        checked={Boolean(personal)}
+                                        onChange={onPersonalChanged}/>
+                        </Form.Group>}
                     </Row>
 
                     {/*ADDRESS*/}
@@ -187,6 +237,7 @@ const EditContactForm = ({contact}) => {
                     </Row>
                 </Form>
                 <OverlayTrigger
+                    trigger={["hover"]}
                     placement="right"
                     overlay={
                         <Tooltip id="my-tooltip-id">

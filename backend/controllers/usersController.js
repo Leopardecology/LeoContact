@@ -21,16 +21,19 @@ const getAllUsers = async (req, res) => {
 const createNewUser = async (req, res) => {
     const {username, password, email, roles} = req.body;
 
-    // Confirm data
-    if (!username || !password) {
-        return res.status(400).json({message: 'All fields are required'});
-    }
-
     // Check for duplicate username
     const duplicate = await User.findOne({username}).collation({locale: 'en', strength: 2}).lean().exec();
 
     if (duplicate) {
-        return res.status(409).json({message: 'Duplicate username!'});
+        return res.status(409).json({
+            "errors": [
+                {
+                    "location": "body",
+                    "msg": "Duplicate Username",
+                    "param": "username"
+                }
+            ]
+        });
     }
 
     // Hash password
@@ -66,7 +69,15 @@ const updateUser = async (req, res) => {
 
     // Allow updates to the original user 
     if (duplicate && duplicate?._id.toString() !== id) {
-        return res.status(409).json({message: 'Duplicate username'});
+        return res.status(409).json({
+            "errors": [
+                {
+                    "location": "body",
+                    "msg": "Duplicate Username",
+                    "param": "username"
+                }
+            ]
+        });
     }
 
     user.username = username;

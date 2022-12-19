@@ -1,6 +1,6 @@
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 
 import {useSendLogoutMutation} from '../features/auth/authApiSlice';
@@ -40,8 +40,8 @@ const DashHeader = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                         <Nav>
-                            <Nav.Link href="/dash/contacts">Contacts</Nav.Link>
-                            {(isAdmin) && <Nav.Link href="/dash/users">Users</Nav.Link>}
+                            <Link className="nav-link" to="/dash/contacts">Contacts</Link>
+                            {(isAdmin) && <Link className="nav-link" to="/dash/users">Users</Link>}
                             <NavDropdown title={username} id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#ComingSoon">
                                     Coming Soon...

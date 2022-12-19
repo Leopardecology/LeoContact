@@ -3,7 +3,8 @@ import {useGetContactsQuery} from './contactsApiSlice';
 import EditContactForm from './EditContactForm';
 import PulseLoader from "react-spinners/PulseLoader";
 import useAuth from '../../hooks/useAuth';
-import useTitle from '../../hooks/useTitle'
+import useTitle from '../../hooks/useTitle';
+import {Container} from "react-bootstrap";
 
 const EditContact = () => {
     useTitle('LeoContacts - Edit Contact');
@@ -20,9 +21,7 @@ const EditContact = () => {
 
     if (!contact) return <PulseLoader color={"#FFF"}/>;
 
-    if (!isAdmin) {
-        return <p className="error">No access</p>;
-    }
+    if (!isAdmin && contact.personal) return <Container><h1 className={'access_denied'}>Access Denied</h1></Container>;
 
     return <EditContactForm contact={contact}/>;
 };

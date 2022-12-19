@@ -81,48 +81,53 @@ const Home = () => {
                         backdrop="static"
                         keyboard={false}
                     >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Leo Contact</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group controlId="username"
-                                            type="text"
-                                            id="username"
-                                            ref={userRef}
-                                            value={username}
-                                            onChange={handleUserInput}
-                                            autoComplete="off">
-                                    <Form.Control type="text" placeholder="Username"/>
-                                </Form.Group>
-                            </Form>
+                        <Container>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Leo Contact</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Form onSubmit={handleSubmit}>
+                                    <Form.Group controlId="username"
+                                                type="text"
+                                                id="username"
+                                                ref={userRef}
+                                                value={username}
+                                                onChange={handleUserInput}
+                                                autoComplete="off">
+                                        <Form.Control type="text" placeholder="Username"/>
+                                    </Form.Group>
+                                </Form>
 
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group controlId="password"
-                                            type="password"
-                                            id="password"
-                                            value={password}
-                                            onChange={handlePwdInput}>
-                                    <Form.Control type="password" placeholder="Password"/>
-                                </Form.Group>
-                            </Form>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Form.Group className="form-checkbox" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox"
-                                            label="Trust This Device"
-                                            id="persist"
-                                            onChange={handleToggle}
-                                            checked={persist}/>
-                            </Form.Group>
+                                <Form onSubmit={handleSubmit}>
+                                    <Form.Group controlId="password"
+                                                type="password"
+                                                id="password"
+                                                value={password}
+                                                onChange={handlePwdInput}>
+                                        <Form.Control type="password" placeholder="Password"/>
+                                    </Form.Group>
+                                </Form>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                    <Col>
+                                        <Form.Group controlId="formBasicCheckbox">
+                                            <Form.Check type="checkbox"
+                                                        className={"persist-checkbox"}
+                                                        label="Trust This Device"
+                                                        id="persist"
+                                                        onChange={handleToggle}
+                                                        checked={persist}/>
+                                        </Form.Group>
+                                    </Col>
 
-                            <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+                                    <Col sm={3}>
+                                        <Button type="submit" variant="primary" onClick={handleSubmit}>LOGIN</Button>
+                                    </Col>
 
-                            <Button type="submit" variant="primary" onClick={handleSubmit}>LOGIN</Button>
+                                    <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
-                        </Modal.Footer>
-
-
+                            </Modal.Footer>
+                        </Container>
                     </Modal>
                 </Container>
             </main>
