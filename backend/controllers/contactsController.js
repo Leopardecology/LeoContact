@@ -26,7 +26,15 @@ const createNewContact = async (req, res) => {
     const duplicate = await Contact.findOne({email}).collation({locale: 'en', strength: 2}).lean().exec();
 
     if (duplicate) {
-        return res.status(409).json({message: 'Duplicate contact Email!'});
+        return res.status(409).json({
+            "errors": [
+                {
+                    "location": "body",
+                    "msg": "Duplicate contact Email!",
+                    "param": "email"
+                }
+            ]
+        });
     }
 
     // Create and store the new contact

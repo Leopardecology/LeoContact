@@ -24,8 +24,9 @@ export function errorHandlingContact(error) {
     if (error) {
         isError = true;
 
-        for (let i = 0; i < error.data.errors.length; i++) {
-            console.log(error.data.errors[i]);
+        console.log(error);
+
+        for (let i = 0; i < error.data.errors?.length; i++) {
             switch (error.data.errors[i].param) {
                 case 'firstname':
                     firstnameClassName = 'is-invalid';

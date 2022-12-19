@@ -29,7 +29,7 @@ const createNewUser = async (req, res) => {
             "errors": [
                 {
                     "location": "body",
-                    "msg": "Duplicate Username",
+                    "msg": "Duplicate Username!",
                     "param": "username"
                 }
             ]
