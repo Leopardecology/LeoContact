@@ -13,6 +13,8 @@ const mongoose = require('mongoose').default; //TODO: default because of bug?
 const {logEvents} = require('./middleware/logger');
 const PORT = process.env.PORT || 3500;
 
+mongoose.set('strictQuery', false);
+
 console.log(process.env.NODE_ENV);
 
 connectDB();

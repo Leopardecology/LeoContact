@@ -1,6 +1,5 @@
 const mongoose = require('mongoose').default; //TODO: default because of bug?
 
-
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.DATABASE_URI);

@@ -19,20 +19,20 @@
   },
   "homepage": "https://github.com/Sinrath/LeoContact#readme",
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "date-fns": "^2.29.2",
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
+    "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
-    "express-rate-limit": "^6.6.0",
-    "express-validator": "^6.14.2",
+    "express-rate-limit": "^6.7.0",
+    "express-validator": "^6.15.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.6.0",
+    "mongoose": "^6.10.5",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.22"
   }
 }
