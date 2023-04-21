@@ -16,15 +16,9 @@ const ContactsList = () => {
     const onNewContactClicked = () => navigate('/dash/contacts/new');
 
     const {
-        data: contacts,
-        isLoading,
-        isSuccess,
-        isError,
-        error
+        data: contacts, isLoading, isSuccess, isError, error
     } = useGetContactsQuery('contactsList', {
-        pollingInterval: 60000,
-        refetchOnFocus: true,
-        refetchOnMountOrArgChange: true
+        pollingInterval: 60000, refetchOnFocus: true, refetchOnMountOrArgChange: true
     });
 
     let content;
@@ -33,21 +27,30 @@ const ContactsList = () => {
     if (isSuccess) {
         const {ids, entities} = contacts;
 
-        let filteredIds;
-
-        if (isAdmin) {
-            filteredIds = [...ids];
+        if (ids.length === 0) {
+            tableContent = <tr>
+                <td colSpan="5">No contacts found.</td>
+            </tr>;
         } else {
-            filteredIds = ids.filter(contactId => entities[contactId].personal === false);
-        }
 
-        tableContent = ids?.length && filteredIds.map(contactId => <Contact key={contactId}
-                                                                            contactId={contactId}/>);
+            let filteredIds;
+
+            if (isAdmin) {
+                filteredIds = [...ids];
+            } else {
+                filteredIds = ids.filter(contactId => entities[contactId].personal === false);
+            }
+
+            tableContent = ids?.length && filteredIds.map(contactId => <Contact key={contactId}
+                                                                                contactId={contactId}/>);
+        }
     }
 
     if (isError) {
+        console.error('API Error:', error);
+        const errorMessage = error.data.message ? error.data.message : 'An error occurred. Please check the console for details.';
         tableContent = <tr>
-            <td colSpan="5">{error}</td>
+            <td colSpan="5">{errorMessage}</td>
         </tr>;
     }
 
@@ -57,56 +60,50 @@ const ContactsList = () => {
         </tr>;
     }
 
-    content = (
-        <Container>
-            <h1 className={"title prevent-select"}>Contacts</h1>
+    content = (<Container>
+        <h1 className={"title prevent-select"}>Contacts</h1>
 
-            <Stack direction={"horizontal"} gap={3}>
-                <OverlayTrigger
-                    placement="right"
-                    overlay={
-                        <Tooltip id="my-tooltip-id">
-                            <strong>Back</strong>
-                        </Tooltip>
-                    }>
-                    <Button
-                        className="back-button"
-                        onClick={() => navigate('/dash')}
-                    >
-                        <FontAwesomeIcon icon={faArrowLeft}/>
-                    </Button>
-                </OverlayTrigger>
-                <OverlayTrigger
-                    placement="right"
-                    overlay={
-                        <Tooltip id="my-tooltip-id">
-                            <strong>Add New Contact</strong>
-                        </Tooltip>
-                    }>
-                    <Button
-                        className="icon-button ms-auto"
-                        onClick={onNewContactClicked}
-                    >
-                        <FontAwesomeIcon icon={faFileCirclePlus}/>
-                    </Button>
-                </OverlayTrigger>
-            </Stack>
+        <Stack direction={"horizontal"} gap={3}>
+            <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip id="my-tooltip-id">
+                    <strong>Back</strong>
+                </Tooltip>}>
+                <Button
+                    className="back-button"
+                    onClick={() => navigate('/dash')}
+                >
+                    <FontAwesomeIcon icon={faArrowLeft}/>
+                </Button>
+            </OverlayTrigger>
+            <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip id="my-tooltip-id">
+                    <strong>Add New Contact</strong>
+                </Tooltip>}>
+                <Button
+                    className="icon-button ms-auto"
+                    onClick={onNewContactClicked}
+                >
+                    <FontAwesomeIcon icon={faFileCirclePlus}/>
+                </Button>
+            </OverlayTrigger>
+        </Stack>
 
-            <Table className={"prevent-select"} striped bordered hover>
-                <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                    <th scope="col">Updated</th>
-                    <th scope="col">Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                {tableContent}
-                </tbody>
-            </Table>
-        </Container>
-    );
+        <Table className={"prevent-select"} striped bordered hover>
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Updated</th>
+                <th scope="col">Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {tableContent}
+            </tbody>
+        </Table>
+    </Container>);
     return content;
 };
 

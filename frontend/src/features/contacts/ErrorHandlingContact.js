@@ -6,6 +6,9 @@ export function errorHandlingContact(error) {
     let errorMessageFirstname;
     let errorMessageLastname;
     let errorMessageEmail;
+    let errorMessageTelephone;
+    let errorMessageRole;
+    let errorMessageCalendar;
     let errorMessageStreet;
     let errorMessageCity;
     let errorMessageZip;
@@ -14,6 +17,9 @@ export function errorHandlingContact(error) {
     let firstnameClassName;
     let lastnameClassName;
     let emailClassName;
+    let telephoneClassName;
+    let roleClassName;
+    let calendarClassName;
     let streetClassName;
     let cityClassName;
     let zipClassName;
@@ -51,6 +57,36 @@ export function errorHandlingContact(error) {
                 case 'email':
                     emailClassName = 'is-invalid';
                     errorMessageEmail = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'telephone':
+                    telephoneClassName = 'is-invalid';
+                    errorMessageTelephone = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'role':
+                    roleClassName = 'is-invalid';
+                    errorMessageRole = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'calendar':
+                    calendarClassName = 'is-invalid';
+                    errorMessageCalendar = (
                         <Col className={"text-center"}>
                             <Alert show={isError} variant="danger">
                                 {error.data.errors[i].msg}
@@ -108,6 +144,9 @@ export function errorHandlingContact(error) {
                 {errorMessageFirstname}
                 {errorMessageLastname}
                 {errorMessageEmail}
+                {errorMessageTelephone}
+                {errorMessageRole}
+                {errorMessageCalendar}
                 {errorMessageStreet}
                 {errorMessageCity}
                 {errorMessageZip}
@@ -121,6 +160,9 @@ export function errorHandlingContact(error) {
         firstnameClassName,
         lastnameClassName,
         emailClassName,
+        telephoneClassName,
+        roleClassName,
+        calendarClassName,
         streetClassName,
         cityClassName,
         zipClassName,

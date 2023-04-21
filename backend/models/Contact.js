@@ -13,6 +13,25 @@ const contactSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        telephone: {
+            type: String,
+            required: true
+        },
+        role: {
+            type: String,
+            default: '',
+            required: false
+        },
+        calendar: {
+            type: Number,
+            default: 0,
+            required: true
+        },
+        annualReport: {
+            type: Boolean,
+            default: false,
+            required: true
+        },
         address: {
             street: {
                 type: String,

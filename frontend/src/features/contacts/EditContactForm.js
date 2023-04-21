@@ -27,6 +27,10 @@ const EditContactForm = ({contact}) => {
     const [firstname, setFirstname] = useState(contact.firstname);
     const [lastname, setLastname] = useState(contact.lastname);
     const [email, setEmail] = useState(contact.email);
+    const [telephone, setTelephone] = useState(contact.telephone);
+    const [role, setRole] = useState(contact.role);
+    const [calendar, setCalendar] = useState(contact.calendar);
+    const [annualReport, setAnnualReport] = useState(contact.annualReport);
     const [address, setAddress] = useState(contact.address);
     const [personal, setPersonal] = useState(contact.personal);
     const [Show, setShow] = useState(false);
@@ -36,6 +40,9 @@ const EditContactForm = ({contact}) => {
             setFirstname('');
             setLastname('');
             setEmail('');
+            setTelephone('');
+            setRole('');
+            setCalendar('');
             setAddress('');
             navigate('/dash/contacts');
         }
@@ -45,6 +52,10 @@ const EditContactForm = ({contact}) => {
     const onFirstnameChanged = e => setFirstname(e.target.value);
     const onLastnameChanged = e => setLastname(e.target.value);
     const onEmailChanged = e => setEmail(e.target.value);
+    const onTelephoneChanged = e => setTelephone(e.target.value);
+    const onRoleChanged = e => setRole(e.target.value);
+    const onCalendarChanged = e => setCalendar(e.target.value);
+    const onAnnualReportChanged = () => setAnnualReport(prev => !prev);
     const onStreetChanged = e => setAddress({...address, street: e.target.value});
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
@@ -55,7 +66,18 @@ const EditContactForm = ({contact}) => {
     }
 
     const onSaveContactClicked = async () => {
-        await updateContact({id: contact.id, firstname, lastname, email, address, personal});
+        await updateContact({
+            id: contact.id,
+            firstname,
+            lastname,
+            email,
+            telephone,
+            role,
+            calendar,
+            annualReport,
+            address,
+            personal
+        });
     };
 
     const onDeleteContactClicked = async () => {
@@ -67,6 +89,9 @@ const EditContactForm = ({contact}) => {
         firstnameClassName,
         lastnameClassName,
         emailClassName,
+        telephoneClassName,
+        roleClassName,
+        calendarClassName,
         streetClassName,
         cityClassName,
         zipClassName,
@@ -188,6 +213,28 @@ const EditContactForm = ({contact}) => {
                         </Form.Group>}
                     </Row>
 
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="telephone">
+                            <Form.Label>Telephone:</Form.Label>
+                            <Form.Control placeholder="Telephone"
+                                          className={telephoneClassName}
+                                          autoComplete="off"
+                                          type="telephone"
+                                          value={String(telephone)}
+                                          onChange={onTelephoneChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={6} as={Col} controlId="role">
+                            <Form.Label>Role:</Form.Label>
+                            <Form.Control placeholder="Role"
+                                          className={roleClassName}
+                                          autoComplete="off"
+                                          type="role"
+                                          value={String(role)}
+                                          onChange={onRoleChanged}/>
+                        </Form.Group>
+                    </Row>
+
                     {/*ADDRESS*/}
 
                     <h5>Address</h5>
@@ -235,7 +282,32 @@ const EditContactForm = ({contact}) => {
                                               selectButtonClassName="countrySelect"/>
                         </Form.Group>
                     </Row>
+
+                    {/*INFO*/}
+
+                    <h5>Info</h5>
+
+                    <Row className="mb-3">
+                        <Form.Group sm={2} as={Col} controlId="calendar">
+                            <Form.Label>Calendar:</Form.Label>
+                            <Form.Control placeholder="Amount of Calendar"
+                                          className={calendarClassName}
+                                          autoComplete="off"
+                                          type="calendar"
+                                          value={String(calendar)}
+                                          onChange={onCalendarChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} id="annualReport">
+                            <Form.Check label="Annual Report"
+                                        type="checkbox"
+                                        checked={Boolean(annualReport)}
+                                        onChange={onAnnualReportChanged}/>
+                        </Form.Group>
+                    </Row>
+
                 </Form>
+
                 <OverlayTrigger
                     trigger={['hover', 'focus']}
                     placement="right"
@@ -256,7 +328,8 @@ const EditContactForm = ({contact}) => {
 
             </Container>
         </>
-    );
+    )
+        ;
 };
 
 export default EditContactForm;

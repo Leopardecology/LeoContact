@@ -24,6 +24,10 @@ const NewContactForm = () => {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
+    const [telephone, setTelephone] = useState('');
+    const [role, setRole] = useState('');
+    const [calendar, setCalendar] = useState('');
+    const [annualReport, setAnnualReport] = useState(false);
     const [address, setAddress] = useState('');
     const [personal, setPersonal] = useState(false);
 
@@ -32,6 +36,9 @@ const NewContactForm = () => {
             setFirstname('');
             setLastname('');
             setEmail('');
+            setTelephone('');
+            setRole('');
+            setCalendar('');
             setAddress('');
             navigate('/dash/contacts');
         }
@@ -40,6 +47,10 @@ const NewContactForm = () => {
     const onFirstnameChanged = e => setFirstname(e.target.value);
     const onLastnameChanged = e => setLastname(e.target.value);
     const onEmailChanged = e => setEmail(e.target.value);
+    const onTelephoneChanged = e => setTelephone(e.target.value);
+    const onRoleChanged = e => setRole(e.target.value);
+    const onCalendarChanged = e => setCalendar(e.target.value);
+    const onAnnualReportChanged = e => setAnnualReport(e.target.checked);
     const onStreetChanged = e => setAddress({...address, street: e.target.value}); //TODO: fix this
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
@@ -51,7 +62,7 @@ const NewContactForm = () => {
 
     const onSaveContactClicked = async (e) => {
         e.preventDefault();
-        await addNewContact({firstname, lastname, email, address, personal});
+        await addNewContact({firstname, lastname, email, telephone, role, calendar, annualReport, address, personal});
     };
 
     const {
@@ -59,6 +70,9 @@ const NewContactForm = () => {
         firstnameClassName,
         lastnameClassName,
         emailClassName,
+        telephoneClassName,
+        roleClassName,
+        calendarClassName,
         streetClassName,
         cityClassName,
         zipClassName,
@@ -113,7 +127,7 @@ const NewContactForm = () => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
-                            <Form.Control placeholder="Enter email"
+                            <Form.Control placeholder="Email"
                                           className={emailClassName}
                                           type="email"
                                           value={String(email)}
@@ -126,6 +140,28 @@ const NewContactForm = () => {
                                         checked={Boolean(personal)}
                                         onChange={onPersonalChanged}/>
                         </Form.Group>}
+                    </Row>
+
+                    <Row className="mb-3">
+                        <Form.Group sm={6} as={Col} controlId="telephone">
+                            <Form.Label>Telephone:</Form.Label>
+                            <Form.Control placeholder="Telephone"
+                                          className={telephoneClassName}
+                                          autoComplete="off"
+                                          type="telephone"
+                                          value={String(telephone)}
+                                          onChange={onTelephoneChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={6} as={Col} controlId="role">
+                            <Form.Label>Role:</Form.Label>
+                            <Form.Control placeholder="Role"
+                                          className={roleClassName}
+                                          autoComplete="off"
+                                          type="role"
+                                          value={String(role)}
+                                          onChange={onRoleChanged}/>
+                        </Form.Group>
                     </Row>
 
                     {/*ADDRESS*/}
@@ -174,6 +210,30 @@ const NewContactForm = () => {
                                               selectButtonClassName={countryClassName + " countrySelect"}/>
                         </Form.Group>
                     </Row>
+
+                    {/*INFO*/}
+
+                    <h5>Info</h5>
+
+                    <Row className="mb-3">
+                        <Form.Group sm={2} as={Col} controlId="calendar">
+                            <Form.Label>Calendar:</Form.Label>
+                            <Form.Control placeholder="Amount of Calendar"
+                                          className={calendarClassName}
+                                          autoComplete="off"
+                                          type="calendar"
+                                          value={String(calendar)}
+                                          onChange={onCalendarChanged}/>
+                        </Form.Group>
+
+                        <Form.Group sm={3} as={Col} id="annualReport">
+                            <Form.Check label="Annual Report"
+                                        type="checkbox"
+                                        checked={Boolean(annualReport)}
+                                        onChange={onAnnualReportChanged}/>
+                        </Form.Group>
+                    </Row>
+
                 </Form>
                 <OverlayTrigger
                     placement="right"

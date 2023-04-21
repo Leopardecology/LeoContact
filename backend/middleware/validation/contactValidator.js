@@ -29,6 +29,31 @@ exports.validateContact = [
         .isEmail()
         .withMessage('Invalid email address!')
         .bail(),
+    check('telephone')
+        .trim()
+        .not()
+        .isEmpty()
+        .withMessage('Telephone can not be empty!').bail()
+        .matches(/^\+?\d+$/)
+        .withMessage('Telephone needs to be a number with an optional "+" at the beginning!')
+        .bail(),
+    check('role')
+        .trim()
+        .isLength({max: 50})
+        .withMessage('For Role, a maximum of 50 characters is allowed!')
+        .bail(),
+    check('calendar')
+        .default(0)
+        .trim()
+        .isNumeric()
+        .withMessage('Calendar amount needs to be a Number!').bail()
+        .isLength({max: 5})
+        .withMessage('For Calendar amount, a maximum of 5 characters is allowed!')
+        .bail(),
+    check('annualReport')
+        .trim()
+        .isBoolean()
+        .bail(),
     check('address.street')
         .trim()
         .not()
