@@ -76,7 +76,7 @@ const EditUserForm = ({user}) => {
     // don't show delete button if user is himself
     const deleteButton = user.username !== loggedInUser ? (
         <OverlayTrigger
-            placement="right"
+            placement="left"
             overlay={
                 <Tooltip id="my-tooltip-id">
                     <strong>Delete</strong>

@@ -8,6 +8,7 @@ import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip
 import ReactFlagsSelect from "react-flags-select";
 import {errorHandlingContact} from "./ErrorHandlingContact";
 import useAuth from "../../hooks/useAuth";
+import editContact from "./EditContact";
 
 const EditContactForm = ({contact}) => {
 
@@ -34,6 +35,8 @@ const EditContactForm = ({contact}) => {
     const [address, setAddress] = useState(contact.address);
     const [personal, setPersonal] = useState(contact.personal);
     const [Show, setShow] = useState(false);
+    const [showErrorModal, setShowErrorModal] = useState(false);
+
 
     useEffect(() => {
         if (isSuccess || isDelSuccess) {
@@ -60,14 +63,16 @@ const EditContactForm = ({contact}) => {
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
     const onPersonalChanged = () => setPersonal(prev => !prev);
+    const handleCloseErrorModal = () => setShowErrorModal(false);
+
 
     function onCountryChanged(code) {
         setAddress({...address, country: code});
     }
 
-    const onSaveContactClicked = async () => {
-        await updateContact({
-            id: contact.id,
+    const onSaveContactClicked = async (e) => {
+        e.preventDefault();
+        const result = await updateContact({
             firstname,
             lastname,
             email,
@@ -78,7 +83,11 @@ const EditContactForm = ({contact}) => {
             address,
             personal
         });
+        if (error) {
+            setShowErrorModal(true);
+        }
     };
+
 
     const onDeleteContactClicked = async () => {
         await deleteContact({id: contact.id});
@@ -122,7 +131,7 @@ const EditContactForm = ({contact}) => {
 
                     <OverlayTrigger
                         trigger={['hover', 'focus']}
-                        placement="right"
+                        placement="left"
                         overlay={
                             <Tooltip id="my-tooltip-id">
                                 <strong>Delete</strong>
@@ -175,7 +184,7 @@ const EditContactForm = ({contact}) => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="firstname">
                             <Form.Label>Firstname:</Form.Label>
-                            <Form.Control placeholder="Firstname"
+                            <Form.Control placeholder=""
                                           className={firstnameClassName}
                                           autoComplete="off"
                                           type="text"
@@ -185,7 +194,7 @@ const EditContactForm = ({contact}) => {
 
                         <Form.Group sm={6} as={Col} controlId="lastname">
                             <Form.Label>Lastname:</Form.Label>
-                            <Form.Control placeholder="Lastname"
+                            <Form.Control placeholder=""
                                           className={lastnameClassName}
                                           autoComplete="off"
                                           type="text"
@@ -197,7 +206,7 @@ const EditContactForm = ({contact}) => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
-                            <Form.Control placeholder="Enter email"
+                            <Form.Control placeholder=""
                                           className={emailClassName}
                                           type="email"
                                           value={String(email)}
@@ -216,7 +225,7 @@ const EditContactForm = ({contact}) => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="telephone">
                             <Form.Label>Telephone:</Form.Label>
-                            <Form.Control placeholder="Telephone"
+                            <Form.Control placeholder=""
                                           className={telephoneClassName}
                                           autoComplete="off"
                                           type="telephone"
@@ -226,7 +235,7 @@ const EditContactForm = ({contact}) => {
 
                         <Form.Group sm={6} as={Col} controlId="role">
                             <Form.Label>Role:</Form.Label>
-                            <Form.Control placeholder="Role"
+                            <Form.Control placeholder=""
                                           className={roleClassName}
                                           autoComplete="off"
                                           type="role"
@@ -242,7 +251,7 @@ const EditContactForm = ({contact}) => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="street">
                             <Form.Label>Street:</Form.Label>
-                            <Form.Control placeholder="Street"
+                            <Form.Control placeholder=""
                                           className={streetClassName}
                                           autoComplete="off"
                                           type="street"
@@ -254,7 +263,7 @@ const EditContactForm = ({contact}) => {
                     <Row>
                         <Form.Group sm={4} as={Col} controlId="city">
                             <Form.Label>City:</Form.Label>
-                            <Form.Control placeholder="City"
+                            <Form.Control placeholder=""
                                           className={cityClassName}
                                           autoComplete="off"
                                           type="city"
@@ -264,7 +273,7 @@ const EditContactForm = ({contact}) => {
 
                         <Form.Group sm={4} as={Col} controlId="zip">
                             <Form.Label>Zip:</Form.Label>
-                            <Form.Control placeholder="Zip"
+                            <Form.Control placeholder=""
                                           className={zipClassName}
                                           autoComplete="off"
                                           type="zip"
@@ -324,7 +333,19 @@ const EditContactForm = ({contact}) => {
                     </Button>
                 </OverlayTrigger>
 
-                {errorContent}
+                <Modal show={showErrorModal} onHide={handleCloseErrorModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Error</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {errorContent}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseErrorModal}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
             </Container>
         </>

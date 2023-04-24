@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
 import useTitle from "../../hooks/useTitle";
-import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {Button, Col, Container, Form, OverlayTrigger, Row, Stack, Tooltip, Modal} from "react-bootstrap";
 import ReactFlagsSelect from "react-flags-select";
 import {errorHandlingContact} from "./ErrorHandlingContact";
 import useAuth from "../../hooks/useAuth";
@@ -30,6 +30,8 @@ const NewContactForm = () => {
     const [annualReport, setAnnualReport] = useState(false);
     const [address, setAddress] = useState('');
     const [personal, setPersonal] = useState(false);
+    const [showErrorModal, setShowErrorModal] = useState(false);
+
 
     useEffect(() => {
         if (isSuccess) {
@@ -55,6 +57,8 @@ const NewContactForm = () => {
     const onCityChanged = e => setAddress({...address, city: e.target.value});
     const onZipChanged = e => setAddress({...address, zip: e.target.value});
     const onPersonalChanged = e => setPersonal(e.target.checked);
+    const handleCloseErrorModal = () => setShowErrorModal(false);
+
 
     function onCountryChanged(code) {
         setAddress({...address, country: code});
@@ -62,7 +66,20 @@ const NewContactForm = () => {
 
     const onSaveContactClicked = async (e) => {
         e.preventDefault();
-        await addNewContact({firstname, lastname, email, telephone, role, calendar, annualReport, address, personal});
+        const result = await addNewContact({
+            firstname,
+            lastname,
+            email,
+            telephone,
+            role,
+            calendar,
+            annualReport,
+            address,
+            personal
+        });
+        if (error) {
+            setShowErrorModal(true);
+        }
     };
 
     const {
@@ -105,7 +122,7 @@ const NewContactForm = () => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="firstname">
                             <Form.Label>Firstname:</Form.Label>
-                            <Form.Control placeholder="Firstname"
+                            <Form.Control placeholder=""
                                           className={firstnameClassName}
                                           autoComplete="off"
                                           type="text"
@@ -115,7 +132,7 @@ const NewContactForm = () => {
 
                         <Form.Group sm={6} as={Col} controlId="lastname">
                             <Form.Label>Lastname:</Form.Label>
-                            <Form.Control placeholder="Lastname"
+                            <Form.Control placeholder=""
                                           className={lastnameClassName}
                                           autoComplete="off"
                                           type="text"
@@ -127,7 +144,7 @@ const NewContactForm = () => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="email">
                             <Form.Label>Email:</Form.Label>
-                            <Form.Control placeholder="Email"
+                            <Form.Control placeholder=""
                                           className={emailClassName}
                                           type="email"
                                           value={String(email)}
@@ -145,7 +162,7 @@ const NewContactForm = () => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="telephone">
                             <Form.Label>Telephone:</Form.Label>
-                            <Form.Control placeholder="Telephone"
+                            <Form.Control placeholder=""
                                           className={telephoneClassName}
                                           autoComplete="off"
                                           type="telephone"
@@ -155,7 +172,7 @@ const NewContactForm = () => {
 
                         <Form.Group sm={6} as={Col} controlId="role">
                             <Form.Label>Role:</Form.Label>
-                            <Form.Control placeholder="Role"
+                            <Form.Control placeholder=""
                                           className={roleClassName}
                                           autoComplete="off"
                                           type="role"
@@ -171,7 +188,7 @@ const NewContactForm = () => {
                     <Row className="mb-3">
                         <Form.Group sm={6} as={Col} controlId="street">
                             <Form.Label>Street:</Form.Label>
-                            <Form.Control placeholder="Street"
+                            <Form.Control placeholder=""
                                           className={streetClassName}
                                           autoComplete="off"
                                           type="street"
@@ -183,7 +200,7 @@ const NewContactForm = () => {
                     <Row>
                         <Form.Group sm={4} as={Col} controlId="city">
                             <Form.Label>City:</Form.Label>
-                            <Form.Control placeholder="City"
+                            <Form.Control placeholder=""
                                           className={cityClassName}
                                           autoComplete="off"
                                           type="city"
@@ -193,7 +210,7 @@ const NewContactForm = () => {
 
                         <Form.Group sm={4} as={Col} controlId="zip">
                             <Form.Label>Zip:</Form.Label>
-                            <Form.Control placeholder="Zip"
+                            <Form.Control placeholder=""
                                           className={zipClassName}
                                           autoComplete="off"
                                           type="zip"
@@ -208,6 +225,7 @@ const NewContactForm = () => {
                                               selected={address.country}
                                               onSelect={(code) => onCountryChanged(code)}
                                               selectButtonClassName={countryClassName + " countrySelect"}/>
+
                         </Form.Group>
                     </Row>
 
@@ -250,8 +268,19 @@ const NewContactForm = () => {
                     </Button>
                 </OverlayTrigger>
 
-
-                {errorContent}
+                <Modal show={showErrorModal} onHide={handleCloseErrorModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Error</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {errorContent}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseErrorModal}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
             </Container>
         </>
