@@ -10,6 +10,16 @@
 
 /* GENERAL */
 
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+}
+
 h3 {
     padding-top: 0.9rem;
 }

@@ -77,7 +77,7 @@ const ContactsList = () => {
                 </Button>
             </OverlayTrigger>
             <OverlayTrigger
-                placement="right"
+                placement="left"
                 overlay={<Tooltip id="my-tooltip-id">
                     <strong>Add New Contact</strong>
                 </Tooltip>}>

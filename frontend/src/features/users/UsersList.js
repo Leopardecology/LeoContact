@@ -60,7 +60,7 @@ const UsersList = () => {
                     </OverlayTrigger>
 
                     <OverlayTrigger
-                        placement="right"
+                        placement="left"
                         overlay={
                             <Tooltip id="my-tooltip-id">
                                 <strong>Add New User</strong>
