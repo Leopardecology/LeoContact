@@ -124,6 +124,8 @@ Form {
     padding-bottom: 1rem;
     font-weight: 700;
     color: #6c6c6c;
+    right: 1rem;
+    bottom: 1rem;
 }
 
 /* NAVBAR */
