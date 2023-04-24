@@ -15,5 +15,5 @@
 3. ``` cd frontend/ ```
 4. ``` npm i ```
 5. ``` npm run build ```
-6. ``` sudo rm -rf /var/www/html/* ```
-7. ```sudo cp -r /home/leo/apps/LeoContact/frontend/build/* /var/www/html```
+6. ``` sudo rm -rf /var/www/LeoContact/* ```
+7. ```sudo cp -r /home/leo/apps/LeoContact/frontend/build/* /var/www/LeoContact/```
