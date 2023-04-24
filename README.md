@@ -7,7 +7,7 @@
 2. ``` git pull ```
 3. ``` cd backend/ ```
 4. ``` npm i ```
-5. ``` pm2 restart 0 ```
+5. ``` pm2 restart (correct number) ```
 
 ### Frontend
 1. ``` cd apps/LeoContact/ ```
