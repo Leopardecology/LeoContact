@@ -66,7 +66,7 @@ const NewContactForm = () => {
 
     const onSaveContactClicked = async (e) => {
         e.preventDefault();
-        const result = await addNewContact({
+        await addNewContact({
             firstname,
             lastname,
             email,

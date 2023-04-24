@@ -8,7 +8,6 @@ import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip
 import ReactFlagsSelect from "react-flags-select";
 import {errorHandlingContact} from "./ErrorHandlingContact";
 import useAuth from "../../hooks/useAuth";
-import editContact from "./EditContact";
 
 const EditContactForm = ({contact}) => {
 
@@ -72,7 +71,8 @@ const EditContactForm = ({contact}) => {
 
     const onSaveContactClicked = async (e) => {
         e.preventDefault();
-        const result = await updateContact({
+        await updateContact({
+            id: contact.id,
             firstname,
             lastname,
             email,
