@@ -82,10 +82,9 @@ const EditContactForm = ({contact}) => {
             annualReport,
             address,
             personal
-        });
-        if (error) {
+        }).unwrap().catch(() => {
             setShowErrorModal(true);
-        }
+        });
     };
 
 
@@ -340,17 +339,11 @@ const EditContactForm = ({contact}) => {
                     <Modal.Body>
                         {errorContent}
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseErrorModal}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
 
             </Container>
         </>
-    )
-        ;
+    );
 };
 
 export default EditContactForm;

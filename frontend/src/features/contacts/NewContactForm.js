@@ -76,10 +76,9 @@ const NewContactForm = () => {
             annualReport,
             address,
             personal
-        });
-        if (error) {
+        }).unwrap().catch(() => {
             setShowErrorModal(true);
-        }
+        });
     };
 
     const {
@@ -275,11 +274,6 @@ const NewContactForm = () => {
                     <Modal.Body>
                         {errorContent}
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseErrorModal}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
 
             </Container>
