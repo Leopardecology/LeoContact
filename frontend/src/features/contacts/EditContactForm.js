@@ -10,6 +10,8 @@ import useAuth from "../../hooks/useAuth";
 import AddressFields from "./shared/AddressFields";
 import ContactFormFields from "./shared/ContactFormFields";
 import ContactInfoFields from "./shared/ContactInfoFields";
+import {handleContactChange, handleCheckboxChange, handleAddressChange} from "./shared/contactFormHandlers";
+
 
 const EditContactForm = ({contact}) => {
     const {isAdmin} = useAuth();
@@ -36,30 +38,18 @@ const EditContactForm = ({contact}) => {
         }
     }, [isSuccess, isDelSuccess, navigate]);
 
-    const handleContactChange = (e) => {
-        const {name, value} = e.target;
-        setContactData({...contactData, [name]: value});
+    const handleContactChangeWrapper = (e) => {
+        handleContactChange(e, contactData, setContactData);
     };
 
-    const handleCheckboxChange = (e) => {
-        const {name, checked} = e.target;
-        setContactData({...contactData, [name]: checked});
+    const handleCheckboxChangeWrapper = (e) => {
+        handleCheckboxChange(e, contactData, setContactData);
     };
 
-    const handleAddressChange = (e, name, value) => {
-        if (e) {
-            const {name, value} = e.target;
-            setContactData({
-                ...contactData,
-                address: {...contactData.address, [name]: value},
-            });
-        } else {
-            setContactData({
-                ...contactData,
-                address: {...contactData.address, [name]: value},
-            });
-        }
+    const handleAddressChangeWrapper = (e, name, value) => {
+        handleAddressChange(e, name, value, contactData, setContactData);
     };
+
 
     const handleCloseErrorModal = () => setShowErrorModal(false);
 
@@ -158,8 +148,8 @@ const EditContactForm = ({contact}) => {
                     <ContactFormFields
                         contactData={contactData}
                         isAdmin={isAdmin}
-                        onContactChange={handleContactChange}
-                        onCheckboxChange={handleCheckboxChange}
+                        onContactChange={handleContactChangeWrapper}
+                        onCheckboxChange={handleCheckboxChangeWrapper}
                     />
 
                     <AddressFields
