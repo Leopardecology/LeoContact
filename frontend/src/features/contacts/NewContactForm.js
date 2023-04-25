@@ -1,23 +1,22 @@
 import {useEffect, useState} from "react";
-import {useAddNewContactMutation} from "../contactsApiSlice";
+import {useAddNewContactMutation} from "./contactsApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faSave} from "@fortawesome/free-solid-svg-icons";
-import useTitle from "../../../hooks/useTitle";
+import useTitle from "../../hooks/useTitle";
 import {Button, Container, Form, OverlayTrigger, Stack, Tooltip, Modal} from "react-bootstrap";
-import {errorHandlingContact} from "../ErrorHandlingContact";
-import useAuth from "../../../hooks/useAuth";
-import ContactFormFields from "./ContactFormFields";
-import ContactInfoFields from "./ContactInfoFields";
-import AddressFields from "./AddressFields";
+import {errorHandlingContact} from "./ErrorHandlingContact";
+import useAuth from "../../hooks/useAuth";
+import ContactFormFields from "./shared/ContactFormFields";
+import ContactInfoFields from "./shared/ContactInfoFields";
+import AddressFields from "./shared/AddressFields";
 
 const NewContactForm = () => {
     useTitle("LeoContacts - New Contact");
 
     const {isAdmin} = useAuth();
 
-    const [
-        addNewContact,
+    const [addNewContact,
         {isSuccess, error}
     ] = useAddNewContactMutation();
 
@@ -54,7 +53,7 @@ const NewContactForm = () => {
         }
     }, [isSuccess, navigate]);
 
-    const handleInputChange = (e) => {
+    const handleContactChange = (e) => {
         const {name, value} = e.target;
         setContactData({...contactData, [name]: value});
     };
@@ -104,22 +103,29 @@ const NewContactForm = () => {
 
                 <Form onSubmit={(e) => e.preventDefault()}>
                     <ContactFormFields
-                        contactData={contactData}
                         isAdmin={isAdmin}
-                        handleInputChange={handleInputChange}
-                        handleCheckboxChange={handleCheckboxChange}
+                        onFirstnameChanged={(e) => handleContactChange(e)}
+                        onLastnameChanged={(e) => handleContactChange(e)}
+                        onEmailChanged={(e) => handleContactChange(e)}
+                        onPersonalChanged={(e) => handleCheckboxChange(e)}
+                        onTelephoneChanged={(e) => handleContactChange(e)}
+                        onRoleChanged={(e) => handleContactChange(e)}
+
                     />
+
 
                     <AddressFields
                         addressData={contactData.address}
-                        handleAddressChange={handleAddressChange}
+                        onStreetChanged={(e) => handleAddressChange("street", e.target.value)}
+                        onCityChanged={(e) => handleAddressChange("city", e.target.value)}
+                        onZipChanged={(e) => handleAddressChange("zip", e.target.value)}
+                        onCountryChanged={(code) => handleAddressChange("country", code)}
                     />
 
+
                     <ContactInfoFields
-                        calendar={contactData.calendar}
-                        annualReport={contactData.annualReport}
-                        handleInputChange={handleInputChange}
-                        handleCheckboxChange={handleCheckboxChange}
+                        onCalendarChanged={(e) => handleContactChange(e)}
+                        onAnnualReportChanged={(e) => handleCheckboxChange(e)}
                     />
                 </Form>
 

@@ -16,15 +16,17 @@ const ContactInfoFields = ({
                     <Form.Label>Calendar:</Form.Label>
                     <Form.Control placeholder="Amount of Calendar"
                                   autoComplete="off"
-                                  type="calendar"
-                                  value={String(calendar)}
+                                  type="text"
+                                  name="calendar"
+                                  value={calendar}
                                   onChange={onCalendarChanged}/>
                 </Form.Group>
 
                 <Form.Group sm={3} as={Col} id="annualReport">
                     <Form.Check label="Annual Report"
                                 type="checkbox"
-                                checked={Boolean(annualReport)}
+                                name="annualReport"
+                                checked={annualReport}
                                 onChange={onAnnualReportChanged}/>
                 </Form.Group>
             </Row>
