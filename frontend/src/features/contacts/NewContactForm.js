@@ -106,10 +106,10 @@ const NewContactForm = () => {
 
                     <AddressFields
                         addressData={contactData.address}
-                        onStreetChanged={handleAddressChange}
-                        onCityChanged={handleAddressChange}
-                        onZipChanged={handleAddressChange}
-                        onCountryChanged={handleAddressChange}
+                        onStreetChanged={handleAddressChangeWrapper}
+                        onCityChanged={handleAddressChangeWrapper}
+                        onZipChanged={handleAddressChangeWrapper}
+                        onCountryChanged={handleAddressChangeWrapper}
                     />
 
 
