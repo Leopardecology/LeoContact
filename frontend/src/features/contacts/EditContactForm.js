@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {useDeleteContactMutation, useUpdateContactMutation} from './contactsApiSlice';
-import {useNavigate} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowLeft, faSave, faTrash} from '@fortawesome/free-solid-svg-icons';
-import circleExclamation from '../../img/circleExclamation.png';
-import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip} from 'react-bootstrap';
-import {errorHandlingContact} from './ErrorHandlingContact';
-import useAuth from '../../hooks/useAuth';
-import AddressFields from './shared/AddressFields';
-import ContactFormFields from './shared/ContactFormFields';
-import ContactInfoFields from './shared/ContactInfoFields';
+import React, {useEffect, useState} from "react";
+import {useDeleteContactMutation, useUpdateContactMutation} from "./contactsApiSlice";
+import {useNavigate} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft, faSave, faTrash} from "@fortawesome/free-solid-svg-icons";
+import circleExclamation from "../../img/circleExclamation.png";
+import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {errorHandlingContact} from "./ErrorHandlingContact";
+import useAuth from "../../hooks/useAuth";
+import AddressFields from "./shared/AddressFields";
+import ContactFormFields from "./shared/ContactFormFields";
+import ContactInfoFields from "./shared/ContactInfoFields";
 
 const EditContactForm = ({contact}) => {
     const {isAdmin} = useAuth();
@@ -32,7 +32,7 @@ const EditContactForm = ({contact}) => {
 
     useEffect(() => {
         if (isSuccess || isDelSuccess) {
-            navigate('/dash/contacts');
+            navigate("/dash/contacts");
         }
     }, [isSuccess, isDelSuccess, navigate]);
 
@@ -80,38 +80,38 @@ const EditContactForm = ({contact}) => {
 
     return (
         <>
-            <Container className={'prevent-select'}>
-                <h3 className={'title'}>Contact {contact.lastname}</h3>
+            <Container className={"prevent-select"}>
+                <h3 className={"title"}>Contact {contact.lastname}</h3>
 
-                <Stack direction={'horizontal'} gap={3}>
+                <Stack direction={"horizontal"} gap={3}>
                     <OverlayTrigger
-                        trigger={['hover', 'focus']}
-                        placement='right'
+                        trigger={["hover", "focus"]}
+                        placement="right"
                         overlay={
-                            <Tooltip id='my-tooltip-id'>
+                            <Tooltip id="my-tooltip-id">
                                 <strong>Back</strong>
                             </Tooltip>
                         }
                     >
                         <Button
-                            className='back-button'
-                            onClick={() => navigate('/dash/contacts')}
+                            className="back-button"
+                            onClick={() => navigate("/dash/contacts")}
                         >
                             <FontAwesomeIcon icon={faArrowLeft}/>
                         </Button>
                     </OverlayTrigger>
 
                     <OverlayTrigger
-                        trigger={['hover', 'focus']}
-                        placement='left'
+                        trigger={["hover", "focus"]}
+                        placement="left"
                         overlay={
-                            <Tooltip id='my-tooltip-id'>
+                            <Tooltip id="my-tooltip-id">
                                 <strong>Delete</strong>
                             </Tooltip>
                         }
                     >
                         <Button
-                            className='delete-button ms-auto'
+                            className="delete-button ms-auto"
 
                             onClick={() => setShow(true)}
                         >
@@ -179,7 +179,7 @@ const EditContactForm = ({contact}) => {
                 </Form>
 
                 <OverlayTrigger
-                    trigger={['hover', 'focus']}
+                    trigger={["hover", "focus"]}
                     placement="right"
                     overlay={<Tooltip id="my-tooltip-id">
                         <strong>Save</strong>
