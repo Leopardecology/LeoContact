@@ -16,9 +16,7 @@ const NewContactForm = () => {
 
     const {isAdmin} = useAuth();
 
-    const [addNewContact,
-        {isSuccess, error}
-    ] = useAddNewContactMutation();
+    const [addNewContact, {isSuccess, error}] = useAddNewContactMutation();
 
     const navigate = useNavigate();
 
@@ -63,12 +61,21 @@ const NewContactForm = () => {
         setContactData({...contactData, [name]: checked});
     };
 
-    const handleAddressChange = (name, value) => {
-        setContactData({
-            ...contactData,
-            address: {...contactData.address, [name]: value},
-        });
+    const handleAddressChange = (e, name, value) => {
+        if (e) {
+            const {name, value} = e.target;
+            setContactData({
+                ...contactData,
+                address: {...contactData.address, [name]: value},
+            });
+        } else {
+            setContactData({
+                ...contactData,
+                address: {...contactData.address, [name]: value},
+            });
+        }
     };
+
 
     const onSaveContactClicked = async (e) => {
         e.preventDefault();
@@ -103,29 +110,26 @@ const NewContactForm = () => {
 
                 <Form onSubmit={(e) => e.preventDefault()}>
                     <ContactFormFields
+                        contactData={contactData}
                         isAdmin={isAdmin}
-                        onFirstnameChanged={(e) => handleContactChange(e)}
-                        onLastnameChanged={(e) => handleContactChange(e)}
-                        onEmailChanged={(e) => handleContactChange(e)}
-                        onPersonalChanged={(e) => handleCheckboxChange(e)}
-                        onTelephoneChanged={(e) => handleContactChange(e)}
-                        onRoleChanged={(e) => handleContactChange(e)}
-
+                        onContactChange={handleContactChange}
+                        onCheckboxChange={handleCheckboxChange}
                     />
-
 
                     <AddressFields
                         addressData={contactData.address}
-                        onStreetChanged={(e) => handleAddressChange("street", e.target.value)}
-                        onCityChanged={(e) => handleAddressChange("city", e.target.value)}
-                        onZipChanged={(e) => handleAddressChange("zip", e.target.value)}
-                        onCountryChanged={(code) => handleAddressChange("country", code)}
+                        onStreetChanged={handleAddressChange}
+                        onCityChanged={handleAddressChange}
+                        onZipChanged={handleAddressChange}
+                        onCountryChanged={handleAddressChange}
                     />
 
 
                     <ContactInfoFields
-                        onCalendarChanged={(e) => handleContactChange(e)}
-                        onAnnualReportChanged={(e) => handleCheckboxChange(e)}
+                        calendar={contactData.calendar}
+                        annualReport={contactData.annualReport}
+                        onCalendarChanged={handleContactChange}
+                        onAnnualReportChanged={handleCheckboxChange}
                     />
                 </Form>
 
