@@ -221,6 +221,15 @@ Form {
     margin-top: 0.5rem;
 }
 
+.large-checkbox {
+    margin-top: 2.5rem !important;
+    margin-left: 1rem;
+}
+
+.large-checkbox input[type='checkbox'] {
+    transform: scale(1.5);
+}
+
 /* TABLE */
 
 table {

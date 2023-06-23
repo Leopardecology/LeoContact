@@ -50,7 +50,7 @@ const ContactFormFields = ({
                 </Form.Group>
 
                 {isAdmin && (
-                    <Form.Group sm={3} as={Col} id="personal">
+                    <Form.Group sm={3} as={Col} id="personal" className="large-checkbox">
                         <Form.Check
                             label="Personal"
                             type="checkbox"
