@@ -162,9 +162,9 @@ const EditContactForm = ({contact}) => {
 
                     <ContactInfoFields
                         calendar={contactData.calendar}
-                        onCalendarChanged={handleContactChange}
+                        onCalendarChanged={handleContactChangeWrapper}
                         annualReport={contactData.annualReport}
-                        onAnnualReportChanged={handleCheckboxChange}
+                        onAnnualReportChanged={handleCheckboxChangeWrapper}
                     />
                 </Form>
 
