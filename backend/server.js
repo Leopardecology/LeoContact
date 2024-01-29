@@ -11,7 +11,7 @@ const corsOption = require('./config/corsOptions');
 const connectDB = require('./config/dbConnection');
 const mongoose = require('mongoose').default; //TODO: default because of bug?
 const {logEvents} = require('./middleware/logger');
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3600;
 
 mongoose.set('strictQuery', false);
 

@@ -4,6 +4,7 @@ import {setupListeners} from "@reduxjs/toolkit/query";
 import authReducer from "../features/auth/authSlice";
 
 let devtoolsEnv;
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
     devtoolsEnv = true;
 } else if (process.env.NODE_ENV === 'production') {
