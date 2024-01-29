@@ -19,11 +19,27 @@ const getAllContacts = async (req, res) => {
 // @route POST /contacts
 // @access Private
 const createNewContact = async (req, res) => {
-    const {firstname, lastname, email, telephone, role, calendar, annualReport, address, personal} = req.body;
+    const {
+        salutation,
+        firstname,
+        lastname,
+        company,
+        email,
+        telephone,
+        role,
+        calendar,
+        annualReport,
+        address,
+        comment,
+        personal
+    } = req.body;
 
 
     // Check for duplicate email
-    const duplicate = await Contact.findOne({email}).collation({locale: 'en', strength: 2}).lean().exec();
+    const duplicate = await Contact.findOne({email}).collation({
+        locale: 'en',
+        strength: 2
+    }).lean().exec();
 
     if (duplicate) {
         return res.status(409).json({
@@ -36,23 +52,64 @@ const createNewContact = async (req, res) => {
             ]
         });
     }
+    try {
+        // Create and store the new contact
+        const contact = await Contact.create({
+            salutation,
+            firstname,
+            lastname,
+            company,
+            email,
+            telephone,
+            role,
+            calendar,
+            annualReport,
+            address,
+            comment,
+            personal
+        });
 
-    // Create and store the new contact
-    const contact = await Contact.create({firstname, lastname, email, telephone, role, calendar, annualReport, address, personal});
+        if (contact) { // Created
+            return res.status(201).json({message: 'New contact created'});
+        } else {
+            return res.status(400).json({message: 'Invalid contact data received'});
+        }
 
-    if (contact) { // Created 
-        return res.status(201).json({message: 'New contact created'});
-    } else {
-        return res.status(400).json({message: 'Invalid contact data received'});
+    } catch (error) {
+        // Log the error to the console
+        console.error("Error creating new contact: ", error);
+
+        // Send a detailed error response
+        if (error.name === 'ValidationError') {
+            return res.status(422).json({
+                message: 'Validation error occurred',
+                errors: error.errors
+            });
+        } else {
+            return res.status(500).json({message: 'Internal server error'});
+        }
     }
-
 };
 
 // @desc Update a contact
 // @route PATCH /contacts
 // @access Private
 const updateContact = async (req, res) => {
-    const {id, firstname, lastname, email, telephone, role, calendar, annualReport, address, personal} = req.body;
+    const {
+        id,
+        salutation,
+        firstname,
+        lastname,
+        company,
+        email,
+        telephone,
+        role,
+        calendar,
+        annualReport,
+        address,
+        comment,
+        personal
+    } = req.body;
 
     // Confirm contact exists to update
     const contact = await Contact.findById(id).exec();
@@ -62,21 +119,27 @@ const updateContact = async (req, res) => {
     }
 
     // Check for duplicate email
-    const duplicate = await Contact.findOne({email}).collation({locale: 'en', strength: 2}).lean().exec();
+    const duplicate = await Contact.findOne({email}).collation({
+        locale: 'en',
+        strength: 2
+    }).lean().exec();
 
-    // Allow renaming of the original contact 
+    // Allow renaming of the original contact
     if (duplicate && duplicate?._id.toString() !== id) {
         return res.status(409).json({message: 'Duplicate contact email'});
     }
 
+    contact.salutation = salutation;
     contact.firstname = firstname;
     contact.lastname = lastname;
+    contact.company = company;
     contact.email = email;
     contact.telephone = telephone;
     contact.role = role;
     contact.calendar = calendar;
     contact.annualReport = annualReport;
     contact.address = address;
+    contact.comment = comment;
     contact.personal = personal;
 
     const updatedContact = await contact.save();
@@ -95,7 +158,7 @@ const deleteContact = async (req, res) => {
         return res.status(400).json({message: 'Contact ID required'});
     }
 
-    // Confirm contact exists to delete 
+    // Confirm contact exists to delete
     const contact = await Contact.findById(id).exec();
 
     if (!contact) {

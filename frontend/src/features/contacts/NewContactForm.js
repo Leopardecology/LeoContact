@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {useAddNewContactMutation} from "./contactsApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import ContactFormFields from "./shared/ContactFormFields";
 import ContactInfoFields from "./shared/ContactInfoFields";
 import AddressFields from "./shared/AddressFields";
-import {handleContactChange, handleAddressChange} from "./shared/contactFormHandlers";
+import {handleContactChange, handleCheckboxChange, handleAddressChange} from "./shared/contactFormHandlers";
 
 
 const NewContactForm = () => {
@@ -63,6 +63,10 @@ const NewContactForm = () => {
         handleContactChange(e, contactData, setContactData);
     };
 
+    const handleCheckboxChangeWrapper = (e) => {
+        handleCheckboxChange(e, contactData, setContactData);
+    };
+
     const handleAddressChangeWrapper = (e, name, value) => {
         handleAddressChange(e, name, value, contactData, setContactData);
     };
@@ -103,6 +107,7 @@ const NewContactForm = () => {
                         contactData={contactData}
                         isAdmin={isAdmin}
                         onContactChange={handleContactChangeWrapper}
+                        onCheckboxChange={handleCheckboxChangeWrapper}
                     />
 
                     <AddressFields
@@ -118,10 +123,11 @@ const NewContactForm = () => {
                         calendar={contactData.calendar}
                         annualReport={contactData.annualReport}
                         comment={contactData.comment}
-                        onCalendarChanged={handleContactChange}
-                        onAnnualReportChanged={handleContactChange}
-                        onCommentChanged={handleContactChange}
+                        onCalendarChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onAnnualReportChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onCommentChanged={(e) => handleContactChange(e, contactData, setContactData)}
                     />
+
                 </Form>
 
                 <OverlayTrigger

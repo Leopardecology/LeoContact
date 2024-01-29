@@ -4,7 +4,7 @@ const contactSchema = new mongoose.Schema({
         salutation: {
             type: String,
             enum: ['Mr', 'Mrs', 'Ms', 'Dr', 'Prof'],
-            required: false
+            required: true
         },
         firstname: {
             type: String,

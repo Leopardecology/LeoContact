@@ -3,8 +3,10 @@ import {Alert, Col} from "react-bootstrap";
 export function errorHandlingContact(error) {
     let errorContent;
 
+    let errorMessageSalutation;
     let errorMessageFirstname;
     let errorMessageLastname;
+    let errorMessageCompany;
     let errorMessageEmail;
     let errorMessageTelephone;
     let errorMessageRole;
@@ -14,8 +16,10 @@ export function errorHandlingContact(error) {
     let errorMessageZip;
     let errorMessageCountry;
 
+    let salutationClassName;
     let firstnameClassName;
     let lastnameClassName;
+    let companyClassName;
     let emailClassName;
     let telephoneClassName;
     let roleClassName;
@@ -32,6 +36,17 @@ export function errorHandlingContact(error) {
 
         for (let i = 0; i < error.data.errors?.length; i++) {
             switch (error.data.errors[i].param) {
+                case 'salutation':
+                    salutationClassName = 'is-invalid';
+                    errorMessageSalutation = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+
+                    break;
                 case 'firstname':
                     firstnameClassName = 'is-invalid';
                     errorMessageFirstname = (
@@ -51,6 +66,15 @@ export function errorHandlingContact(error) {
                             </Alert>
                         </Col>
                     );
+                    break;
+                case 'company':
+                    companyClassName = 'is-invalid';
+                    errorMessageCompany = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>);
                     break;
                 case 'email':
                     emailClassName = 'is-invalid';
@@ -139,8 +163,10 @@ export function errorHandlingContact(error) {
 
         errorContent = (
             <>
+                {errorMessageSalutation}
                 {errorMessageFirstname}
                 {errorMessageLastname}
+                {errorMessageCompany}
                 {errorMessageEmail}
                 {errorMessageTelephone}
                 {errorMessageRole}
@@ -155,8 +181,10 @@ export function errorHandlingContact(error) {
 
     return {
         errorContent,
+        salutationClassName,
         firstnameClassName,
         lastnameClassName,
+        companyClassName,
         emailClassName,
         telephoneClassName,
         roleClassName,

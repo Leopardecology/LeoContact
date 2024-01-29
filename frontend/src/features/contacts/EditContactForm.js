@@ -25,6 +25,7 @@ import ContactFormFields from "./shared/ContactFormFields";
 import ContactInfoFields from "./shared/ContactInfoFields";
 import {
     handleContactChange,
+    handleCheckboxChange,
     handleAddressChange
 } from "./shared/contactFormHandlers";
 
@@ -56,6 +57,10 @@ const EditContactForm = ({contact}) => {
 
     const handleContactChangeWrapper = (e) => {
         handleContactChange(e, contactData, setContactData);
+    };
+
+    const handleCheckboxChangeWrapper = (e) => {
+        handleCheckboxChange(e, contactData, setContactData);
     };
 
     const handleAddressChangeWrapper = (e, name, value) => {
@@ -162,6 +167,7 @@ const EditContactForm = ({contact}) => {
                         contactData={contactData}
                         isAdmin={isAdmin}
                         onContactChange={handleContactChangeWrapper}
+                        onCheckboxChange={handleCheckboxChangeWrapper}
                     />
 
                     <AddressFields
@@ -174,11 +180,11 @@ const EditContactForm = ({contact}) => {
 
                     <ContactInfoFields
                         calendar={contactData.calendar}
-                        onCalendarChanged={handleContactChangeWrapper}
                         annualReport={contactData.annualReport}
-                        onAnnualReportChanged={handleContactChangeWrapper}
                         comment={contactData.comment}
-                        onCommentChanged={handleContactChangeWrapper}
+                        onCalendarChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onAnnualReportChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onCommentChanged={(e) => handleContactChange(e, contactData, setContactData)}
                     />
                 </Form>
 
