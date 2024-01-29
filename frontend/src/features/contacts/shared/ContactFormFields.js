@@ -7,10 +7,53 @@ const ContactFormFields = ({
                                onContactChange,
                                onCheckboxChange,
                            }) => {
-    const {firstname, lastname, email, personal, telephone, role} = contactData;
+    const {
+        salutation,
+        company,
+        firstname,
+        lastname,
+        email,
+        personal,
+        telephone,
+        role
+    } = contactData;
 
     return (
         <>
+            <Row className="mb-3">
+                <Form.Group sm={2} as={Col} controlId="salutation">
+                    <Form.Label>Salutation:</Form.Label>
+                    <Form.Select
+                        placeholder=""
+                        autoComplete="off"
+                        name="salutation"
+                        value={salutation}
+                        onChange={onContactChange}
+                    >
+                        <option value="">Select Salutation</option>
+                        {['Mr', 'Mrs', 'Ms', 'Dr', 'Prof']
+                            .map((salutationOption) => (
+                                <option key={salutationOption}
+                                        value={salutationOption}>
+                                    {salutationOption}
+                                </option>
+                            ))}
+                    </Form.Select>
+                </Form.Group>
+
+                <Form.Group sm={4} as={Col} controlId="company">
+                    <Form.Label>Company:</Form.Label>
+                    <Form.Control
+                        placeholder=""
+                        autoComplete="off"
+                        type="text"
+                        name="company"
+                        value={company}
+                        onChange={onContactChange}
+                    />
+                </Form.Group>
+            </Row>
+
             <Row className="mb-3">
                 <Form.Group sm={6} as={Col} controlId="firstname">
                     <Form.Label>Firstname:</Form.Label>
@@ -50,7 +93,8 @@ const ContactFormFields = ({
                 </Form.Group>
 
                 {isAdmin && (
-                    <Form.Group sm={3} as={Col} id="personal" className="large-checkbox">
+                    <Form.Group sm={3} as={Col} id="personal"
+                                className="large-checkbox">
                         <Form.Check
                             label="Personal"
                             type="checkbox"

@@ -1,16 +1,32 @@
 import React, {useEffect, useState} from "react";
-import {useDeleteContactMutation, useUpdateContactMutation} from "./contactsApiSlice";
+import {
+    useDeleteContactMutation,
+    useUpdateContactMutation
+} from "./contactsApiSlice";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faSave, faTrash} from "@fortawesome/free-solid-svg-icons";
 import circleExclamation from "../../img/circleExclamation.png";
-import {Button, Col, Container, Form, Modal, OverlayTrigger, Row, Stack, Tooltip} from "react-bootstrap";
+import {
+    Button,
+    Col,
+    Container,
+    Form,
+    Modal,
+    OverlayTrigger,
+    Row,
+    Stack,
+    Tooltip
+} from "react-bootstrap";
 import {errorHandlingContact} from "./ErrorHandlingContact";
 import useAuth from "../../hooks/useAuth";
 import AddressFields from "./shared/AddressFields";
 import ContactFormFields from "./shared/ContactFormFields";
 import ContactInfoFields from "./shared/ContactInfoFields";
-import {handleContactChange, handleCheckboxChange, handleAddressChange} from "./shared/contactFormHandlers";
+import {
+    handleContactChange,
+    handleAddressChange
+} from "./shared/contactFormHandlers";
 
 
 const EditContactForm = ({contact}) => {
@@ -40,10 +56,6 @@ const EditContactForm = ({contact}) => {
 
     const handleContactChangeWrapper = (e) => {
         handleContactChange(e, contactData, setContactData);
-    };
-
-    const handleCheckboxChangeWrapper = (e) => {
-        handleCheckboxChange(e, contactData, setContactData);
     };
 
     const handleAddressChangeWrapper = (e, name, value) => {
@@ -118,7 +130,8 @@ const EditContactForm = ({contact}) => {
                     <Modal.Body>
                         <Container>
                             <Row>
-                                <img className={"delete-symbol"} alt={"Warning"} src={circleExclamation}/>
+                                <img className={"delete-symbol"}
+                                     alt={"Warning"} src={circleExclamation}/>
                                 <h4>Delete this Contact?</h4>
                             </Row>
                             <Row>
@@ -149,7 +162,6 @@ const EditContactForm = ({contact}) => {
                         contactData={contactData}
                         isAdmin={isAdmin}
                         onContactChange={handleContactChangeWrapper}
-                        onCheckboxChange={handleCheckboxChangeWrapper}
                     />
 
                     <AddressFields
@@ -164,7 +176,9 @@ const EditContactForm = ({contact}) => {
                         calendar={contactData.calendar}
                         onCalendarChanged={handleContactChangeWrapper}
                         annualReport={contactData.annualReport}
-                        onAnnualReportChanged={handleCheckboxChangeWrapper}
+                        onAnnualReportChanged={handleContactChangeWrapper}
+                        comment={contactData.comment}
+                        onCommentChanged={handleContactChangeWrapper}
                     />
                 </Form>
 

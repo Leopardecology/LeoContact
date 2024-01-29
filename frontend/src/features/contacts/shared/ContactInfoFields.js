@@ -6,6 +6,8 @@ const ContactInfoFields = ({
                                onCalendarChanged,
                                annualReport,
                                onAnnualReportChanged,
+                               comment,
+                               onCommentChanged,
                            }) => {
     return (
         <>
@@ -15,7 +17,7 @@ const ContactInfoFields = ({
                 <Form.Group sm={2} as={Col} controlId="calendar">
                     <Form.Label>Calendar:</Form.Label>
                     <Form.Control
-                        placeholder="Amount of Calendar"
+                        placeholder="Amount"
                         autoComplete="off"
                         type="text"
                         name="calendar"
@@ -23,13 +25,26 @@ const ContactInfoFields = ({
                         onChange={onCalendarChanged}/>
                 </Form.Group>
 
-                <Form.Group sm={3} as={Col} className="large-checkbox" id="annualReport">
-                    <Form.Check
-                        label="Annual Report"
-                        type="checkbox"
+                <Form.Group sm={2} as={Col} controlId="annualReport">
+                    <Form.Label>Annual Report:</Form.Label>
+                    <Form.Control
+                        placeholder="Amount"
+                        autoComplete="off"
+                        type="text"
                         name="annualReport"
-                        checked={annualReport}
+                        value={annualReport}
                         onChange={onAnnualReportChanged}/>
+                </Form.Group>
+
+                <Form.Group sm={6} as={Col} controlId="comment">
+                    <Form.Label>Comment:</Form.Label>
+                    <Form.Control
+                        placeholder=""
+                        autoComplete="off"
+                        type="text"
+                        name="comment"
+                        value={comment}
+                        onChange={onCommentChanged}/>
                 </Form.Group>
             </Row>
 

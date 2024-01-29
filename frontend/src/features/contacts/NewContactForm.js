@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import ContactFormFields from "./shared/ContactFormFields";
 import ContactInfoFields from "./shared/ContactInfoFields";
 import AddressFields from "./shared/AddressFields";
-import {handleContactChange, handleCheckboxChange, handleAddressChange} from "./shared/contactFormHandlers";
+import {handleContactChange, handleAddressChange} from "./shared/contactFormHandlers";
 
 
 const NewContactForm = () => {
@@ -23,13 +23,16 @@ const NewContactForm = () => {
     const navigate = useNavigate();
 
     const [contactData, setContactData] = useState({
+        salutation: "",
+        company: "",
         firstname: "",
         lastname: "",
         email: "",
         telephone: "",
         role: "",
         calendar: "",
-        annualReport: false,
+        annualReport: "",
+        comment: "",
         address: {street: "", city: "", zip: "", country: ""},
         personal: false,
     });
@@ -39,13 +42,16 @@ const NewContactForm = () => {
     useEffect(() => {
         if (isSuccess) {
             setContactData({
+                salutation: "",
+                company: "",
                 firstname: "",
                 lastname: "",
                 email: "",
                 telephone: "",
                 role: "",
                 calendar: "",
-                annualReport: false,
+                annualReport: "",
+                comment: "",
                 address: {street: "", city: "", zip: "", country: ""},
                 personal: false,
             });
@@ -55,10 +61,6 @@ const NewContactForm = () => {
 
     const handleContactChangeWrapper = (e) => {
         handleContactChange(e, contactData, setContactData);
-    };
-
-    const handleCheckboxChangeWrapper = (e) => {
-        handleCheckboxChange(e, contactData, setContactData);
     };
 
     const handleAddressChangeWrapper = (e, name, value) => {
@@ -101,7 +103,6 @@ const NewContactForm = () => {
                         contactData={contactData}
                         isAdmin={isAdmin}
                         onContactChange={handleContactChangeWrapper}
-                        onCheckboxChange={handleCheckboxChangeWrapper}
                     />
 
                     <AddressFields
@@ -116,8 +117,10 @@ const NewContactForm = () => {
                     <ContactInfoFields
                         calendar={contactData.calendar}
                         annualReport={contactData.annualReport}
+                        comment={contactData.comment}
                         onCalendarChanged={handleContactChange}
-                        onAnnualReportChanged={handleCheckboxChange}
+                        onAnnualReportChanged={handleContactChange}
+                        onCommentChanged={handleContactChange}
                     />
                 </Form>
 

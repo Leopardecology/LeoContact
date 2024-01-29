@@ -2,7 +2,7 @@ import {Button, Col, Container, Row, Modal, Form} from "react-bootstrap";
 import {useEffect, useRef, useState} from "react";
 import usePersist from "../hooks/usePersist";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux/es/hooks/useDispatch";
+import {useDispatch} from "react-redux";
 import {useLoginMutation} from "../features/auth/authApiSlice";
 import {setCredentials} from "../features/auth/authSlice";
 import PulseLoader from "react-spinners/PulseLoader";

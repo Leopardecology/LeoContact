@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const contactSchema = new mongoose.Schema({
+        salutation: {
+            type: String,
+            enum: ['Mr', 'Mrs', 'Ms', 'Dr', 'Prof'],
+            required: false
+        },
         firstname: {
             type: String,
             required: true
@@ -8,6 +13,10 @@ const contactSchema = new mongoose.Schema({
         lastname: {
             type: String,
             required: true
+        },
+        company: {
+            type: String,
+            required: false
         },
         email: {
             type: String,
@@ -29,8 +38,8 @@ const contactSchema = new mongoose.Schema({
             required: true
         },
         annualReport: {
-            type: Boolean,
-            default: false,
+            type: Number,
+            default: 0,
             required: true
         },
         address: {
@@ -50,6 +59,11 @@ const contactSchema = new mongoose.Schema({
                 type: String,
                 required: true
             }
+        },
+        comment: {
+            type: String,
+            default: '',
+            required: false
         },
         personal: {
             type: Boolean,
