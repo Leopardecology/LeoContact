@@ -25,11 +25,9 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
-    // console.log(args) // request url, method, body
-    // console.log(api) // signal, dispatch, getState()
-    // console.log(extraOptions) //custom like {shout: true}
-
     let result = await baseQuery(args, api, extraOptions);
+
+    // console.log("Server response error:", result); # For debugging
 
     // If you want, handle other status codes, too
     if (result?.error?.status === 403) {

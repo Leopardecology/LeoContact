@@ -8,6 +8,7 @@ const ContactInfoFields = ({
                                onAnnualReportChanged,
                                comment,
                                onCommentChanged,
+                               classNames
                            }) => {
     return (
         <>
@@ -18,6 +19,7 @@ const ContactInfoFields = ({
                     <Form.Label>Calendar:</Form.Label>
                     <Form.Control
                         placeholder="Amount"
+                        className={classNames.calendarClassName}
                         autoComplete="off"
                         type="text"
                         name="calendar"
@@ -29,6 +31,7 @@ const ContactInfoFields = ({
                     <Form.Label>Annual Report:</Form.Label>
                     <Form.Control
                         placeholder="Amount"
+                        className={classNames.annualReportClassName}
                         autoComplete="off"
                         type="text"
                         name="annualReport"

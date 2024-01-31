@@ -7,6 +7,8 @@ const AddressFields = ({
                            onCityChanged,
                            onZipChanged,
                            onCountryChanged,
+                           classNames
+
                        }) => {
     const handleCountryChanged = (code) => {
         onCountryChanged(null, "country", code);
@@ -20,6 +22,7 @@ const AddressFields = ({
                     <Form.Label>Street:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.streetClassName}
                         autoComplete="off"
                         type="text"
                         name="street"
@@ -34,6 +37,7 @@ const AddressFields = ({
                     <Form.Label>City:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.cityClassName}
                         autoComplete="off"
                         type="text"
                         name="city"
@@ -46,6 +50,7 @@ const AddressFields = ({
                     <Form.Label>Zip:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.zipClassName}
                         autoComplete="off"
                         type="text"
                         name="zip"
@@ -58,6 +63,7 @@ const AddressFields = ({
                     <Form.Label>Country:</Form.Label>
                     <ReactFlagsSelect
                         searchable
+                        className={classNames.countryClassName}
                         searchPlaceholder="Search Country"
                         selected={addressData.country}
                         onSelect={handleCountryChanged}

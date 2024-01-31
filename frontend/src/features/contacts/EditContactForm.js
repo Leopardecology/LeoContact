@@ -83,7 +83,10 @@ const EditContactForm = ({contact}) => {
         await deleteContact({id: contact.id});
     };
 
-    const {errorContent} = errorHandlingContact(error);
+    const {
+        errorContent,
+        classNames
+    } = errorHandlingContact(error);
 
     return (
         <>
@@ -168,6 +171,7 @@ const EditContactForm = ({contact}) => {
                         isAdmin={isAdmin}
                         onContactChange={handleContactChangeWrapper}
                         onCheckboxChange={handleCheckboxChangeWrapper}
+                        classNames={classNames}
                     />
 
                     <AddressFields
@@ -176,6 +180,7 @@ const EditContactForm = ({contact}) => {
                         onCityChanged={handleAddressChangeWrapper}
                         onZipChanged={handleAddressChangeWrapper}
                         onCountryChanged={handleAddressChangeWrapper}
+                        classNames={classNames}
                     />
 
                     <ContactInfoFields
@@ -185,6 +190,7 @@ const EditContactForm = ({contact}) => {
                         onCalendarChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onAnnualReportChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onCommentChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        classNames={classNames}
                     />
                 </Form>
 

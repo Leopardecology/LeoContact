@@ -80,7 +80,7 @@ const NewContactForm = () => {
 
     const handleCloseErrorModal = () => setShowErrorModal(false);
 
-    const {errorContent} = errorHandlingContact(error);
+    const {errorContent, classNames} = errorHandlingContact(error);
 
     return (
         <>
@@ -108,6 +108,7 @@ const NewContactForm = () => {
                         isAdmin={isAdmin}
                         onContactChange={handleContactChangeWrapper}
                         onCheckboxChange={handleCheckboxChangeWrapper}
+                        classNames={classNames}
                     />
 
                     <AddressFields
@@ -116,6 +117,7 @@ const NewContactForm = () => {
                         onCityChanged={handleAddressChangeWrapper}
                         onZipChanged={handleAddressChangeWrapper}
                         onCountryChanged={handleAddressChangeWrapper}
+                        classNames={classNames}
                     />
 
 
@@ -126,6 +128,7 @@ const NewContactForm = () => {
                         onCalendarChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onAnnualReportChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onCommentChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        classNames={classNames}
                     />
 
                 </Form>

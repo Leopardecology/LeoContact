@@ -8,8 +8,6 @@ exports.validateContact = [
         .isEmpty()
         .withMessage('Firstname can not be empty!')
         .bail()
-        .matches(/^[A-Za-z\s]+$/).withMessage('Firstname must be alphabetic.')
-        .bail()
         .isLength({min: 3})
         .withMessage('For Firstname, a minimum of 3 characters is required!')
         .bail(),
@@ -20,15 +18,44 @@ exports.validateContact = [
         .isEmpty()
         .withMessage('Lastname can not be empty!')
         .bail()
-        .matches(/^[A-Za-z\s]+$/).withMessage('Firstname must be alphabetic.')
-        .bail()
         .isLength({min: 3})
         .withMessage('For Lastname, a minimum of 3 characters is required!')
         .bail(),
     check('email')
         .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('Email can not be empty!')
+        .bail()
         .isEmail()
         .withMessage('Invalid email address!')
+        .bail(),
+    check('calendar')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('Calendar amount can not be empty!')
+        .bail()
+        .isNumeric()
+        .withMessage('Calendar amount needs to be a Number!')
+        .bail()
+        .isLength({max: 2})
+        .withMessage('For Calendar amount, a maximum of 5 characters is allowed!')
+        .bail(),
+    check('annualReport')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('Annual Report amount can not be empty!')
+        .bail()
+        .isNumeric()
+        .withMessage('Annual Report amount needs to be a Number!')
+        .bail()
+        .isLength({max: 2})
+        .withMessage('For Calendar amount, a maximum of 5 characters is allowed!')
         .bail(),
     // check('telephone')
     //     .trim()
@@ -82,4 +109,5 @@ exports.validateContact = [
             return res.status(422).json({errors: errors.array()});
         next();
     },
-];
+]
+;

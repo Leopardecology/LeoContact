@@ -6,6 +6,8 @@ const ContactFormFields = ({
                                isAdmin,
                                onContactChange,
                                onCheckboxChange,
+                               classNames
+
                            }) => {
     const {
         salutation,
@@ -25,6 +27,7 @@ const ContactFormFields = ({
                     <Form.Label>Salutation:</Form.Label>
                     <Form.Select
                         placeholder=""
+                        className={classNames.salutationClassName}
                         autoComplete="off"
                         name="salutation"
                         value={salutation}
@@ -45,6 +48,7 @@ const ContactFormFields = ({
                     <Form.Label>Company:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.companyClassName}
                         autoComplete="off"
                         type="text"
                         name="company"
@@ -59,6 +63,7 @@ const ContactFormFields = ({
                     <Form.Label>Firstname:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.firstnameClassName}
                         autoComplete="off"
                         type="text"
                         name="firstname"
@@ -71,6 +76,7 @@ const ContactFormFields = ({
                     <Form.Label>Lastname:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.lastnameClassName}
                         autoComplete="off"
                         type="text"
                         name="lastname"
@@ -85,6 +91,7 @@ const ContactFormFields = ({
                     <Form.Label>Email:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.emailClassName}
                         type="email"
                         name="email"
                         value={email}
@@ -111,6 +118,7 @@ const ContactFormFields = ({
                     <Form.Label>Telephone:</Form.Label>
                     <Form.Control
                         placeholder=""
+                        className={classNames.telephoneClassName}
                         autoComplete="off"
                         type="telephone"
                         name="telephone"

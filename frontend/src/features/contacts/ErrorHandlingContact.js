@@ -1,7 +1,8 @@
 import {Alert, Col} from "react-bootstrap";
 
 export function errorHandlingContact(error) {
-    let errorContent;
+
+    let errorContent = null;
 
     let errorMessageSalutation;
     let errorMessageFirstname;
@@ -11,6 +12,7 @@ export function errorHandlingContact(error) {
     let errorMessageTelephone;
     let errorMessageRole;
     let errorMessageCalendar;
+    let errorMessageAnnualReport;
     let errorMessageStreet;
     let errorMessageCity;
     let errorMessageZip;
@@ -24,6 +26,7 @@ export function errorHandlingContact(error) {
     let telephoneClassName;
     let roleClassName;
     let calendarClassName;
+    let annualReportClassName;
     let streetClassName;
     let cityClassName;
     let zipClassName;
@@ -35,7 +38,7 @@ export function errorHandlingContact(error) {
         isError = true;
 
         for (let i = 0; i < error.data.errors?.length; i++) {
-            switch (error.data.errors[i].param) {
+            switch (error.data.errors[i].path) {
                 case 'salutation':
                     salutationClassName = 'is-invalid';
                     errorMessageSalutation = (
@@ -45,7 +48,6 @@ export function errorHandlingContact(error) {
                             </Alert>
                         </Col>
                     );
-
                     break;
                 case 'firstname':
                     firstnameClassName = 'is-invalid';
@@ -109,6 +111,16 @@ export function errorHandlingContact(error) {
                 case 'calendar':
                     calendarClassName = 'is-invalid';
                     errorMessageCalendar = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>
+                    );
+                    break;
+                case 'annualReport':
+                    annualReportClassName = 'is-invalid';
+                    errorMessageAnnualReport = (
                         <Col className={"text-center"}>
                             <Alert show={isError} variant="danger">
                                 {error.data.errors[i].msg}
@@ -181,17 +193,20 @@ export function errorHandlingContact(error) {
 
     return {
         errorContent,
-        salutationClassName,
-        firstnameClassName,
-        lastnameClassName,
-        companyClassName,
-        emailClassName,
-        telephoneClassName,
-        roleClassName,
-        calendarClassName,
-        streetClassName,
-        cityClassName,
-        zipClassName,
-        countryClassName
+        classNames: {
+            salutationClassName,
+            firstnameClassName,
+            lastnameClassName,
+            companyClassName,
+            emailClassName,
+            annualReportClassName,
+            telephoneClassName,
+            roleClassName,
+            calendarClassName,
+            streetClassName,
+            cityClassName,
+            zipClassName,
+            countryClassName
+        }
     };
 }
