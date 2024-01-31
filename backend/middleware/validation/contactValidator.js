@@ -25,11 +25,11 @@ exports.validateContact = [
         .isLength({min: 3})
         .withMessage('For Lastname, a minimum of 3 characters is required!')
         .bail(),
-    // check('email')
-    //     .trim()
-    //     .isEmail()
-    //     .withMessage('Invalid email address!')
-    //     .bail(),
+    check('email')
+        .trim()
+        .isEmail()
+        .withMessage('Invalid email address!')
+        .bail(),
     // check('telephone')
     //     .trim()
     //     .matches(/^(\+?\d+|)$/)
