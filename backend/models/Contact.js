@@ -4,7 +4,7 @@ const contactSchema = new mongoose.Schema({
         salutation: {
             type: String,
             enum: ['Mr', 'Mrs', 'Ms', 'Dr', 'Prof'],
-            required: true
+            required: false
         },
         firstname: {
             type: String,
@@ -45,7 +45,7 @@ const contactSchema = new mongoose.Schema({
         address: {
             street: {
                 type: String,
-                required: true
+                required: false
             },
             city: {
                 type: String,
@@ -53,11 +53,11 @@ const contactSchema = new mongoose.Schema({
             },
             zip: {
                 type: Number,
-                required: true
+                required: false
             },
             country: {
                 type: String,
-                required: true
+                required: false
             }
         },
         comment: {
