@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const contactSchema = new mongoose.Schema({
         salutation: {
             type: String,
-            enum: ['Mr', 'Mrs', 'Ms', 'Dr', 'Prof'],
+            enum: ['Mr', 'Mrs', 'Ms', 'Dr', 'Prof', ''],
             required: false
         },
         firstname: {
