@@ -1,6 +1,13 @@
 const {check, validationResult} = require('express-validator');
 
 exports.validateContact = [
+    check('salutation')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('Salutation can not be empty!')
+        .bail(),
     check('firstname')
         .trim()
         .escape()
