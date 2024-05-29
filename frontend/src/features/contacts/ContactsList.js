@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faFileCirclePlus} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { useState } from 'react';
 
 const ContactsList = () => {
     useTitle('LeoContacts - Contacts');
@@ -21,28 +22,45 @@ const ContactsList = () => {
         pollingInterval: 60000, refetchOnFocus: true, refetchOnMountOrArgChange: true
     });
 
+    const [sortConfig, setSortConfig] =
+        useState({ key: 'firstname', direction: 'ascending' });
+
+
+    const requestSort = (key) => {
+        let direction = 'ascending';
+        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const sortedContacts = (ids, entities) => {
+        return ids.map(id => entities[id]).sort((a, b) => {
+            if (a[sortConfig.key] < b[sortConfig.key]) {
+                return sortConfig.direction === 'ascending' ? -1 : 1;
+            }
+            if (a[sortConfig.key] > b[sortConfig.key]) {
+                return sortConfig.direction === 'ascending' ? 1 : -1;
+            }
+            return 0;
+        });
+    };
+
     let content;
     let tableContent;
 
     if (isSuccess) {
-        const {ids, entities} = contacts;
+        const { ids, entities } = contacts;
 
         if (ids.length === 0) {
-            tableContent = <tr>
-                <td colSpan="5">No contacts found.</td>
-            </tr>;
+            tableContent = <tr><td colSpan="4">No contacts found.</td></tr>;
         } else {
+            let filteredIds = isAdmin ? ids : ids.filter(id => !entities[id].personal);
+            let sortedIds = sortedContacts(filteredIds, entities);
 
-            let filteredIds;
-
-            if (isAdmin) {
-                filteredIds = [...ids];
-            } else {
-                filteredIds = ids.filter(contactId => entities[contactId].personal === false);
-            }
-
-            tableContent = ids?.length && filteredIds.map(contactId => <Contact key={contactId}
-                                                                                contactId={contactId}/>);
+            tableContent = sortedIds.map(contact => (
+                <Contact key={contact.id} contact={contact} />
+            ));
         }
     }
 
@@ -60,50 +78,41 @@ const ContactsList = () => {
         </tr>;
     }
 
-    content = (<Container>
-        <h1 className={"title prevent-select"}>Contacts</h1>
+    content = (
+        <Container>
+            <h1 className={"title prevent-select"}>Contacts</h1>
+            <Stack direction={"horizontal"} gap={3}>
+                <OverlayTrigger
+                    placement="right"
+                    overlay={<Tooltip id="back-tooltip">Back</Tooltip>}>
+                    <Button className="back-button" onClick={() => navigate('/dash')}>
+                        <FontAwesomeIcon icon={faArrowLeft}/>
+                    </Button>
+                </OverlayTrigger>
+                <OverlayTrigger
+                    placement="left"
+                    overlay={<Tooltip id="add-tooltip">Add New Contact</Tooltip>}>
+                    <Button className="icon-button ms-auto" onClick={onNewContactClicked}>
+                        <FontAwesomeIcon icon={faFileCirclePlus}/>
+                    </Button>
+                </OverlayTrigger>
+            </Stack>
+            <Table className={"prevent-select"} striped bordered hover>
+                <thead>
+                <tr>
+                    <th scope="col" onClick={() => requestSort('firstname')}>First Name</th>
+                    <th scope="col" onClick={() => requestSort('lastname')}>Last Name</th>
+                    <th scope="col" onClick={() => requestSort('updatedAt')}>Updated</th>
+                    <th scope="col" onClick={() => requestSort('email')}>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                {tableContent}
+                </tbody>
+            </Table>
+        </Container>
+    );
 
-        <Stack direction={"horizontal"} gap={3}>
-            <OverlayTrigger
-                placement="right"
-                overlay={<Tooltip id="my-tooltip-id">
-                    <strong>Back</strong>
-                </Tooltip>}>
-                <Button
-                    className="back-button"
-                    onClick={() => navigate('/dash')}
-                >
-                    <FontAwesomeIcon icon={faArrowLeft}/>
-                </Button>
-            </OverlayTrigger>
-            <OverlayTrigger
-                placement="left"
-                overlay={<Tooltip id="my-tooltip-id">
-                    <strong>Add New Contact</strong>
-                </Tooltip>}>
-                <Button
-                    className="icon-button ms-auto"
-                    onClick={onNewContactClicked}
-                >
-                    <FontAwesomeIcon icon={faFileCirclePlus}/>
-                </Button>
-            </OverlayTrigger>
-        </Stack>
-
-        <Table className={"prevent-select"} striped bordered hover>
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Surname</th>
-                <th scope="col">Updated</th>
-                <th scope="col">Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            {tableContent}
-            </tbody>
-        </Table>
-    </Container>);
     return content;
 };
 
