@@ -2,8 +2,10 @@ import React from "react";
 import {Col, Form, Row} from "react-bootstrap";
 
 const ContactInfoFields = ({
-                               calendar,
-                               onCalendarChanged,
+                               calendarEnglish,
+                               calendarGerman,
+                               onCalendarEnglishChanged,
+                               onCalendarGermanChanged,
                                annualReport,
                                onAnnualReportChanged,
                                comment,
@@ -15,16 +17,28 @@ const ContactInfoFields = ({
             <h5>Info</h5>
 
             <Row className="mb-3">
-                <Form.Group sm={2} as={Col} controlId="calendar">
-                    <Form.Label>Calendar:</Form.Label>
+                <Form.Group sm={2} as={Col} controlId="calendarEnglish">
+                    <Form.Label>Calendar English:</Form.Label>
                     <Form.Control
                         placeholder="Amount"
-                        className={classNames.calendarClassName}
+                        className={classNames.calendarEnglishClassName}
                         autoComplete="off"
                         type="text"
-                        name="calendar"
-                        value={calendar}
-                        onChange={onCalendarChanged}/>
+                        name="calendarEnglish"
+                        value={calendarEnglish}
+                        onChange={onCalendarEnglishChanged}/>
+                </Form.Group>
+
+                <Form.Group sm={2} as={Col} controlId="calendarGerman">
+                    <Form.Label>Calendar German:</Form.Label>
+                    <Form.Control
+                        placeholder="Amount"
+                        className={classNames.calendarGermanClassName}
+                        autoComplete="off"
+                        type="text"
+                        name="calendarGerman"
+                        value={calendarGerman}
+                        onChange={onCalendarGermanChanged}/>
                 </Form.Group>
 
                 <Form.Group sm={2} as={Col} controlId="annualReport">

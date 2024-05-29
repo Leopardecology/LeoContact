@@ -4,6 +4,7 @@ import ReactFlagsSelect from "react-flags-select";
 const AddressFields = ({
                            addressData,
                            onStreetChanged,
+                           onStreetAdditionChanged,
                            onCityChanged,
                            onZipChanged,
                            onCountryChanged,
@@ -28,6 +29,19 @@ const AddressFields = ({
                         name="street"
                         value={addressData.street}
                         onChange={(e) => onStreetChanged(e, "street")}
+                    />
+                </Form.Group>
+
+                <Form.Group sm={6} as={Col} controlId="streetAddition">
+                    <Form.Label>Street Addition:</Form.Label>
+                    <Form.Control
+                        placeholder=""
+                        className={classNames.streetAdditionClassName}
+                        autoComplete="off"
+                        type="text"
+                        name="streetAddition"
+                        value={addressData.streetAddition}
+                        onChange={(e) => onStreetAdditionChanged(e, "streetAddition")}
                     />
                 </Form.Group>
             </Row>

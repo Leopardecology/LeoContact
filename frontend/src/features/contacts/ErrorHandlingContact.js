@@ -9,11 +9,14 @@ export function errorHandlingContact(error) {
     let errorMessageLastname;
     let errorMessageCompany;
     let errorMessageEmail;
-    let errorMessageTelephone;
+    let errorMessageTelephonePrivate;
+    let errorMessageTelephoneBusiness;
     let errorMessageRole;
-    let errorMessageCalendar;
+    let errorMessageCalendarEnglish;
+    let errorMessageCalendarGerman;
     let errorMessageAnnualReport;
     let errorMessageStreet;
+    let errorMessageStreetAddition;
     let errorMessageCity;
     let errorMessageZip;
     let errorMessageCountry;
@@ -23,11 +26,14 @@ export function errorHandlingContact(error) {
     let lastnameClassName;
     let companyClassName;
     let emailClassName;
-    let telephoneClassName;
+    let telephonePrivateClassName;
+    let telephoneBusinessClassName;
     let roleClassName;
-    let calendarClassName;
+    let calendarEnglishClassName;
+    let calendarGermanClassName;
     let annualReportClassName;
     let streetClassName;
+    let streetAdditionClassName;
     let cityClassName;
     let zipClassName;
     let countryClassName;
@@ -88,15 +94,24 @@ export function errorHandlingContact(error) {
                         </Col>
                     );
                     break;
-                case 'telephone':
-                    telephoneClassName = 'is-invalid';
-                    errorMessageTelephone = (
+                case 'telephonePrivate':
+                    telephonePrivateClassName = 'is-invalid';
+                    errorMessageTelephonePrivate = (
                         <Col className={"text-center"}>
                             <Alert show={isError} variant="danger">
                                 {error.data.errors[i].msg}
                             </Alert>
                         </Col>
                     );
+                    break;
+                case 'telephoneBusiness':
+                    telephoneBusinessClassName = 'is-invalid';
+                    errorMessageTelephoneBusiness = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>);
                     break;
                 case 'role':
                     roleClassName = 'is-invalid';
@@ -108,15 +123,24 @@ export function errorHandlingContact(error) {
                         </Col>
                     );
                     break;
-                case 'calendar':
-                    calendarClassName = 'is-invalid';
-                    errorMessageCalendar = (
+                case 'calendarEnglish':
+                    calendarEnglishClassName = 'is-invalid';
+                    errorMessageCalendarEnglish = (
                         <Col className={"text-center"}>
                             <Alert show={isError} variant="danger">
                                 {error.data.errors[i].msg}
                             </Alert>
                         </Col>
                     );
+                    break;
+                case 'calendarGerman':
+                    calendarGermanClassName = 'is-invalid';
+                    errorMessageCalendarGerman = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>);
                     break;
                 case 'annualReport':
                     annualReportClassName = 'is-invalid';
@@ -137,6 +161,15 @@ export function errorHandlingContact(error) {
                             </Alert>
                         </Col>
                     );
+                    break;
+                case 'address.streetAddition':
+                    streetAdditionClassName = 'is-invalid';
+                    errorMessageStreetAddition = (
+                        <Col className={"text-center"}>
+                            <Alert show={isError} variant="danger">
+                                {error.data.errors[i].msg}
+                            </Alert>
+                        </Col>);
                     break;
                 case 'address.city':
                     cityClassName = 'is-invalid';
@@ -180,10 +213,14 @@ export function errorHandlingContact(error) {
                 {errorMessageLastname}
                 {errorMessageCompany}
                 {errorMessageEmail}
-                {errorMessageTelephone}
+                {errorMessageTelephonePrivate}
+                {errorMessageTelephoneBusiness}
                 {errorMessageRole}
-                {errorMessageCalendar}
+                {errorMessageCalendarEnglish}
+                {errorMessageCalendarGerman}
+                {errorMessageAnnualReport}
                 {errorMessageStreet}
+                {errorMessageStreetAddition}
                 {errorMessageCity}
                 {errorMessageZip}
                 {errorMessageCountry}
@@ -199,11 +236,14 @@ export function errorHandlingContact(error) {
             lastnameClassName,
             companyClassName,
             emailClassName,
-            annualReportClassName,
-            telephoneClassName,
+            telephonePrivateClassName,
+            telephoneBusinessClassName,
             roleClassName,
-            calendarClassName,
+            calendarEnglishClassName,
+            calendarGermanClassName,
+            annualReportClassName,
             streetClassName,
+            streetAdditionClassName,
             cityClassName,
             zipClassName,
             countryClassName

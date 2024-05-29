@@ -28,12 +28,14 @@ const NewContactForm = () => {
         firstname: "",
         lastname: "",
         email: "",
-        telephone: "",
+        telephonePrivate: "",
+        telephoneBusiness: "",
         role: "",
-        calendar: "",
+        calendarEnglish: "",
+        calendarGerman: "",
         annualReport: "",
         comment: "",
-        address: {street: "", city: "", zip: "", country: ""},
+        address: {street: "", streetAddition: "", city: "", zip: "", country: ""},
         personal: false,
     });
 
@@ -47,12 +49,14 @@ const NewContactForm = () => {
                 firstname: "",
                 lastname: "",
                 email: "",
-                telephone: "",
+                telephonePrivate: "",
+                telephoneBusiness: "",
                 role: "",
-                calendar: "",
+                calendarEnglish: "",
+                calendarGerman: "",
                 annualReport: "",
                 comment: "",
-                address: {street: "", city: "", zip: "", country: ""},
+                address: {street: "", streetAddition: "",city: "", zip: "", country: ""},
                 personal: false,
             });
             navigate("/dash/contacts");
@@ -114,6 +118,7 @@ const NewContactForm = () => {
                     <AddressFields
                         addressData={contactData.address}
                         onStreetChanged={handleAddressChangeWrapper}
+                        onStreetAdditionChanged={handleAddressChangeWrapper}
                         onCityChanged={handleAddressChangeWrapper}
                         onZipChanged={handleAddressChangeWrapper}
                         onCountryChanged={handleAddressChangeWrapper}
@@ -122,10 +127,12 @@ const NewContactForm = () => {
 
 
                     <ContactInfoFields
-                        calendar={contactData.calendar}
+                        calendarEnglish={contactData.calendarEnglish}
+                        calendarGerman={contactData.calendarGerman}
                         annualReport={contactData.annualReport}
                         comment={contactData.comment}
-                        onCalendarChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onCalendarEnglishChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onCalendarGermanChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onAnnualReportChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onCommentChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         classNames={classNames}

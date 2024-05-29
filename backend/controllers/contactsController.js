@@ -25,9 +25,11 @@ const createNewContact = async (req, res) => {
         lastname,
         company,
         email,
-        telephone,
+        telephonePrivate,
+        telephoneBusiness,
         role,
-        calendar,
+        calendarEnglish,
+        calendarGerman,
         annualReport,
         address,
         comment,
@@ -60,9 +62,11 @@ const createNewContact = async (req, res) => {
             lastname,
             company,
             email,
-            telephone,
+            telephonePrivate,
+            telephoneBusiness,
             role,
-            calendar,
+            calendarEnglish,
+            calendarGerman,
             annualReport,
             address,
             comment,
@@ -102,9 +106,11 @@ const updateContact = async (req, res) => {
         lastname,
         company,
         email,
-        telephone,
+        telephonePrivate,
+        telephoneBusiness,
         role,
-        calendar,
+        calendarEnglish,
+        calendarGerman,
         annualReport,
         address,
         comment,
@@ -134,9 +140,11 @@ const updateContact = async (req, res) => {
     contact.lastname = lastname;
     contact.company = company;
     contact.email = email;
-    contact.telephone = telephone;
+    contact.telephonePrivate = telephonePrivate;
+    contact.telephoneBusiness = telephoneBusiness;
     contact.role = role;
-    contact.calendar = calendar;
+    contact.calendarEnglish = calendarEnglish;
+    contact.calendarGerman = calendarGerman;
     contact.annualReport = annualReport;
     contact.address = address;
     contact.comment = comment;

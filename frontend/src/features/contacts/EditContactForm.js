@@ -177,6 +177,7 @@ const EditContactForm = ({contact}) => {
                     <AddressFields
                         addressData={contactData.address}
                         onStreetChanged={handleAddressChangeWrapper}
+                        onStreetAdditionChanged={handleAddressChangeWrapper}
                         onCityChanged={handleAddressChangeWrapper}
                         onZipChanged={handleAddressChangeWrapper}
                         onCountryChanged={handleAddressChangeWrapper}
@@ -184,10 +185,12 @@ const EditContactForm = ({contact}) => {
                     />
 
                     <ContactInfoFields
-                        calendar={contactData.calendar}
+                        calendarEnglish={contactData.calendarEnglish}
+                        calendarGerman={contactData.calendarGerman}
                         annualReport={contactData.annualReport}
                         comment={contactData.comment}
-                        onCalendarChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onCalendarEnglishChanged={(e) => handleContactChange(e, contactData, setContactData)}
+                        onCalendarGermanChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onAnnualReportChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         onCommentChanged={(e) => handleContactChange(e, contactData, setContactData)}
                         classNames={classNames}

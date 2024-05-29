@@ -16,7 +16,8 @@ const ContactFormFields = ({
         lastname,
         email,
         personal,
-        telephone,
+        telephonePrivate,
+        telephoneBusiness,
         role
     } = contactData;
 
@@ -114,19 +115,34 @@ const ContactFormFields = ({
             </Row>
 
             <Row className="mb-3">
-                <Form.Group sm={6} as={Col} controlId="telephone">
-                    <Form.Label>Telephone:</Form.Label>
+                <Form.Group sm={6} as={Col} controlId="telephonePrivate">
+                    <Form.Label>Private Telephone:</Form.Label>
                     <Form.Control
                         placeholder=""
-                        className={classNames.telephoneClassName}
+                        className={classNames.telephonePrivateClassName}
                         autoComplete="off"
                         type="telephone"
-                        name="telephone"
-                        value={telephone}
+                        name="telephonePrivate"
+                        value={telephonePrivate}
                         onChange={onContactChange}
                     />
                 </Form.Group>
 
+                <Form.Group sm={6} as={Col} controlId="telephoneBusiness">
+                    <Form.Label>Business Telephone:</Form.Label>
+                    <Form.Control
+                        placeholder=""
+                        className={classNames.telephoneBusinessClassName}
+                        autoComplete="off"
+                        type="telephone"
+                        name="telephoneBusiness"
+                        value={telephoneBusiness}
+                        onChange={onContactChange}
+                    />
+                </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
                 <Form.Group sm={6} as={Col} controlId="role">
                     <Form.Label>Role:</Form.Label>
                     <Form.Control
