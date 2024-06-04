@@ -104,7 +104,7 @@ const ContactFormFields = ({
                     <Form.Group sm={3} as={Col} id="personal"
                                 className="large-checkbox">
                         <Form.Check
-                            label="Personal"
+                            label="Personal Telephone"
                             type="checkbox"
                             name="personal"
                             checked={personal}
@@ -114,19 +114,22 @@ const ContactFormFields = ({
                 )}
             </Row>
 
+
             <Row className="mb-3">
-                <Form.Group sm={6} as={Col} controlId="telephonePrivate">
-                    <Form.Label>Private Telephone:</Form.Label>
-                    <Form.Control
-                        placeholder=""
-                        className={classNames.telephonePrivateClassName}
-                        autoComplete="off"
-                        type="telephone"
-                        name="telephonePrivate"
-                        value={telephonePrivate}
-                        onChange={onContactChange}
-                    />
-                </Form.Group>
+                {(!personal || isAdmin) && (
+                    <Form.Group sm={6} as={Col} controlId="telephonePrivate">
+                        <Form.Label>Private Telephone:</Form.Label>
+                        <Form.Control
+                            placeholder=""
+                            className={classNames.telephonePrivateClassName}
+                            autoComplete="off"
+                            type="telephone"
+                            name="telephonePrivate"
+                            value={telephonePrivate}
+                            onChange={onContactChange}
+                        />
+                    </Form.Group>
+                )}
 
                 <Form.Group sm={6} as={Col} controlId="telephoneBusiness">
                     <Form.Label>Business Telephone:</Form.Label>
@@ -141,6 +144,7 @@ const ContactFormFields = ({
                     />
                 </Form.Group>
             </Row>
+
 
             <Row className="mb-3">
                 <Form.Group sm={6} as={Col} controlId="role">

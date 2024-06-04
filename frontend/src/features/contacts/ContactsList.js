@@ -7,11 +7,9 @@ import { Button, Container, OverlayTrigger, Stack, Table, Tooltip, Form } from "
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
-import useAuth from "../../hooks/useAuth";
 
 const ContactsList = () => {
     useTitle('LeoContacts - Contacts');
-    const { isAdmin } = useAuth();
     const navigate = useNavigate();
     const onNewContactClicked = () => navigate('/dash/contacts/new');
     const [sortConfig, setSortConfig] = useState({ key: 'firstname', direction: 'ascending' });
@@ -76,7 +74,7 @@ const ContactsList = () => {
 
     if (isSuccess) {
         const { ids, entities } = contacts;
-        let filteredIds = isAdmin ? ids : ids.filter(id => !entities[id].personal);
+        let filteredIds =  ids
 
         // Apply search filter
         filteredIds = filterContacts(filteredIds, entities);

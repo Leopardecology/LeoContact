@@ -9,8 +9,6 @@ import {Container} from "react-bootstrap";
 const EditContact = () => {
     useTitle('LeoContacts - Edit Contact');
 
-    const {isAdmin} = useAuth();
-
     const {id} = useParams();
 
     const {contact} = useGetContactsQuery("contactsList", {
@@ -20,8 +18,6 @@ const EditContact = () => {
     });
 
     if (!contact) return <PulseLoader color={"#FFF"}/>;
-
-    if (!isAdmin && contact.personal) return <Container><h1 className={'access_denied'}>Access Denied</h1></Container>;
 
     return <EditContactForm contact={contact}/>;
 };
