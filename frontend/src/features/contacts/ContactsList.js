@@ -1,19 +1,36 @@
-import { useState } from 'react';
-import { useGetContactsQuery } from "./contactsApiSlice";
+import {useState} from 'react';
+import {useGetContactsQuery} from "./contactsApiSlice";
 import Contact from "./Contact";
 import PulseLoader from 'react-spinners/PulseLoader';
 import useTitle from "../../hooks/useTitle";
-import { Button, Container, OverlayTrigger, Stack, Table, Tooltip, Form } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from 'react-router-dom';
+import {
+    Button,
+    Container,
+    OverlayTrigger,
+    Stack,
+    Table,
+    Tooltip,
+    Form,
+    Col
+} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faArrowLeft,
+    faFileCirclePlus
+} from "@fortawesome/free-solid-svg-icons";
+import {useNavigate} from 'react-router-dom';
+import ReactFlagsSelect from "react-flags-select";
 
 const ContactsList = () => {
     useTitle('LeoContacts - Contacts');
     const navigate = useNavigate();
     const onNewContactClicked = () => navigate('/dash/contacts/new');
-    const [sortConfig, setSortConfig] = useState({ key: 'firstname', direction: 'ascending' });
+    const [sortConfig, setSortConfig] = useState({
+        key: 'firstname',
+        direction: 'ascending'
+    });
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState(''); // New state for selected country
 
     const {
         data: contacts,
@@ -32,7 +49,7 @@ const ContactsList = () => {
         if (sortConfig.key === key && sortConfig.direction === 'ascending') {
             direction = 'descending';
         }
-        setSortConfig({ key, direction });
+        setSortConfig({key, direction});
     };
 
     const filterContacts = (ids, entities) => {
@@ -40,19 +57,26 @@ const ContactsList = () => {
             const contact = entities[id];
             if (!contact) return false; // Check if the contact is undefined
 
-            // Format the date to include day, month, and year
-            const updatedDate = contact.updatedAt ? new Date(contact.updatedAt).toLocaleDateString('de-DE', {
-                year: 'numeric', month: 'long', day: 'numeric'
-            }).toLowerCase() : '';
+            // Safely access the updatedAt field
+            const updatedDate = contact.updatedAt && contact.updatedAt.$date ?
+                new Date(contact.updatedAt.$date.$numberLong * 1).toLocaleDateString('de-DE', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                }).toLowerCase()
+                : '';
 
             const searchString = searchTerm.toLowerCase();
 
-            return (
+            // Filter by search term and selected country code
+            const matchesSearchTerm =
                 (contact.firstname && contact.firstname.toLowerCase().includes(searchString)) ||
                 (contact.lastname && contact.lastname.toLowerCase().includes(searchString)) ||
                 (contact.email && contact.email.toLowerCase().includes(searchString)) ||
-                updatedDate.includes(searchString)
-            );
+                updatedDate.includes(searchString);
+
+            const matchesCountry =
+                selectedCountry === '' || (contact.address && contact.address.country === selectedCountry);
+
+            return matchesSearchTerm && matchesCountry;
         });
     };
 
@@ -73,28 +97,32 @@ const ContactsList = () => {
     let tableContent;
 
     if (isSuccess) {
-        const { ids, entities } = contacts;
-        let filteredIds =  ids
+        const {ids, entities} = contacts;
+        let filteredIds = ids
 
-        // Apply search filter
+        // Apply search and country filter
         filteredIds = filterContacts(filteredIds, entities);
 
         // Sort the contacts
         let sortedIds = sortedContacts(filteredIds, entities);
 
         tableContent = sortedIds.map(contact => (
-            <Contact key={contact.id} contact={contact} />
+            <Contact key={contact._id.$oid} contact={contact}/>
         ));
     }
 
     if (isError) {
         console.error('API Error:', error);
         const errorMessage = error.data.message ? error.data.message : 'An error occurred. Please check the console for details.';
-        tableContent = <tr><td colSpan="5">{errorMessage}</td></tr>;
+        tableContent = <tr>
+            <td colSpan="5">{errorMessage}</td>
+        </tr>;
     }
 
     if (isLoading) {
-        tableContent = <tr><td colSpan="5"><PulseLoader color={"#FFF"}/></td></tr>;
+        tableContent = <tr>
+            <td colSpan="5"><PulseLoader color={"#FFF"}/></td>
+        </tr>;
     }
 
     content = (
@@ -117,8 +145,19 @@ const ContactsList = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     style={{
-                        width: '15%', position: 'relative', left: '0%'}}
+                        width: '15%', position: 'relative', left: '0%'
+                    }}
                 />
+
+                <Form.Group as={Col} controlId="country">
+                    <ReactFlagsSelect
+                        searchable
+                        searchPlaceholder="Search Country"
+                        selected={selectedCountry}
+                        onSelect={(code) => setSelectedCountry(code)}
+                        className="countrySearch"
+                    />
+                </Form.Group>
 
                 <OverlayTrigger
                     placement="left"
@@ -133,10 +172,18 @@ const ContactsList = () => {
             <Table className={"prevent-select"} striped bordered hover>
                 <thead>
                 <tr>
-                    <th scope="col" onClick={() => requestSort('firstname')}>First Name</th>
-                    <th scope="col" onClick={() => requestSort('lastname')}>Last Name</th>
-                    <th scope="col" onClick={() => requestSort('updatedAt')}>Updated</th>
-                    <th scope="col" onClick={() => requestSort('email')}>Email</th>
+                    <th scope="col"
+                        onClick={() => requestSort('firstname')}>First Name
+                    </th>
+                    <th scope="col"
+                        onClick={() => requestSort('lastname')}>Last Name
+                    </th>
+                    <th scope="col"
+                        onClick={() => requestSort('updatedAt')}>Updated
+                    </th>
+                    <th scope="col"
+                        onClick={() => requestSort('email')}>Email
+                    </th>
                 </tr>
                 </thead>
                 <tbody>

@@ -121,6 +121,15 @@ Form {
     content: none !important;
 }
 
+.countrySearch {
+    padding-bottom: 0 !important;
+    border-radius: 0.275rem !important;
+    background: #fff;
+    width: 25%;
+}
+
+
+
 /* FOOTER */
 
 @media screen and (max-width: 576px) {

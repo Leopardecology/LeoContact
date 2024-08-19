@@ -1,4 +1,4 @@
-const mongoose = require('mongoose').default; //TODO: default because of bug?
+const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
