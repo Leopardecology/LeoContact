@@ -83,6 +83,11 @@ const contactSchema = new mongoose.Schema({
                 type: Boolean,
                 default: false,
                 required: true
+            },
+            administration: {
+                type: String,
+                enum: ['Switzerland', 'Botswana'],
+                required: true
             }
         },
         {

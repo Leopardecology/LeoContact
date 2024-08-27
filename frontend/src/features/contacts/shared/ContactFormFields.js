@@ -16,6 +16,7 @@ const ContactFormFields = ({
         lastname,
         email,
         personal,
+        administration,
         telephonePrivate,
         telephoneBusiness,
         role
@@ -56,6 +57,29 @@ const ContactFormFields = ({
                         value={company}
                         onChange={onContactChange}
                     />
+                </Form.Group>
+
+                <Form.Group sm={2} as={Col} controlId="administration">
+                    <Form.Label>Administration:</Form.Label>
+                    {isAdmin ? (
+                        <Form.Select
+                            placeholder=""
+                            autoComplete="off"
+                            name="administration"
+                            value={administration}
+                            onChange={onContactChange}
+                        >
+                            <option value="">Select Administration</option>
+                            <option value="Switzerland">Switzerland</option>
+                            <option value="Botswana">Botswana</option>
+                        </Form.Select>
+                    ) : (
+                        <Form.Control
+                            readOnly
+                            value={administration || "Not specified"}
+                            className={`${classNames.administrationClassName} form-control`}
+                        />
+                    )}
                 </Form.Group>
             </Row>
 
@@ -113,7 +137,6 @@ const ContactFormFields = ({
                     </Form.Group>
                 )}
             </Row>
-
 
             <Row className="mb-3">
                 {(!personal || isAdmin) && (

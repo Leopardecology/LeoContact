@@ -37,6 +37,7 @@ const NewContactForm = () => {
         comment: "",
         address: {street: "", streetAddition: "", city: "", zip: "", country: ""},
         personal: false,
+        administration: "",
     });
 
     const [showErrorModal, setShowErrorModal] = useState(false);
@@ -58,6 +59,7 @@ const NewContactForm = () => {
                 comment: "",
                 address: {street: "", streetAddition: "",city: "", zip: "", country: ""},
                 personal: false,
+                administration: "",
             });
             navigate("/dash/contacts");
         }

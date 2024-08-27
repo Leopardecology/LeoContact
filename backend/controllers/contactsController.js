@@ -33,7 +33,8 @@ const createNewContact = async (req, res) => {
         annualReport,
         address,
         comment,
-        personal
+        personal,
+        administration
     } = req.body;
 
 
@@ -70,7 +71,8 @@ const createNewContact = async (req, res) => {
             annualReport,
             address,
             comment,
-            personal
+            personal,
+            administration
         });
 
         if (contact) { // Created
@@ -114,7 +116,8 @@ const updateContact = async (req, res) => {
         annualReport,
         address,
         comment,
-        personal
+        personal,
+        administration
     } = req.body;
 
     // Confirm contact exists to update
@@ -149,6 +152,7 @@ const updateContact = async (req, res) => {
     contact.address = address;
     contact.comment = comment;
     contact.personal = personal;
+    contact.administration = administration;
 
     const updatedContact = await contact.save();
 

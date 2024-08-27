@@ -352,3 +352,18 @@ table {
 .is-invalid {
     border: 1px solid var(--ERROR) !important;
 }
+
+/* Administration field styling */
+.form-control[readonly]:not([plaintext]) {
+    background-color: #fff;
+    opacity: 1;
+    cursor: default;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-control[readonly]:not([plaintext]):focus {
+    box-shadow: none;
+    border-color: #ced4da;  /* This is Bootstrap's default border color */
+}
