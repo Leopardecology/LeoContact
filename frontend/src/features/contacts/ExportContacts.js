@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useGetContactsQuery } from "./contactsApiSlice";
-import { Container, Table, Form, Button, Row, Col, Modal } from "react-bootstrap";
+import { Container, Table, Form, Button, Row, Col, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import PulseLoader from 'react-spinners/PulseLoader';
 import { CSVLink } from 'react-csv';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom';
+import useTitle from "../../hooks/useTitle";
 
 const ExportContacts = () => {
+    useTitle('LeoContacts - Export Contacts');
+    const navigate = useNavigate();
     const [selectedContacts, setSelectedContacts] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedFields, setSelectedFields] = useState({});
@@ -21,7 +27,6 @@ const ExportContacts = () => {
         refetchOnMountOrArgChange: true
     });
 
-    // Field name to nice label mapping
     const fieldLabels = {
         'salutation': 'Salutation',
         'firstname': 'First Name',
@@ -46,7 +51,19 @@ const ExportContacts = () => {
 
     const fields = Object.keys(fieldLabels);
 
-    const handleSelectContact = (contactId) => {
+    const handleSelectContact = (contactId, event) => {
+        // If the event originated from the checkbox, don't toggle twice
+        if (event.target.type === 'checkbox') return;
+
+        setSelectedContacts(prev =>
+            prev.includes(contactId)
+                ? prev.filter(id => id !== contactId)
+                : [...prev, contactId]
+        );
+    };
+
+    const handleCheckboxChange = (contactId, event) => {
+        event.stopPropagation(); // Prevent the row click event from firing
         setSelectedContacts(prev =>
             prev.includes(contactId)
                 ? prev.filter(id => id !== contactId)
@@ -109,41 +126,53 @@ const ExportContacts = () => {
     } else if (isError) {
         content = <p>{error?.data?.message || "An error occurred"}</p>;
     } else if (isSuccess) {
-        const { ids, entities } = contacts;
-
-        const tableContent = ids?.length
-            ? ids.map(contactId => {
-                const contact = entities[contactId];
-                if (contact) {
-                    return (
-                        <tr key={contactId}>
-                            <td>
-                                <Form.Check
-                                    type="checkbox"
-                                    checked={selectedContacts.includes(contactId)}
-                                    onChange={() => handleSelectContact(contactId)}
-                                />
-                            </td>
-                            <td>{contact.firstname}</td>
-                            <td>{contact.lastname}</td>
-                            <td>{contact.email}</td>
-                        </tr>
-                    )
-                }
-                return null;
-            })
-            : null;
+        const tableContent = contacts.ids.map(contactId => {
+            const contact = contacts.entities[contactId];
+            return (
+                <tr
+                    key={contactId}
+                    onClick={(event) => handleSelectContact(contactId, event)}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <td onClick={(e) => e.stopPropagation()}>
+                        <Form.Check
+                            type="checkbox"
+                            checked={selectedContacts.includes(contactId)}
+                            onChange={(event) => handleCheckboxChange(contactId, event)}
+                        />
+                    </td>
+                    <td>{contact.firstname}</td>
+                    <td>{contact.lastname}</td>
+                    <td>{contact.email}</td>
+                </tr>
+            );
+        });
 
         content = (
             <>
-                <Row className="mb-3">
+                <Row className="mb-3 align-items-center">
+                    <Col xs="auto">
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id="back-tooltip">Back</Tooltip>}>
+                            <Button className="back-button"
+                                    onClick={() => navigate('/dash')}>
+                                <FontAwesomeIcon icon={faArrowLeft}/>
+                            </Button>
+                        </OverlayTrigger>
+                    </Col>
                     <Col>
                         <Button onClick={handleSelectAll} className="me-2">Select All</Button>
                         <Button onClick={handleDeselectAll} className="me-2">Deselect All</Button>
-                        <Button onClick={() => setShowModal(true)} className="me-2">Export Selected ({selectedContacts.length})</Button>
+                    </Col>
+                    <Col xs="auto">
+                        <Button onClick={() => setShowModal(true)} className="me-2">
+                            <FontAwesomeIcon icon={faFileExport}/> Export ({selectedContacts.length})
+                        </Button>
                     </Col>
                 </Row>
-                <Table striped bordered hover>
+
+                <Table className={"prevent-select"} striped bordered hover>
                     <thead>
                     <tr>
                         <th>Select</th>
@@ -199,7 +228,7 @@ const ExportContacts = () => {
 
     return (
         <Container>
-            <h1>Export Contacts</h1>
+            <h1 className={"title prevent-select"}>Export Contacts</h1>
             {content}
         </Container>
     );
