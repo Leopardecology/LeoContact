@@ -1,14 +1,11 @@
-import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {useEffect} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
-
-import {useSendLogoutMutation} from '../features/auth/authApiSlice';
+import { useSendLogoutMutation } from '../features/auth/authApiSlice';
 
 const DashHeader = () => {
-
-    const {username, isAdmin} = useAuth();
-
+    const { username, isAdmin } = useAuth();
     const navigate = useNavigate();
 
     const [sendLogout, {
@@ -41,7 +38,8 @@ const DashHeader = () => {
                     <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                         <Nav>
                             <Link className="nav-link" to="/dash/contacts">Contacts</Link>
-                            {(isAdmin) && <Link className="nav-link" to="/dash/users">Users</Link>}
+                            <Link className="nav-link" to="/dash/contacts/export">Export Contacts</Link>
+                            {isAdmin && <Link className="nav-link" to="/dash/users">Users</Link>}
                             <NavDropdown title={username} id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#ComingSoon">
                                     Coming Soon...
@@ -59,4 +57,5 @@ const DashHeader = () => {
         </>
     );
 };
+
 export default DashHeader;
