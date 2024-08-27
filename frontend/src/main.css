@@ -104,8 +104,8 @@ Form {
 }
 
 .countrySelect {
-    padding-bottom: 0.11rem !important;
-    padding-top: 0.11rem !important;
+    padding-bottom: 0.15rem !important;
+    padding-top: 0.15rem !important;
     border-radius: 0.375rem !important;
     background: #fff url(./img/down.svg) right 0.75rem center no-repeat !important;
     background-size: 16px 12px !important;
@@ -123,9 +123,20 @@ Form {
 
 .countrySearch {
     padding-bottom: 0 !important;
-    border-radius: 0.275rem !important;
+    border-radius: 0.4rem !important;
     background: #fff;
-    width: 25%;
+    width: 50%;
+}
+
+#rfs-btn {
+    padding-bottom: 0.15rem;
+    padding-top: 0.15rem;
+    border-radius: 0.4rem;
+}
+
+.administrationSearch {
+    width: 50% !important;
+    margin-left: auto !important;
 }
 
 

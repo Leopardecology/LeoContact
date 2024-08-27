@@ -16,7 +16,8 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowLeft,
-    faFileCirclePlus
+    faFileCirclePlus,
+    faFilterCircleXmark
 } from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from 'react-router-dom';
 import ReactFlagsSelect from "react-flags-select";
@@ -29,8 +30,16 @@ const ContactsList = () => {
         key: 'firstname',
         direction: 'ascending'
     });
+
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCountry, setSelectedCountry] = useState(''); // New state for selected country
+    const [selectedAdministration, setSelectedAdministration] = useState(''); // New state for selected administration
+
+    const clearFilters = () => {
+        setSearchTerm('');
+        setSelectedCountry('');
+        setSelectedAdministration('');
+    };
 
     const {
         data: contacts,
@@ -76,7 +85,10 @@ const ContactsList = () => {
             const matchesCountry =
                 selectedCountry === '' || (contact.address && contact.address.country === selectedCountry);
 
-            return matchesSearchTerm && matchesCountry;
+            const matchesAdministration =
+                selectedAdministration === '' || contact.administration === selectedAdministration;
+
+            return matchesSearchTerm && matchesCountry && matchesAdministration;
         });
     };
 
@@ -131,7 +143,7 @@ const ContactsList = () => {
 
             <Stack direction={"horizontal"} gap={3}>
                 <OverlayTrigger
-                    placement="right"
+                    placement="top"
                     overlay={<Tooltip id="back-tooltip">Back</Tooltip>}>
                     <Button className="back-button"
                             onClick={() => navigate('/dash')}>
@@ -159,8 +171,29 @@ const ContactsList = () => {
                     />
                 </Form.Group>
 
+                <Form.Group as={Col} controlId="administration">
+                    <Form.Select
+                        value={selectedAdministration}
+                        onChange={(e) => setSelectedAdministration(e.target.value)}
+                        className="administrationSearch"
+                    >
+                        <option value="">All Administrations</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Botswana">Botswana</option>
+                    </Form.Select>
+                </Form.Group>
+
                 <OverlayTrigger
-                    placement="left"
+                    placement="top"
+                    overlay={<Tooltip id="clear-filters-tooltip">Clear Filters</Tooltip>}>
+                    <Button className="clear-filters-button"
+                            onClick={clearFilters}>
+                        <FontAwesomeIcon icon={faFilterCircleXmark}/>
+                    </Button>
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                    placement="top"
                     overlay={<Tooltip id="add-tooltip">Add New
                         Contact</Tooltip>}>
                     <Button className="icon-button ms-auto"
