@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import DashLayout from "./components/DashLayout";
 import Welcome from "./features/auth/Welcome";
 import ContactsList from "./features/contacts/ContactsList";
+import SelectContacts from "./features/contacts/contact_features/SelectContacts";
 import UsersList from "./features/users/UsersList";
 import EditUser from "./features/users/EditUser";
 import NewUserForm from "./features/users/NewUserForm";
@@ -44,6 +45,7 @@ function App() {
                                     <Route index element={<ContactsList/>}/>
                                     <Route path=":id" element={<EditContact/>}/>
                                     <Route path="new" element={<NewContactForm/>}/>
+                                    <Route path="select" element={<SelectContacts/>}/>
                                 </Route>
 
                             </Route> {/*End Dash*/}
