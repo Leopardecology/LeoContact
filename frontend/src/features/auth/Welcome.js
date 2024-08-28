@@ -10,7 +10,10 @@ const Welcome = () => {
     useTitle('LeoContacts - Welcome');
 
     const date = new Date();
-    const today = new Intl.DateTimeFormat('en-DE', {dateStyle: 'full', timeStyle: 'short'}).format(date);
+    const today = new Intl.DateTimeFormat('en-DE', {
+        dateStyle: 'full',
+        timeStyle: 'short'
+    }).format(date);
 
     return (
         <section className="welcome">
@@ -29,9 +32,16 @@ const Welcome = () => {
                     <Row>
                         <Col sm="auto">
                             <Link to="/dash/contacts">
-                                <Button className="welcome-btn">Contacts</Button>
+                                <Button
+                                    className="welcome-btn">Contacts</Button>
                             </Link>
                         </Col>
+                        {isAdmin && <Col sm="auto">
+                            <Link to="/dash/contacts/select">
+                                <Button className="welcome-btn">Select
+                                    Contact</Button>
+                            </Link>
+                        </Col>}
                         {isAdmin && <Col sm="auto">
                             <Link to="/dash/users">
                                 <Button className="welcome-btn">Users</Button>

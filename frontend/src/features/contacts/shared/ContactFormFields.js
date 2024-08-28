@@ -59,7 +59,7 @@ const ContactFormFields = ({
                     />
                 </Form.Group>
 
-                <Form.Group sm={2} as={Col} controlId="administration">
+                <Form.Group sm={3} as={Col} controlId="administration">
                     <Form.Label>Administration:</Form.Label>
                     {isAdmin ? (
                         <Form.Select
