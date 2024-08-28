@@ -38,7 +38,7 @@ const DashHeader = () => {
                     <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                         <Nav>
                             <Link className="nav-link" to="/dash/contacts">Contacts</Link>
-                            <Link className="nav-link" to="/dash/contacts/export">Export Contacts</Link>
+                            <Link className="nav-link" to="/dash/contacts/select">Select Contacts</Link>
                             {isAdmin && <Link className="nav-link" to="/dash/users">Users</Link>}
                             <NavDropdown title={username} id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#ComingSoon">

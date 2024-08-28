@@ -11,7 +11,8 @@ import {
     Table,
     Tooltip,
     Form,
-    Col
+    Col,
+    Row
 } from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -145,9 +146,8 @@ const ContactsList = () => {
                 <OverlayTrigger
                     placement="top"
                     overlay={<Tooltip id="back-tooltip">Back</Tooltip>}>
-                    <Button className="back-button"
-                            onClick={() => navigate('/dash')}>
-                        <FontAwesomeIcon icon={faArrowLeft}/>
+                    <Button className="back-button" onClick={() => navigate('/dash')}>
+                        <FontAwesomeIcon icon={faArrowLeft} />
                     </Button>
                 </OverlayTrigger>
 
@@ -156,52 +156,54 @@ const ContactsList = () => {
                     placeholder="Search Contacts"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    style={{
-                        width: '15%', position: 'relative', left: '0%'
-                    }}
+                    style={{ width: '15%', position: 'relative', left: '0%' }}
                 />
 
-                <Form.Group as={Col} controlId="country">
-                    <ReactFlagsSelect
-                        searchable
-                        searchPlaceholder="Search Country"
-                        selected={selectedCountry}
-                        onSelect={(code) => setSelectedCountry(code)}
-                        className="countrySearch"
-                    />
-                </Form.Group>
+                <Row className="g-3">
+                    <Col xs={6}>
+                        <Form.Group controlId="country">
+                            <ReactFlagsSelect
+                                searchable
+                                searchPlaceholder="Search Country"
+                                selected={selectedCountry}
+                                onSelect={(code) => setSelectedCountry(code)}
+                                className="countrySearch"
+                            />
+                        </Form.Group>
+                    </Col>
 
-                <Form.Group as={Col} controlId="administration">
-                    <Form.Select
-                        value={selectedAdministration}
-                        onChange={(e) => setSelectedAdministration(e.target.value)}
-                        className="administrationSearch"
-                    >
-                        <option value="">All Administrations</option>
-                        <option value="Switzerland">Switzerland</option>
-                        <option value="Botswana">Botswana</option>
-                    </Form.Select>
-                </Form.Group>
+                    <Col xs={6}>
+                        <Form.Group controlId="administration">
+                            <Form.Select
+                                value={selectedAdministration}
+                                onChange={(e) => setSelectedAdministration(e.target.value)}
+                                className="administrationSearch"
+                            >
+                                <option value="">All Administrations</option>
+                                <option value="Switzerland">Switzerland</option>
+                                <option value="Botswana">Botswana</option>
+                            </Form.Select>
+                        </Form.Group>
+                    </Col>
+                </Row>
 
                 <OverlayTrigger
                     placement="top"
                     overlay={<Tooltip id="clear-filters-tooltip">Clear Filters</Tooltip>}>
-                    <Button className="clear-filters-button"
-                            onClick={clearFilters}>
-                        <FontAwesomeIcon icon={faFilterCircleXmark}/>
+                    <Button className="clear-filters-button" onClick={clearFilters}>
+                        <FontAwesomeIcon icon={faFilterCircleXmark} />
                     </Button>
                 </OverlayTrigger>
 
                 <OverlayTrigger
                     placement="top"
-                    overlay={<Tooltip id="add-tooltip">Add New
-                        Contact</Tooltip>}>
-                    <Button className="icon-button ms-auto"
-                            onClick={onNewContactClicked}>
-                        <FontAwesomeIcon icon={faFileCirclePlus}/>
+                    overlay={<Tooltip id="add-tooltip">Add New Contact</Tooltip>}>
+                    <Button className="icon-button ms-auto" onClick={onNewContactClicked}>
+                        <FontAwesomeIcon icon={faFileCirclePlus} />
                     </Button>
                 </OverlayTrigger>
             </Stack>
+
             <Table className={"prevent-select"} striped bordered hover>
                 <thead>
                 <tr>

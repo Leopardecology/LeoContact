@@ -44,6 +44,8 @@ h5 {
 
 .title {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-bottom: 2rem;
+    font-size: 3rem;
     font-weight: 700 !important;
     letter-spacing: 0.2rem;
     justify-content: center;
@@ -125,7 +127,7 @@ Form {
     padding-bottom: 0 !important;
     border-radius: 0.4rem !important;
     background: #fff;
-    width: 50%;
+    width: 15rem;
 }
 
 #rfs-btn {
@@ -135,7 +137,7 @@ Form {
 }
 
 .administrationSearch {
-    width: 50% !important;
+    width: 15rem !important;
     margin-left: auto !important;
 }
 
