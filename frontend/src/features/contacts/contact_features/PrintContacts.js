@@ -1,21 +1,11 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
 
-const PrintContacts = ({ showModal, handleClose }) => {
+const PrintContacts = () => {
     return (
-        <Modal show={showModal} onHide={handleClose} size="lg">
-            <Modal.Header closeButton>
-                <Modal.Title>Print Address (Mockup)</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <p>This is a mockup for the print functionality.</p>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-            </Modal.Footer>
-        </Modal>
+        <>
+            <h5>Print Address (Mockup)</h5>
+            <p>This is not implemented yet.</p>
+        </>
     );
 };
 

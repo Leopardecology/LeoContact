@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { Button, Row, Col, Form } from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 
-const ExportContacts = ({ showModal, handleClose, selectedContacts, contacts, fieldLabels }) => {
+const ExportContacts = ({ handleClose, selectedContacts, contacts, fieldLabels }) => {
     const [selectedFields, setSelectedFields] = useState({});
 
     const fields = Object.keys(fieldLabels);
@@ -46,31 +46,24 @@ const ExportContacts = ({ showModal, handleClose, selectedContacts, contacts, fi
     };
 
     return (
-        <Modal show={showModal} onHide={handleClose} size="lg">
-            <Modal.Header closeButton>
-                <Modal.Title>Select Fields to Export</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Button onClick={handleSelectAllFields} className="me-2 mb-3">Select All</Button>
-                <Button onClick={handleDeselectAllFields} className="mb-3">Deselect All</Button>
-                <Row>
-                    {fields.map(field => (
-                        <Col key={field} xs={6} md={4} lg={3} className="mb-2">
-                            <Form.Check
-                                type="checkbox"
-                                id={`field-${field}`}
-                                label={fieldLabels[field]}
-                                checked={!!selectedFields[field]}
-                                onChange={() => handleFieldSelect(field)}
-                            />
-                        </Col>
-                    ))}
-                </Row>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
+        <>
+            <h5>Select Fields to Export</h5>
+            <Button onClick={handleSelectAllFields} className="me-2 mb-3">Select All +</Button>
+            <Button onClick={handleDeselectAllFields} className="mb-3">Deselect All</Button>
+            <Row>
+                {fields.map(field => (
+                    <Col key={field} xs={6} md={4} lg={3} className="mb-2">
+                        <Form.Check
+                            type="checkbox"
+                            id={`field-${field}`}
+                            label={fieldLabels[field]}
+                            checked={!!selectedFields[field]}
+                            onChange={() => handleFieldSelect(field)}
+                        />
+                    </Col>
+                ))}
+            </Row>
+            <div className="mt-3">
                 <CSVLink
                     data={getExportData()}
                     filename="exported_contacts.csv"
@@ -80,8 +73,8 @@ const ExportContacts = ({ showModal, handleClose, selectedContacts, contacts, fi
                 >
                     Export
                 </CSVLink>
-            </Modal.Footer>
-        </Modal>
+            </div>
+        </>
     );
 };
 
