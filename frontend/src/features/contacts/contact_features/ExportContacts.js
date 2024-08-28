@@ -48,7 +48,7 @@ const ExportContacts = ({ handleClose, selectedContacts, contacts, fieldLabels }
     return (
         <>
             <h5>Select Fields to Export</h5>
-            <Button onClick={handleSelectAllFields} className="me-2 mb-3">Select All +</Button>
+            <Button onClick={handleSelectAllFields} className="me-2 mb-3">Select All</Button>
             <Button onClick={handleDeselectAllFields} className="mb-3">Deselect All</Button>
             <Row>
                 {fields.map(field => (
