@@ -94,7 +94,8 @@ const ExportContacts = ({
                     </Col>
                 ))}
             </Row>
-            <div className="mt-3 d-flex align-items-center">
+            <div
+                className="mt-3 d-flex align-items-center justify-content-between">
                 <Form.Select
                     value={exportFormat}
                     onChange={(e) => setExportFormat(e.target.value)}
@@ -104,22 +105,26 @@ const ExportContacts = ({
                     <option value="csv">CSV</option>
                     <option value="excel">Excel</option>
                 </Form.Select>
-                {exportFormat === 'csv' ? (
-                    <CSVLink
-                        data={getExportData()}
-                        filename="exported_contacts.csv"
-                        className="btn btn-primary"
-                        target="_blank"
-                        onClick={handleClose}
-                    >
-                        Export
-                    </CSVLink>
-                ) : (
-                    <Button onClick={handleExport} className="btn btn-primary">
-                        Export
-                    </Button>
-                )}
+                <div className="ms-auto">
+                    {exportFormat === 'csv' ? (
+                        <CSVLink
+                            data={getExportData()}
+                            filename="exported_contacts.csv"
+                            className="btn btn-primary"
+                            target="_blank"
+                            onClick={handleClose}
+                        >
+                            Export
+                        </CSVLink>
+                    ) : (
+                        <Button onClick={handleExport}
+                                className="btn btn-primary">
+                            Export
+                        </Button>
+                    )}
+                </div>
             </div>
+
         </>
     );
 };
