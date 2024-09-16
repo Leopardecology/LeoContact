@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Row, Col, Form} from 'react-bootstrap';
 import {CSVLink} from 'react-csv';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 
 const ExportContacts = ({
                             handleClose,
@@ -57,15 +57,40 @@ const ExportContacts = ({
 
     };
 
-    const exportToExcel = () => {
+    const exportToExcel = async () => {
         const data = getExportData();
-        console.log(data);
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Contacts");
-        XLSX.writeFile(wb, "exported_contacts.xlsx");
+
+        // Create a new workbook
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Contacts');
+
+        // Define columns based on the keys in the data object
+        worksheet.columns = Object.keys(data[0]).map(key => ({
+            header: key, key: key
+        }));
+
+        // Add rows to the worksheet
+        data.forEach(item => worksheet.addRow(item));
+
+        // Prepare for file download (write as a buffer in browser)
+        const buffer = await workbook.xlsx.writeBuffer();
+
+        // Create a blob for the Excel file and download it
+        const blob = new Blob([buffer],
+            {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+        const url = window.URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = 'exported_contacts.xlsx';
+        anchor.click();
+
+        // Clean up the object URL after download
+        window.URL.revokeObjectURL(url);
+
+        // Call the handleClose function if needed
         handleClose();
     };
+
 
     const handleExport = () => {
         if (exportFormat === 'excel') {
