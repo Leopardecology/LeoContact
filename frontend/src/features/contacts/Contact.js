@@ -1,12 +1,14 @@
 import { memo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Contact = ({ contact }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const updated = new Date(contact.updatedAt).toLocaleString('de-DE', { day: 'numeric', month: 'long' });
 
     const handleEdit = () => {
-        navigate(`/dash/contacts/${contact.id}`);
+        // Append location.search to retain filters
+        navigate(`/dash/contacts/${contact.id}${location.search}`);
     };
 
     return (

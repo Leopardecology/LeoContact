@@ -3,7 +3,7 @@ import {
     useDeleteContactMutation,
     useUpdateContactMutation
 } from "./contactsApiSlice";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faSave, faTrash} from "@fortawesome/free-solid-svg-icons";
 import circleExclamation from "../../img/circleExclamation.png";
@@ -32,13 +32,16 @@ import {
 
 const EditContactForm = ({contact}) => {
     const {isAdmin} = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Check if location.search contains the expected parameters
+    console.log("Current location.search:", location.search);
 
     const [
         updateContact,
         {isSuccess, error},
     ] = useUpdateContactMutation();
-
-    const navigate = useNavigate();
 
     const [
         deleteContact,
@@ -97,15 +100,11 @@ const EditContactForm = ({contact}) => {
                     <OverlayTrigger
                         trigger={["hover", "focus"]}
                         placement="right"
-                        overlay={
-                            <Tooltip id="my-tooltip-id">
-                                <strong>Back</strong>
-                            </Tooltip>
-                        }
+                        overlay={<Tooltip id="my-tooltip-id"><strong>Back</strong></Tooltip>}
                     >
                         <Button
                             className="back-button"
-                            onClick={() => navigate("/dash/contacts")}
+                            onClick={() => navigate("/dash/contacts" + location.search)}
                         >
                             <FontAwesomeIcon icon={faArrowLeft}/>
                         </Button>
