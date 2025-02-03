@@ -17,7 +17,7 @@ mongoose.set('strictQuery', false);
 
 console.log(process.env.NODE_ENV);
 
-connectDB();
+connectDB().then(r => console.log(r)).catch(err => console.log(err));
 
 app.use(logger);
 

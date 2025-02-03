@@ -9,6 +9,8 @@ if (process.env.NODE_ENV === 'development') {
     devtoolsEnv = true;
 } else if (process.env.NODE_ENV === 'production') {
     devtoolsEnv = false;
+} else {
+    console.error('NODE_ENV not set');
 }
 
 export const store = configureStore({
