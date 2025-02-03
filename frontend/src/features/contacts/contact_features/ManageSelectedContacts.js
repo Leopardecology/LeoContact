@@ -89,7 +89,11 @@ const ManageSelectedContacts = ({
             case 'mail':
                 return <MailContacts handleClose={handleActionClose} />;
             case 'print':
-                return <PrintContacts handleClose={handleActionClose} />;
+                return <PrintContacts 
+                    handleClose={handleActionClose}
+                    selectedContacts={selectedContacts}
+                    contacts={contacts}
+                />;
             default:
                 return null;
         }

@@ -366,6 +366,10 @@ table {
     border: 1px solid var(--ERROR) !important;
 }
 
+.print-controls {
+    margin-bottom: 20px;
+}
+
 /* Administration field styling */
 .form-control[readonly]:not([plaintext]) {
     background-color: #fff;
